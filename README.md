@@ -1,1 +1,1 @@
-# all relavent for hc32f460 series
+# all relavents for hc32f460 series
