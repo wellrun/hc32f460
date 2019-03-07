@@ -1,0 +1,293 @@
+<Language>
+  <LanguageSelect>0</LanguageSelect>
+  <Chinese>
+    <Text>
+      <MenuFileText>文件</MenuFileText>
+      <MenuSaveText>Save</MenuSaveText>
+      <MenuLanguageText>语言</MenuLanguageText>
+      <MenuChineseText>中文</MenuChineseText>
+      <MenuEnglishText>English</MenuEnglishText>
+      <MenuExitText>退出</MenuExitText>
+      <MenuHelpText>帮助</MenuHelpText>
+      <MenuSubHelpText>帮助</MenuSubHelpText>
+      <GroupMCUSettingText>MCU设置</GroupMCUSettingText>
+      <TargetMCUText>目标MCU</TargetMCUText>
+      <CrystalFrequencyText>晶振频率</CrystalFrequencyText>
+      <HexFileText>Hex文件</HexFileText>
+      <COMSettingText>端口设置</COMSettingText>
+      <ConnectText>连接</ConnectText>
+      <DisconnectText>断开连接</DisconnectText>
+      <MCUFlashInfoText>MCU Flash信息</MCUFlashInfoText>
+      <StartAddressText>开始地址</StartAddressText>
+      <PageSizeText>页大小</PageSizeText>
+      <PageCountText>页数量</PageCountText>
+      <ResultsText>编程结果</ResultsText>
+      <PassCountText>通过次数</PassCountText>
+      <FailCountText>失败次数</FailCountText>
+      <TotalCountText>总共次数</TotalCountText>
+      <ClearText>清除</ClearText>
+      <OperationText>操作</OperationText>
+      <ChipEraseText>片擦除</ChipEraseText>
+      <PageEraseText>页擦除</PageEraseText>
+      <EraseText>擦除</EraseText>
+      <BlankCheckText>空白检查</BlankCheckText>
+      <ProgramText>编程</ProgramText>
+      <VerifyText>验证</VerifyText>
+      <CheckBlankCheckText>空白检测</CheckBlankCheckText>
+      <CHeckVerifyText>验证</CHeckVerifyText>
+      <CheckProgramText>编程</CheckProgramText>
+      <CheckEncryptText>芯片加密</CheckEncryptText>
+      <CheckEncrypt1Text>读保护1</CheckEncrypt1Text>
+      <CheckEncrypt2Text>读保护2</CheckEncrypt2Text>
+      <CheckDisorderText>加密</CheckDisorderText>
+      <CheckSelectAllText>全选</CheckSelectAllText>
+      <ExecuteText>执行</ExecuteText>
+      <UploadText>上传</UploadText>
+      <ChecksumText>校验和</ChecksumText>
+      <Version>版本:1.4.1</Version>
+      <EraseCheck>擦除</EraseCheck>
+      <AutoNumber>自动编号</AutoNumber>
+      <NumberAddress>开始地址</NumberAddress>
+      <StartNumber>起始编号</StartNumber>
+      <NumberLength>编号次数</NumberLength>
+      <NumberInterval>编号步进</NumberInterval>
+      <CurrentNumber>当前编号:</CurrentNumber>
+      <HistoryNumber>历史编号:</HistoryNumber>
+      <AutoNumberOpen>启用</AutoNumberOpen>
+      <AutoNumberClose>关闭</AutoNumberClose>
+      <Frequency>
+        <FrequencyText>请选择晶振频率</FrequencyText>
+        <Items>11</Items>
+        <Item0>Internal CR</Item0>
+        <Item1>4 MHz</Item1>
+        <Item2>6 MHz</Item2>
+        <Item3>8 MHz</Item3>
+        <Item4>10 MHz</Item4>
+        <Item5>12 MHz</Item5>
+        <Item6>16 MHz</Item6>
+        <Item7>18 MHz</Item7>
+        <Item8>20 MHz</Item8>
+        <Item9>24 MHz</Item9>
+        <Item10>32 MHz</Item10>
+      </Frequency>
+    </Text>
+    <ErrorInformation>
+      <ErrorInformationText>错误</ErrorInformationText>
+      <SelectTargetMCUEmpty>请选择目标MCU</SelectTargetMCUEmpty>
+      <SelectFrequencyEmpty>请选择晶振频率</SelectFrequencyEmpty>
+      <SelectHexFileEmpty>请选择Hex文件</SelectHexFileEmpty>
+      <URLError>文件路径不正确或文件无效</URLError>
+      <FileFormatError>文件格式错误</FileFormatError>
+      <SelectHexFileCOM>请选择串口端口</SelectHexFileCOM>
+      <FrameErr>通信错误</FrameErr>
+      <FrameNotDef>通信命令未定义</FrameNotDef>
+      <ReadFail>读取失败</ReadFail>
+      <MassEraseFail>芯片擦除失败</MassEraseFail>
+      <PageEraseFail>页擦除失败</PageEraseFail>
+      <TimeOut>通信超时</TimeOut>
+      <VerifyFail>验证失败</VerifyFail>
+      <WriteFail>编程失败</WriteFail>
+      <Encrypted>MCU Flash被加锁</Encrypted>
+      <FlashAddressOF>Flash地址溢出</FlashAddressOF>
+      <FrameLenghtOF>帧长度超出范围</FrameLenghtOF>
+      <DataLenghtOF>数据长度超出范围</DataLenghtOF>
+      <BaudrateOF>波特率超出范围</BaudrateOF>
+      <SerialPortErr>串口端口错误</SerialPortErr>
+      <EmptyFill>参数不能为空，请填写</EmptyFill>
+      <FormatErr>参数格式错误，请重新填写</FormatErr>
+      <AddressInvalid>起始地址无效，请重新填写</AddressInvalid>
+      <OpenAutoNumber>请点击“启用”来启用自动编号</OpenAutoNumber>
+      <PlsFillPwd>密码不能为空，请填写</PlsFillPwd>
+    </ErrorInformation>
+    <WarningInformation>
+      <WarningInformationText>提示</WarningInformationText>
+      <ConnectSuccessful>连接成功</ConnectSuccessful>
+      <DisconnectSuccessful>断开连接成功</DisconnectSuccessful>
+      <OperationBusy>操作繁忙，请稍后再试</OperationBusy>
+      <RequesetResetAndReconnect>MCU已被加密，需要手动重启MCU，请在手动重启MCU后点击“是(Y)”</RequesetResetAndReconnect>
+      <PromptToResetAndReconnect>请手动重启MCU并重新建立连接</PromptToResetAndReconnect>
+      <ChooseToResetAndReconnect>您已确认手动重启了MCU</ChooseToResetAndReconnect>
+      <ChipEraseSuccessful>芯片擦除成功</ChipEraseSuccessful>
+      <PageEraseSuccessful>页擦除成功</PageEraseSuccessful>
+      <BlankCheckSuccessful>空白检测成功，检测结果是： </BlankCheckSuccessful>
+      <ResultBlank>空白</ResultBlank>
+      <ResultNotBlank>非空白，起始地址为：</ResultNotBlank>
+      <ProgramSuccessful>编程成功</ProgramSuccessful>
+      <VerifySuccessful>验证成功，验证结果是：</VerifySuccessful>
+      <VerifyMatch>匹配</VerifyMatch>
+      <VerifyNotMatch>不匹配</VerifyNotMatch>
+      <StartChipErase>开始芯片擦除</StartChipErase>
+      <StartPageErase>开始页擦除</StartPageErase>
+      <StartBlankCheck>开始空白检测</StartBlankCheck>
+      <BlankCheckFail>空白检测失败</BlankCheckFail>
+      <StartProgram>开始编程</StartProgram>
+      <ProgramFail>编程失败</ProgramFail>
+      <StartVerify>开始验证</StartVerify>
+      <StartUpload>开始上传</StartUpload>
+      <UploadSuccessful>上传成功</UploadSuccessful>
+      <UploadFail>上传失败</UploadFail>
+      <StartEncrypt>开始加密</StartEncrypt>
+      <EncryptFail>加密失败</EncryptFail>
+      <EncryptedSuccessful>MCU加密成功</EncryptedSuccessful>
+      <OverHexData>自动编号地址与用户代码重叠，是否继续操作？</OverHexData>
+      <AutoNumberFinsh>自动编号完成</AutoNumberFinsh>
+      <PreDisorderFail>加密失败</PreDisorderFail>
+      <PreDisorderOperateFail>加密功能需要与编程功能一起使用</PreDisorderOperateFail>
+      <Encrypt1Fail>读保护1失败</Encrypt1Fail>
+      <Encrypt2Fail>读保护2失败</Encrypt2Fail>
+      <PreDisorderOK>加密成功</PreDisorderOK>
+      <PreDisorderSetErr>选中片擦除才能使用加密功能</PreDisorderSetErr>
+      <Encrypt1OK>读保护1成功</Encrypt1OK>
+      <Encrypt2OK>读保护2成功</Encrypt2OK>
+      <Encrypt1RepeatNotAllowed>读保护1已生效，不能重复操作</Encrypt1RepeatNotAllowed>
+      <Encrypt2RepeatNotAllowed>读保护2已生效，不能重复操作</Encrypt2RepeatNotAllowed>
+    </WarningInformation>
+    <ConfigSave>
+      <MCUSelected>6</MCUSelected>
+      <CrystalSelected>0</CrystalSelected>
+      <HexFileURL>
+      </HexFileURL>
+      <COMSelect>COM92</COMSelect>
+      <EraseMode>0</EraseMode>
+      <EraseEnb>1</EraseEnb>
+      <BankEnb>1</BankEnb>
+      <ProEnb>1</ProEnb>
+      <VerifyEnb>1</VerifyEnb>
+      <EncryptEnb>1</EncryptEnb>
+    </ConfigSave>
+  </Chinese>
+  <English>
+    <Text>
+      <MenuFileText>File</MenuFileText>
+      <MenuSaveText>Save</MenuSaveText>
+      <MenuLanguageText>Language</MenuLanguageText>
+      <MenuChineseText>中文</MenuChineseText>
+      <MenuEnglishText>English</MenuEnglishText>
+      <MenuExitText>Exit</MenuExitText>
+      <MenuHelpText>Help</MenuHelpText>
+      <MenuSubHelpText>Help</MenuSubHelpText>
+      <GroupMCUSettingText>MCU Setting</GroupMCUSettingText>
+      <TargetMCUText>Target MCU</TargetMCUText>
+      <CrystalFrequencyText>Crystal Freq</CrystalFrequencyText>
+      <HexFileText>Hex File</HexFileText>
+      <COMSettingText>COM Setting</COMSettingText>
+      <ConnectText>Connect</ConnectText>
+      <DisconnectText>Disconnect</DisconnectText>
+      <MCUFlashInfoText>MCU Flash Information</MCUFlashInfoText>
+      <StartAddressText>Start Address</StartAddressText>
+      <PageSizeText>Page Size</PageSizeText>
+      <PageCountText>Page Count</PageCountText>
+      <ResultsText>Results</ResultsText>
+      <PassCountText>Pass Count</PassCountText>
+      <FailCountText>Fail Count</FailCountText>
+      <TotalCountText>Total Count</TotalCountText>
+      <ClearText>Clear</ClearText>
+      <OperationText>Operation</OperationText>
+      <ChipEraseText>Chip Erase</ChipEraseText>
+      <PageEraseText>Page Erase</PageEraseText>
+      <EraseText>Erase</EraseText>
+      <BlankCheckText>Blank Check</BlankCheckText>
+      <ProgramText>Program</ProgramText>
+      <VerifyText>Verify</VerifyText>
+      <CheckBlankCheckText>Blank Check</CheckBlankCheckText>
+      <CHeckVerifyText>Verify</CHeckVerifyText>
+      <CheckProgramText>Program</CheckProgramText>
+      <CheckEncryptText>Encrypt</CheckEncryptText>
+      <ExecuteText>Execute</ExecuteText>
+      <UploadText>Upload</UploadText>
+      <ChecksumText>Checksum</ChecksumText>
+      <Version>Version:1.4.1</Version>
+      <EraseCheck>Erase</EraseCheck>
+      <AutoNumber>Auto Number</AutoNumber>
+      <NumberAddress>Start Addr</NumberAddress>
+      <StartNumber>Start Num</StartNumber>
+      <NumberLength>Length</NumberLength>
+      <NumberInterval>Interval</NumberInterval>
+      <CurrentNumber>Current Num:</CurrentNumber>
+      <HistoryNumber>History Num:</HistoryNumber>
+      <AutoNumberOpen>Open</AutoNumberOpen>
+      <AutoNumberClose>Close</AutoNumberClose>
+      <PreDisorderFail>fail to enable disorder function</PreDisorderFail>
+      <Encrypt1Fail>fail to enable encrypt lv1</Encrypt1Fail>
+      <Encrypt2Fail>fail to enable encrypt lv2</Encrypt2Fail>
+      <PreDisorderOK>disorder success</PreDisorderOK>
+      <Encrypt1OK>encrypt lv1 success</Encrypt1OK>
+      <Encrypt2OK>encrypt lv2 success</Encrypt2OK>
+      <Frequency>
+        <FrequencyText>Please Select Crystal Frequency</FrequencyText>
+        <Items>11</Items>
+        <Item0>Internal CR</Item0>
+        <Item1>4 MHz</Item1>
+        <Item2>6 MHz</Item2>
+        <Item3>8 MHz</Item3>
+        <Item4>10 MHz</Item4>
+        <Item5>12 MHz</Item5>
+        <Item6>16 MHz</Item6>
+        <Item7>18 MHz</Item7>
+        <Item8>20 MHz</Item8>
+        <Item9>24 MHz</Item9>
+        <Item10>32 MHz</Item10>
+      </Frequency>
+    </Text>
+    <ErrorInformation>
+      <ErrorInformationText>Error</ErrorInformationText>
+      <SelectTargetMCUEmpty>Please select Target MCU</SelectTargetMCUEmpty>
+      <SelectFrequencyEmpty>Please select Crystal Frequency</SelectFrequencyEmpty>
+      <SelectHexFileEmpty>Please select Hex File</SelectHexFileEmpty>
+      <URLError>File URL error or file protected</URLError>
+      <FileFormatError>File format error</FileFormatError>
+      <SelectHexFileCOM>Please select serial COM</SelectHexFileCOM>
+      <FrameErr>Communication errorr</FrameErr>
+      <FrameNotDef>Communication command is undefined</FrameNotDef>
+      <ReadFail>Read fail</ReadFail>
+      <MassEraseFail>Chip erase fail</MassEraseFail>
+      <PageEraseFail>Page erase fail</PageEraseFail>
+      <TimeOut>Communication timeout</TimeOut>
+      <VerifyFail>Verify fail</VerifyFail>
+      <WriteFail>Write fail</WriteFail>
+      <Encrypted>MCU is encrypted</Encrypted>
+      <FlashAddressOF>Flash address overflow</FlashAddressOF>
+      <FrameLenghtOF>Frame length out of range</FrameLenghtOF>
+      <DataLenghtOF>Data length out of range</DataLenghtOF>
+      <BaudrateOF>Baudrate out of range</BaudrateOF>
+      <SerialPortErr>Serial port error</SerialPortErr>
+      <EmptyFill>Parameter is empty, please fill</EmptyFill>
+      <FormatErr>Parameter format error, please fill it again</FormatErr>
+      <AddressInvalid>Start address invalid, please fill again</AddressInvalid>
+      <OpenAutoNumber>Please click“Open” to open auto number</OpenAutoNumber>
+    </ErrorInformation>
+    <WarningInformation>
+      <WarningInformationText>Hint</WarningInformationText>
+      <ConnectSuccessful>Connect Successful</ConnectSuccessful>
+      <DisconnectSuccessful>Disconnect Successful</DisconnectSuccessful>
+      <OperationBusy>The operation is busy, please try again later</OperationBusy>
+      <RequesetResetAndReconnect>MCU is encrypted, please manually reset mcu. is manually reset done?</RequesetResetAndReconnect>
+      <PromptToResetAndReconnect>Please manually reset mcu and reconnect isp</PromptToResetAndReconnect>
+      <ChooseToResetAndReconnect>Manually reset mcu confirmed</ChooseToResetAndReconnect>
+      <ChipEraseSuccessful>Chip erase successful</ChipEraseSuccessful>
+      <PageEraseSuccessful>Page erase successful</PageEraseSuccessful>
+      <BlankCheckSuccessful>Blank check successful, the result is </BlankCheckSuccessful>
+      <ResultBlank>blank</ResultBlank>
+      <ResultNotBlank>not blank, the start address is </ResultNotBlank>
+      <ProgramSuccessful>Program successful</ProgramSuccessful>
+      <VerifySuccessful>Verify successful, the result is </VerifySuccessful>
+      <VerifyMatch>matching</VerifyMatch>
+      <VerifyNotMatch>mismatching</VerifyNotMatch>
+      <StartChipErase>Start chip erase</StartChipErase>
+      <StartPageErase>Start page erase</StartPageErase>
+      <StartBlankCheck>Start blank check</StartBlankCheck>
+      <BlankCheckFail>Blank check fail</BlankCheckFail>
+      <StartProgram>Start program</StartProgram>
+      <ProgramFail>Program fail</ProgramFail>
+      <StartVerify>Start verify</StartVerify>
+      <StartUpload>Start upload</StartUpload>
+      <UploadSuccessful>Upload successful</UploadSuccessful>
+      <UploadFail>Upload fail</UploadFail>
+      <StartEncrypt>Start encrypt</StartEncrypt>
+      <EncryptFail>Encrypt fail</EncryptFail>
+      <EncryptedSuccessful>MCU encrypt successful</EncryptedSuccessful>
+      <OverHexData>The Auto Number address and user code address overlap, whether to continue operate?</OverHexData>
+      <AutoNumberFinsh>Auto Number finshed</AutoNumberFinsh>
+    </WarningInformation>
+  </English>
+</Language>

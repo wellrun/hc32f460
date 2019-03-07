@@ -1,0 +1,20 @@
+<System>
+  <MCU>
+    <MCUNumber>1</MCUNumber>
+    <MCU0>
+      <MCUName>HC32L</MCUName>
+      <FlashAddress>0x00000000</FlashAddress>
+      <PageCount>256</PageCount>
+      <PageSize>512</PageSize>
+      <BinFile>m_flash.hc001</BinFile>
+      <RAMCodeAdd>0x20000000</RAMCodeAdd>
+      <MainCR>4000000</MainCR>
+      <CRTrimmingAdd>0x100004</CRTrimmingAdd>
+      <CRTrimmingLength>16</CRTrimmingLength>
+      <UIDAdd>0x40000100</UIDAdd>
+      <UIDLength>0x0c</UIDLength>
+      <UID>0x00000000</UID>
+      <UserArea>0000000000000000</UserArea>
+    </MCU0>
+  </MCU>
+</System>
