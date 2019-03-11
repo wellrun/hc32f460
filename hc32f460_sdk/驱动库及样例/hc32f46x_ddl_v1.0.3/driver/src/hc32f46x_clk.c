@@ -95,7 +95,7 @@
 #define CLK_PLLM_MAX                        24u
 
 #define CLK_PLL_VCO_IN_MIN                  1*1000*1000
-#define CLK_PLL_VCO_IN_MAX                  12*1000*1000
+#define CLK_PLL_VCO_IN_MAX                  24*1000*1000
 
 #define CLK_PLL_VCO_OUT_MIN                 240*1000*1000
 #define CLK_PLL_VCO_OUT_MAX                 480*1000*1000

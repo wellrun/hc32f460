@@ -218,7 +218,7 @@ static en_result_t SetUartBaudrate(uint32_t u32Baudrate)
 
     M4_USART3->CR1_f.FBME = (0xFFFFFFFFul == DIV_Fraction) ? 0u : 1u;
     M4_USART3->BRR_f.DIV_FRACTION = DIV_Fraction;
-    M4_USART3->BRR_f.DIV_MANTISSA = DIV_Integer;
+    M4_USART3->BRR_f.DIV_INTEGER = DIV_Integer;
     return Ok;
 }
 

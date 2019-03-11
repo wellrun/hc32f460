@@ -144,7 +144,7 @@
 #define IS_VALID_FLASH_ADDR(addr)                                              \
 (   ((addr) == 0x00000000)                      ||                             \
     ((addr) >= 0x00000001)                      ||                             \
-    ((addr) <= 0x0007DFFF))
+    ((addr) <= 0x0007FFDF))
 
 /*  Parameter validity check for flash address. */
 #define IS_VALID_OTP_LOCK_ADDR(addr)                                           \
@@ -545,8 +545,14 @@ void EFM_SetBusState(en_efm_bus_sta_t enState)
 en_result_t EFM_SingleProgram(uint32_t u32Addr, uint32_t u32Data)
 {
     en_result_t enRet = Ok;
+    uint8_t u8tmp;
 
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
+
+    /* read back CACHE */
+    u8tmp = M4_EFM->FRMC_f.CACHE;
+
+    M4_EFM->FRMC_f.CACHE = Disable;
 
     /* Enable prgram. */
     EFM_ErasePgmCmd(Enable);
@@ -567,6 +573,9 @@ en_result_t EFM_SingleProgram(uint32_t u32Addr, uint32_t u32Data)
     EFM_SetErasePgmMode(ReadOnly1);
     EFM_ErasePgmCmd(Disable);
 
+    /* recover CACHE */
+    M4_EFM->FRMC_f.CACHE = u8tmp;
+
     return enRet;
 }
 
@@ -585,8 +594,14 @@ en_result_t EFM_SingleProgram(uint32_t u32Addr, uint32_t u32Data)
 en_result_t EFM_SingleProgramRB(uint32_t u32Addr, uint32_t u32Data)
 {
     en_result_t enRet = Ok;
+    uint8_t u8tmp;
 
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
+
+    /* read back CACHE */
+    u8tmp = M4_EFM->FRMC_f.CACHE;
+
+    M4_EFM->FRMC_f.CACHE = Disable;
 
     /* Enable prgram. */
     EFM_ErasePgmCmd(Enable);
@@ -606,6 +621,9 @@ en_result_t EFM_SingleProgramRB(uint32_t u32Addr, uint32_t u32Data)
     /* Set read only mode. */
     EFM_SetErasePgmMode(ReadOnly1);
     EFM_ErasePgmCmd(Disable);
+
+    /* recover CACHE */
+    M4_EFM->FRMC_f.CACHE = u8tmp;
 
     return enRet;
 }
@@ -646,6 +664,7 @@ static void *EFM_Memcpy(void *pvDst, const void *pvSrc, uint32_t u32Count)
 en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
 {
     en_result_t enRet = Ok;
+    uint8_t u8tmp;
     uint32_t i;
     uint32_t u32Tmp = 0xFFFFFFFF;
     uint32_t *u32pSrc = pBuf;
@@ -655,6 +674,11 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
 
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
     DDL_ASSERT(IS_VALID_POINTER(pBuf));
+
+    /* read back CACHE */
+    u8tmp = M4_EFM->FRMC_f.CACHE;
+
+    M4_EFM->FRMC_f.CACHE = Disable;
 
     /* Enable prgram. */
     EFM_ErasePgmCmd(Enable);
@@ -676,7 +700,7 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
     if(u32RemainBytes)
     {
         EFM_Memcpy(&u32Tmp, u32pSrc, u32RemainBytes);
-        *u32pDest++ = *u32pSrc++;
+        *u32pDest++ = u32Tmp;
     }
 
     /* Set read only mode. */
@@ -686,6 +710,9 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
 
     EFM_ClearFlag(EFM_FLAG_EOP);
     EFM_ErasePgmCmd(Disable);
+
+    /* recover CACHE */
+    M4_EFM->FRMC_f.CACHE = u8tmp;
 
     return enRet;
 }
@@ -703,7 +730,14 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
  ******************************************************************************/
 void EFM_SectorErase(uint32_t u32Addr)
 {
+    uint8_t u8tmp;
+
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
+
+    /* read back CACHE */
+    u8tmp = M4_EFM->FRMC_f.CACHE;
+
+    M4_EFM->FRMC_f.CACHE = Disable;
 
     /* Enable erase. */
     EFM_ErasePgmCmd(Enable);
@@ -718,6 +752,9 @@ void EFM_SectorErase(uint32_t u32Addr)
     /* Set read only mode. */
     EFM_SetErasePgmMode(ReadOnly1);
     EFM_ErasePgmCmd(Disable);
+
+    /* recover CACHE */
+    M4_EFM->FRMC_f.CACHE = u8tmp;
 }
 
 /**
@@ -733,7 +770,14 @@ void EFM_SectorErase(uint32_t u32Addr)
  ******************************************************************************/
 void EFM_MassErase(uint32_t u32Addr)
 {
+    uint8_t u8tmp;
+
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
+
+    /* read back CACHE */
+    u8tmp = M4_EFM->FRMC_f.CACHE;
+
+    M4_EFM->FRMC_f.CACHE = Disable;
 
     /* Enable erase. */
     EFM_ErasePgmCmd(Enable);
@@ -748,6 +792,9 @@ void EFM_MassErase(uint32_t u32Addr)
     /* Set read only mode. */
     EFM_SetErasePgmMode(ReadOnly1);
     EFM_ErasePgmCmd(Disable);
+
+    /* recover CACHE */
+    M4_EFM->FRMC_f.CACHE = u8tmp;
 }
 
 /**

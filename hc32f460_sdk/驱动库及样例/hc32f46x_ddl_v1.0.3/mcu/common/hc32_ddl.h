@@ -116,6 +116,10 @@ extern "C"
 #include "hc32f46x_aes.h"
 #endif /* DDL_AES_ENABLE */
 
+#if (DDL_CAN_ENABLE == DDL_ON)
+#include "hc32f46x_can.h"
+#endif /* DDL_CAN_ENABLE */
+
 #if (DDL_CLK_ENABLE == DDL_ON)
 #include "hc32f46x_clk.h"
 #endif /* DDL_CLK_ENABLE */
@@ -124,9 +128,9 @@ extern "C"
 #include "hc32f46x_cmp.h"
 #endif /* DDL_CMP_ENABLE */
 
-#if (DDL_CAN_ENABLE == DDL_ON)
-#include "hc32f46x_can.h"
-#endif /* DDL_CAN_ENABLE */
+#if (DDL_CRC_ENABLE == DDL_ON)
+#include "hc32f46x_crc.h"
+#endif /* DDL_CRC_ENABLE */
 
 #if (DDL_DCU_ENABLE == DDL_ON)
 #include "hc32f46x_dcu.h"

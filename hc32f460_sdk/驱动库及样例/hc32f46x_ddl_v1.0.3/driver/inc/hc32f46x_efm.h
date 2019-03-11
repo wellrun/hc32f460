@@ -164,9 +164,9 @@ typedef struct stc_efm_win_protect_addr
  ******************************************************************************/
 typedef struct stc_efm_unique_id
 {
-    uint32_t            uniqueID1;      ///< Enable fast start up or not.
-    uint32_t            uniqueID2;      ///< Select xtal32 drive capability.
-    uint32_t            uniqueID3;      ///< The filter mode of xtal32.
+    uint32_t            uniqueID1;      ///< unique ID 1.
+    uint32_t            uniqueID2;      ///< unique ID 2.
+    uint32_t            uniqueID3;      ///< unique ID 3.
 }stc_efm_unique_id_t;
 /*******************************************************************************
  * Global pre-processor symbols/macros ('#define')

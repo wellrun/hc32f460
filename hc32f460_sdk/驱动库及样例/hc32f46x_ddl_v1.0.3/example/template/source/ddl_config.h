@@ -98,6 +98,7 @@ extern "C"
 #define DDL_CAN_ENABLE                              DDL_OFF
 #define DDL_CLK_ENABLE                              DDL_OFF
 #define DDL_CMP_ENABLE                              DDL_OFF
+#define DDL_CRC_ENABLE                              DDL_OFF
 #define DDL_DCU_ENABLE                              DDL_OFF
 #define DDL_DMAC_ENABLE                             DDL_OFF
 #define DDL_EFM_ENABLE                              DDL_OFF

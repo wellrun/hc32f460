@@ -153,8 +153,6 @@
 /*******************************************************************************
  * Local function prototypes ('static')
  ******************************************************************************/
-static en_result_t RTC_EnterRwMode(void);
-static en_result_t RTC_ExitRwMode(void);
 
 /*******************************************************************************
  * Local variable definitions ('static')
@@ -253,26 +251,28 @@ en_result_t RTC_Init(const stc_rtc_init_t *pstcRtcInit)
  ** \retval ErrorTimeout                Enter mode timeout
  **
  ******************************************************************************/
-static en_result_t RTC_EnterRwMode(void)
+en_result_t RTC_EnterRwMode(void)
 {
     uint8_t u8RegSta;
     uint32_t u32Timeout, u32TimeCnt = 0;
     en_result_t enRet = Ok;
 
-    M4_RTC->CR2_f.WAIT = 1u;
-    M4_RTC->CR1_f.START = 0u;
-    /* Waiting for WAITF bit set */
-    u32Timeout = SystemCoreClock >> 8;
-    do
+    /* Mode switch when RTC is running */
+    if (0u != M4_RTC->CR1_f.START)
     {
-        u8RegSta = M4_RTC->CR2_f.WAITF;
-        u32TimeCnt++;
-    } while ((u32TimeCnt < u32Timeout) && (u8RegSta == 0u));
+        M4_RTC->CR2_f.WAIT = 1u;
+        /* Waiting for WAITF bit set */
+        u32Timeout = SystemCoreClock >> 8;
+        do
+        {
+            u8RegSta = M4_RTC->CR2_f.WAITF;
+            u32TimeCnt++;
+        } while ((u32TimeCnt < u32Timeout) && (u8RegSta == 0u));
 
-    if (0u == u8RegSta)
-    {
-        M4_RTC->CR1_f.START = 1u;
-        enRet = ErrorTimeout;
+        if (0u == u8RegSta)
+        {
+            enRet = ErrorTimeout;
+        }
     }
 
     return enRet;
@@ -288,25 +288,28 @@ static en_result_t RTC_EnterRwMode(void)
  ** \retval ErrorTimeout                Exit mode timeout
  **
  ******************************************************************************/
-static en_result_t RTC_ExitRwMode(void)
+en_result_t RTC_ExitRwMode(void)
 {
     uint8_t u8RegSta;
     uint32_t u32Timeout, u32TimeCnt = 0;
     en_result_t enRet = Ok;
 
-    M4_RTC->CR2_f.WAIT = 0u;
-    M4_RTC->CR1_f.START = 1u;
-    /* Waiting for WAITF bit reset */
-    u32Timeout = SystemCoreClock >> 8;
-    do
-    {
-        u8RegSta = M4_RTC->CR2_f.WAITF;
-        u32TimeCnt++;
-    } while ((u32TimeCnt < u32Timeout) && (u8RegSta == 1u));
+    /* Mode switch when RTC is running */
+    if (0u != M4_RTC->CR1_f.START)
+    {    
+        M4_RTC->CR2_f.WAIT = 0u;
+        /* Waiting for WAITF bit reset */
+        u32Timeout = SystemCoreClock >> 8;
+        do
+        {
+            u8RegSta = M4_RTC->CR2_f.WAITF;
+            u32TimeCnt++;
+        } while ((u32TimeCnt < u32Timeout) && (u8RegSta == 1u));
 
-    if (1u == u8RegSta)
-    {
-        enRet = ErrorTimeout;
+        if (1u == u8RegSta)
+        {
+            enRet = ErrorTimeout;
+        }
     }
 
     return enRet;
@@ -460,6 +463,30 @@ en_result_t RTC_SetClkCompenValue(uint16_t u16CompenVal)
 
     return enRet;
 }
+
+/**
+ *******************************************************************************
+ ** \brief Enable or disable clock compensation
+ **
+ ** \param [in] enNewSta                The function new state
+ ** \arg Disable                        Disable RTC clock compensation
+ ** \arg Enable                         Enable RTC clock compensation
+ **
+ ** \retval Ok                          Process successfully done
+ **
+ ******************************************************************************/
+en_result_t RTC_ClkCompenCmd(en_functional_state_t enNewSta)
+{
+    en_result_t enRet = Ok;
+
+    /* Check parameters */
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
+
+    M4_RTC->ERRCRH_f.COMPEN = enNewSta;
+
+    return enRet;
+}
+
 
 /**
  *******************************************************************************

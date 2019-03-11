@@ -277,11 +277,14 @@ typedef struct stc_rtc_init
 en_result_t RTC_DeInit(void);
 en_result_t RTC_Init(const stc_rtc_init_t *pstcRtcInit);
 en_result_t RTC_Cmd(en_functional_state_t enNewSta);
+en_result_t RTC_EnterRwMode(void);
+en_result_t RTC_ExitRwMode(void);
 
 /* Extend functions */
 en_result_t RTC_PeriodIntConfig(en_rtc_period_int_type_t enIntType);
 en_result_t RTC_LowPowerSwitch(void);
 en_result_t RTC_SetClkCompenValue(uint16_t u16CompenVal);
+en_result_t RTC_ClkCompenCmd(en_functional_state_t enNewSta);
 en_result_t RTC_OneHzOutputCmd(en_functional_state_t enNewSta);
 
 /* Date and time functions */
