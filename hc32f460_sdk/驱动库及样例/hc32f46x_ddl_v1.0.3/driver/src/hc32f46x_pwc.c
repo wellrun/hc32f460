@@ -822,7 +822,7 @@ void PWC_Fcg3PeriphClockCmd(uint32_t u32Fcg3Periph, en_functional_state_t enNewS
  ** \note   None
  **
  ******************************************************************************/
-void PWC_StopModeCfg(const stc_pwc_stop_mode_cfg_t*  pstcStpMdCfg)
+en_result_t PWC_StopModeCfg(const stc_pwc_stop_mode_cfg_t*  pstcStpMdCfg)
 {
     DDL_ASSERT(IS_PWC_STOP_MODE_FLASH(pstcStpMdCfg->enStopFlash));
     DDL_ASSERT(IS_PWC_STOP_MODE_CLK(pstcStpMdCfg->enStopClk));
@@ -832,7 +832,31 @@ void PWC_StopModeCfg(const stc_pwc_stop_mode_cfg_t*  pstcStpMdCfg)
     M4_SYSREG->PWR_STPMCR = (pstcStpMdCfg->enStopFlash          |
                             (pstcStpMdCfg->enStopClk << 1));
 
+    /* if should close HRC & PLL while stop mode, please disable before modifying the register */
+    if(Disable == pstcStpMdCfg->enHrc)
+    {
+        /* HRC is system clock */
+        if(0 == M4_SYSREG->CMU_CKSWR_f.CKSW)
+            return ErrorInvalidParameter;
+        /* Disable HRC */
+        M4_SYSREG->CMU_HRCCR_f.HRCSTP = 1;
+    }
+    if(Disable == pstcStpMdCfg->enPll)
+    {
+        /* PLL is system clock */
+        if(5 == M4_SYSREG->CMU_CKSWR_f.CKSW)
+            return ErrorInvalidParameter;
+        /* Disable PLL */
+        M4_SYSREG->CMU_PLLCR_f.MPLLOFF = 1;
+    }
+
+    M4_SYSREG->PWR_PWRC1_f.VHRCSD = ((Enable == pstcStpMdCfg->enHrc) ? 0 : 1);
+    M4_SYSREG->PWR_PWRC1_f.VPLLSD = ((Enable == pstcStpMdCfg->enPll) ? 0 : 1);
+    M4_SYSREG->PWR_PWRC1_f.STPDAS = pstcStpMdCfg->enStpDrvAbi;
+
     DISABLE_PWR_REG_WRITE();
+
+    return Ok;
 }
 
 /**

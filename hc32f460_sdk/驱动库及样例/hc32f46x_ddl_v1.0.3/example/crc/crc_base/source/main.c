@@ -42,10 +42,10 @@
 /******************************************************************************/
 /** \file main.c
  **
- ** \brief HASH sample
+ ** \brief CRC sample
  **
- **   - 2018-10-18  1.0  Wuze First version for Device Driver Library of
- **     Hash
+ **   - 2019-03-11  1.0  Wuze First version for Device Driver Library of
+ **     CRC
  **
  ******************************************************************************/
 
@@ -61,9 +61,6 @@
 /*******************************************************************************
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
-#define HASH_MSG_DIGEST_SIZE        (32u)
-
-#define TIMEOUT_10MS                (10u)
 
 /*******************************************************************************
  * Global variable definitions (declared in header file with 'extern')
@@ -72,31 +69,11 @@
 /*******************************************************************************
  * Local function prototypes ('static')
  ******************************************************************************/
-static void HashConfig(void);
+static void CrcConfig(void);
 
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
-static uint8_t m_au8HashMsgDigest1[HASH_MSG_DIGEST_SIZE];
-static uint8_t m_au8HashMsgDigest2[HASH_MSG_DIGEST_SIZE];
-static uint8_t m_au8HashMsgDigest3[HASH_MSG_DIGEST_SIZE];
-
-static uint8_t *m_su8SrcData1 = "abcde";
-
-static uint8_t *m_su8SrcData2 = \
-"abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\
-abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\
-abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\
-abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\
-abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-static uint8_t *m_su8SrcData3 = \
-"abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\
-!@#$%^&*( ()(*()*&&*^*& &^%^%^%dsf@#^%$#(*&^_)#<>?>?><>. ~;/':dd////ghe/\
-abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\
-?></.,;;://}{[]}{///sdfas\"dfas;;;;;d\"\"\"\"\"}{|\\][?><\":56789ABCDEFGH\
-abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\
-01234567890123456789";
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
@@ -112,52 +89,73 @@ abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\
  ******************************************************************************/
 int32_t main(void)
 {
-    /* Config HASH. */
-    HashConfig();
+    bool bFlag;
+    uint16_t u16InitVal;
+    uint16_t u16Checksum;
+    uint16_t au16Data[2u] = {0x1234, 0x5678};
+
+    uint32_t u32InitVal;
+    uint32_t u32Checksum;
+    uint32_t au32Data[2u] = {0x12345678, 0x87654321};
+
+    /* Config CRC. */
+    CrcConfig();
 
     /* Config UART for printing. Baud rate 115200. */
     Ddl_UartInit();
 
     /***************** Configuration end, application start **************/
-
     while (1u)
     {
-        /* Use HASH. */
-        HASH_Start(m_su8SrcData1, strlen((char *)m_su8SrcData1), \
-                    m_au8HashMsgDigest1, TIMEOUT_10MS);
-        printf("\nString \"abcde\" message digest:\n");
-        for (uint8_t i = 0u; i < sizeof(m_au8HashMsgDigest1); i++)
-        {
-            printf("%.2x ", m_au8HashMsgDigest1[i]);
-        }
+        /* CRC16 usage. */
+        u16InitVal = 0x0u;
+        CRC_Init(CRC_SEL_16B | CRC_REFIN_DISABLE | CRC_REFOUT_DISABLE | CRC_XOROUT_DISABLE);
+        u16Checksum = CRC_Calculate16B(u16InitVal, au16Data, 2u);
+        printf("\nCRC16 result = %.4x", u16Checksum);
+        bFlag = CRC_Check16B(u16InitVal, u16Checksum, au16Data, 2u);
+        printf("\nCRC16 flag = %d", bFlag);
 
-        HASH_Start(m_su8SrcData2, strlen((char *)m_su8SrcData2), \
-                    m_au8HashMsgDigest2, TIMEOUT_10MS);
+        /* Change the CRC configuration. */
+        /* The bits of the checksum will be transposed if CRC_REFOUT is enabled. */
+        CRC_Init(CRC_SEL_16B | CRC_REFIN_DISABLE | CRC_REFOUT_ENABLE | CRC_XOROUT_DISABLE);
+        u16Checksum = CRC_Calculate16B(u16InitVal, au16Data, 2u);
+        printf("\nCRC16 result = %.4x", u16Checksum);
+        bFlag = CRC_Check16B(u16InitVal, u16Checksum, au16Data, 2u);
+        printf("\nCRC16 flag = %d", bFlag);
 
-        HASH_Start(m_su8SrcData3, strlen((char *)m_su8SrcData3), \
-                    m_au8HashMsgDigest3, TIMEOUT_10MS);
+        /* CRC32 usage. */
+        u32InitVal = 0xFFFFFFFFu;
+        CRC_Init(CRC_SEL_32B | CRC_REFIN_ENABLE | CRC_REFOUT_ENABLE | CRC_XOROUT_DISABLE);
+        u32Checksum = CRC_Calculate32B(u32InitVal, au32Data, 2u);
+        printf("\nCRC32 result = %.8x", u32Checksum);
+        bFlag = CRC_Check32B(u32InitVal, u32Checksum, au32Data, 2u);
+        printf("\nCRC32 flag = %d", bFlag);
 
-        /* Main loop cycle is 500ms. */
-        Ddl_Delay1ms(500u);
+        /* Changes the CRC configuration. */
+        CRC_Init(CRC_SEL_32B | CRC_REFIN_DISABLE | CRC_REFOUT_DISABLE | CRC_XOROUT_ENABLE);
+        u32Checksum = CRC_Calculate32B(u32InitVal, au32Data, 2u);
+        printf("\nCRC32 result = %.8x", u32Checksum);
+        bFlag = CRC_Check32B(u32InitVal, u32Checksum, au32Data, 2u);
+        printf("\nCRC32 flag = %d", bFlag);
     }
 }
 
 /**
  *******************************************************************************
- ** \brief  HASH initial configuration.
+ ** \brief  CRC initial configuration.
  **
  ** \param  None.
  **
  ** \retval None.
  **
  ******************************************************************************/
-static void HashConfig(void)
+static void CrcConfig(void)
 {
-    /* 1. Enable HASH. */
-    PWC_Fcg0PeriphClockCmd(PWC_FCG0_PERIPH_HASH, Enable);
+    /* 1. Enable CRC. */
+    PWC_Fcg0PeriphClockCmd(PWC_FCG0_PERIPH_CRC, Enable);
 
-    /* 2. Initialize HASH. */
-    HASH_Init();
+    /* 2. Initializes CRC here or before every CRC calculation. */
+    CRC_Init(CRC_SEL_16B | CRC_REFIN_DISABLE | CRC_REFOUT_DISABLE | CRC_XOROUT_DISABLE);
 }
 
 /*******************************************************************************

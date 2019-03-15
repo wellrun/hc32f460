@@ -152,8 +152,8 @@ typedef enum en_pwc_waketime_sel
  ******************************************************************************/
 typedef enum en_pwc_stop_flash_sel
 {
-    NotWait                         = 0u,  ///< Not Wait flash stable.
-    Wait                            = 1u,  ///< wait flash stable.
+    Wait                            = 0u,  ///< wait flash stable.
+    NotWait                         = 1u,  ///< Not Wait flash stable.
 }en_pwc_stop_flash_sel_t;
 
 /**
@@ -343,6 +343,8 @@ typedef struct stc_pwc_stop_mode_cfg
     en_pwc_stopdas_t        enStpDrvAbi;    ///< Driver ability while enter stop mode.
     en_pwc_stop_flash_sel_t enStopFlash;    ///< Flash mode while stop mode awake.
     en_pwc_stop_clk_sel_t   enStopClk;      ///< Clock value while stop mode awake.
+    en_functional_state_t   enHrc;          ///< Whether the HRC enable or disable while enter stop mode.
+    en_functional_state_t   enPll;          ///< Whether the PLL enable or disable while enter stop mode.
 }stc_pwc_stop_mode_cfg_t;
 
 /**
@@ -579,7 +581,7 @@ void PWC_Fcg0PeriphClockCmd(uint32_t u32Fcg0Periph, en_functional_state_t enNewS
 void PWC_Fcg1PeriphClockCmd(uint32_t u32Fcg1Periph, en_functional_state_t enNewState);
 void PWC_Fcg2PeriphClockCmd(uint32_t u32Fcg2Periph, en_functional_state_t enNewState);
 void PWC_Fcg3PeriphClockCmd(uint32_t u32Fcg3Periph, en_functional_state_t enNewState);
-void PWC_StopModeCfg(const stc_pwc_stop_mode_cfg_t*  pstcStpMdCfg);
+en_result_t PWC_StopModeCfg(const stc_pwc_stop_mode_cfg_t*  pstcStpMdCfg);
 void PWC_StopWkupCmd(uint32_t u32Wkup0Event, en_functional_state_t enNewState);
 void PWC_EnterStopMd(void);
 void PWC_EnterSleepMd(void);

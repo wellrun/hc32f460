@@ -44,8 +44,8 @@
  **
  ** \brief AES sample
  **
- **   - 2018-10-20  1.0  Wuze First version for Device Driver Library of
- **     Hash
+ **   - 2018-10-20  1.0  Wuze First version for Device Driver Library o
+ **     AES
  **
  ******************************************************************************/
 

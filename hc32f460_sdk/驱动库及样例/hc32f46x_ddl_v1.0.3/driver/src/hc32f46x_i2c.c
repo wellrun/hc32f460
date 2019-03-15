@@ -174,13 +174,13 @@ static uint8_t u8FreqDiv[8] = {1,2,4,8,16,32,64,128};
  ******************************************************************************/
 static uint8_t GetFreqReg(float fDiv)
 {
-    uint8_t u8Reg = 7;
+    uint8_t u8Reg = 0;
 
-    for(uint8_t i=6; i>=0; i--)
+    for(uint8_t i=7; i>0; i--)
     {
-        if(fDiv >= u8FreqDiv[i])
+        if(fDiv >= u8FreqDiv[i-1])
         {
-            u8Reg = i+1;
+            u8Reg = i;
             break;
         }
     }
@@ -252,8 +252,8 @@ void I2C_BaudrateConfig(M4_I2C_TypeDef* pstcI2Cx, uint32_t u32Baudrate, uint32_t
 
     /* Write register */
     pstcI2Cx->CCR_f.FREQ = u8DivIndex;
-    pstcI2Cx->CCR_f.SLOWW = width / 2 - divsum - divsum;
-    pstcI2Cx->CCR_f.SHIGHW = width - width / 2 - divsum - divsum;
+    pstcI2Cx->CCR_f.SLOWW = width / 2 - dnfsum - divsum;
+    pstcI2Cx->CCR_f.SHIGHW = width - width / 2 - dnfsum - divsum;
 }
 
 /**

@@ -264,14 +264,14 @@ extern "C"
  ** \brief Enable or disable NMI digital filter function
  ******************************************************************************/
 #define NMI_DIGITAL_FILTER_DISABLE              ((uint8_t)0x00)   ///< Disable NMI digital filter
-#define NMI_DIGITAL_FILTER_ENABLE               ((uint8_t)0x40)   ///< Disable NMI digital filter
+#define NMI_DIGITAL_FILTER_ENABLE               ((uint8_t)0x40)   ///< Enable NMI digital filter
 
 /**
  *******************************************************************************
  ** \brief Enable or disable NMI pin ICG function
  ******************************************************************************/
-#define NMI_PIN_ICG_FUNCTION_DISABLE            ((uint8_t)0x00)   ///< Disable NMI pin ICG function
-#define NMI_PIN_ICG_FUNCTION_ENABLE             ((uint8_t)0x80)   ///< Disable NMI pin ICG function
+#define NMI_PIN_ICG_FUNCTION_DISABLE            ((uint8_t)0x80)   ///< Disable NMI pin ICG function
+#define NMI_PIN_ICG_FUNCTION_ENABLE             ((uint8_t)0x00)   ///< Enable NMI pin ICG function
 
 /**
  *******************************************************************************

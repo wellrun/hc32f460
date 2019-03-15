@@ -882,31 +882,25 @@ void CLK_SetSysClkSource(en_clk_sys_source_t enTargetSysSrc)
 
     DISABLE_CLOCK_REG_WRITE();
 
-    if(CLKSysSrcMPLL == M4_SYSREG->CMU_CKSWR_f.CKSW ||
-        CLKSysSrcMPLL == enTargetSysSrc)
+    timeout = 0;
+    do
     {
-        /* Wait stable after switch system clock source.
-        Only current system clock source or target system clock source is MPLL
-        need to wait stable. */
-        timeout = 0;
-        do
-        {
-            timeout++;
-        }while(timeout < CLK_SYSCLK_STABLE);
+        timeout++;
+    }while(timeout < CLK_SYSCLK_STABLE);
 
-        /* Open fcg0~fcg3. */
-        M4_MSTP->FCG0 = fcg0;
-        M4_MSTP->FCG1 = fcg1;
-        M4_MSTP->FCG2 = fcg2;
-        M4_MSTP->FCG3 = fcg3;
+    /* Open fcg0~fcg3. */
+    M4_MSTP->FCG0 = fcg0;
+    M4_MSTP->FCG1 = fcg1;
+    M4_MSTP->FCG2 = fcg2;
+    M4_MSTP->FCG3 = fcg3;
 
-        /* Wait stable after open fcg. */
-        timeout = 0;
-        do
-        {
-            timeout++;
-        }while(timeout < CLK_FCG_STABLE);
-    }
+    /* Wait stable after open fcg. */
+    timeout = 0;
+    do
+    {
+        timeout++;
+    }while(timeout < CLK_FCG_STABLE);
+
     SystemCoreClockUpdate();
 }
 
@@ -981,29 +975,25 @@ void CLK_SysClkConfig(const stc_clk_sysclk_cfg_t *pstcSysclkCfg)
 
     DISABLE_CLOCK_REG_WRITE();
 
-    if(CLKSysSrcMPLL == M4_SYSREG->CMU_CKSWR_f.CKSW)
+    timeout = 0;
+    do
     {
-        /* Wait stable after switch system clock division.
-        Only current system clock source is MPLL need to wait stable. */
-        timeout = 0;
-        do
-        {
-            timeout++;
-        }while(timeout < CLK_SYSCLK_STABLE);
+        timeout++;
+    }while(timeout < CLK_SYSCLK_STABLE);
 
-        /* Open fcg0~fcg3. */
-        M4_MSTP->FCG0 = fcg0;
-        M4_MSTP->FCG1 = fcg1;
-        M4_MSTP->FCG2 = fcg2;
-        M4_MSTP->FCG3 = fcg3;
+    /* Open fcg0~fcg3. */
+    M4_MSTP->FCG0 = fcg0;
+    M4_MSTP->FCG1 = fcg1;
+    M4_MSTP->FCG2 = fcg2;
+    M4_MSTP->FCG3 = fcg3;
 
-        /* Wait stable after open fcg. */
-        timeout = 0;
-        do
-        {
-            timeout++;
-        }while(timeout < CLK_FCG_STABLE);
-    }
+    /* Wait stable after open fcg. */
+    timeout = 0;
+    do
+    {
+        timeout++;
+    }while(timeout < CLK_FCG_STABLE);
+
 }
 
 
@@ -1154,30 +1144,24 @@ void CLK_SetUsbClkSource(en_clk_usb_source_t enTargetUsbSrc)
 
     DISABLE_CLOCK_REG_WRITE();
 
-    if(CLKSysSrcMPLL == M4_SYSREG->CMU_CKSWR_f.CKSW)
+    timeout = 0;
+    do
     {
-        /* Wait stable after switch usb clock source.
-        Only current system clock source or target system clock source is MPLL
-        need to wait stable. */
-        timeout = 0;
-        do
-        {
-            timeout++;
-        }while(timeout < CLK_USBCLK_STABLE);
+        timeout++;
+    }while(timeout < CLK_USBCLK_STABLE);
 
-        /* Open fcg0~fcg3. Write the backup value. */
-        M4_MSTP->FCG0 = fcg0;
-        M4_MSTP->FCG1 = fcg1;
-        M4_MSTP->FCG2 = fcg2;
-        M4_MSTP->FCG3 = fcg3;
+    /* Open fcg0~fcg3. Write the backup value. */
+    M4_MSTP->FCG0 = fcg0;
+    M4_MSTP->FCG1 = fcg1;
+    M4_MSTP->FCG2 = fcg2;
+    M4_MSTP->FCG3 = fcg3;
 
-        /* Wait stable after open fcg. */
-        timeout = 0;
-        do
-        {
-            timeout++;
-        }while(timeout < CLK_FCG_STABLE);
-    }
+    /* Wait stable after open fcg. */
+    timeout = 0;
+    do
+    {
+        timeout++;
+    }while(timeout < CLK_FCG_STABLE);
 
     if(M4_SYSREG->PWR_STPMCR_f.CKSMRC == 1u)
     {

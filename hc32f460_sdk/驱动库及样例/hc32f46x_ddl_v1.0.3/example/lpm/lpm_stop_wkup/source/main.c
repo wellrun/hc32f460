@@ -135,6 +135,7 @@ void Port_Init(void)
 void Port_Handle(void)
 {
     u8IntCnt++;
+    EXINT_IrqFlgClr(ExtiCh00);
 }
 /**
  *******************************************************************************
@@ -165,7 +166,9 @@ int32_t main(void)
     stcPwcStopCfg.enStpDrvAbi = StopHighspeed;
     stcPwcStopCfg.enStopClk = ClkFix;
     stcPwcStopCfg.enStopFlash = Wait;
-    PWC_StopModeCfg(&stcPwcStopCfg);
+    stcPwcStopCfg.enHrc = Enable;
+    stcPwcStopCfg.enPll = Enable;
+    while(Ok != PWC_StopModeCfg(&stcPwcStopCfg));
 
     /* EIRQ0 config. */
     stcExintCfg.enExitCh = ExtiCh00;
