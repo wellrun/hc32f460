@@ -114,7 +114,7 @@ USBD_Class_cb_TypeDef  USBD_HID_cb =
     NULL, /*EP0_TxSent*/
     NULL, /*EP0_RxReady*/
     USBD_HID_DataIn, /*DataIn*/
-    NULL, /*DataOut*/
+    USBD_HID_DataOut, /*DataOut*/
     NULL, /*SOF */
     NULL,
     NULL,
