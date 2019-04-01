@@ -102,6 +102,7 @@ static uint8_t  USBD_HID_Setup (void  *pdev,
                                 USB_SETUP_REQ *req);
 static uint8_t  *USBD_HID_GetCfgDesc (uint8_t speed, uint16_t *length);
 static uint8_t  USBD_HID_DataIn (void  *pdev, uint8_t epnum);
+static uint8_t  USBD_HID_DataOut (void  *pdev, uint8_t epnum);
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
@@ -170,7 +171,7 @@ __USB_ALIGN_BEGIN static uint8_t USBD_HID_CfgDesc[USB_HID_CONFIG_DESC_SIZ] __USB
     USB_INTERFACE_DESCRIPTOR_TYPE,/*bDescriptorType: Interface descriptor type*/
     0x00,         /*bInterfaceNumber: Number of Interface*/
     0x00,         /*bAlternateSetting: Alternate setting*/
-    0x01,         /*bNumEndpoints*/
+    0x02,         /*bNumEndpoints*/
     0x03,         /*bInterfaceClass: HID*/
     0x01,         /*bInterfaceSubClass : 1=BOOT, 0=no boot*/
     0x02,         /*nInterfaceProtocol : 0=none, 1=keyboard, 2=mouse*/
@@ -197,6 +198,16 @@ __USB_ALIGN_BEGIN static uint8_t USBD_HID_CfgDesc[USB_HID_CONFIG_DESC_SIZ] __USB
     0x00,
     0x0A,          /*bInterval: Polling Interval (10 ms)*/
     /* 34 */
+
+    0x07,          /*bLength: Endpoint Descriptor size*/
+    USB_ENDPOINT_DESCRIPTOR_TYPE, /*bDescriptorType:*/
+
+    HID_OUT_EP,     /*bEndpointAddress: Endpoint Address (IN)*/
+    0x03,          /*bmAttributes: Interrupt endpoint*/
+    HID_OUT_PACKET, /*wMaxPacketSize: 4 Byte max */
+    0x00,
+    0x0A,          /*bInterval: Polling Interval (10 ms)*/
+    /* 41 */
 } ;
 
 #ifdef USB_OTG_HS_INTERNAL_DMA_ENABLED
@@ -279,6 +290,7 @@ __USB_ALIGN_BEGIN static uint8_t HID_MOUSE_ReportDesc[HID_MOUSE_REPORT_DESC_SIZE
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
+static uint8_t u8HidRevBuf[4];
 /**
  *******************************************************************************
  ** \brief  USBD_HID_Init
@@ -301,6 +313,13 @@ static uint8_t  USBD_HID_Init (void  *pdev,
                 HID_OUT_EP,
                 HID_OUT_PACKET,
                 USB_OTG_EP_INT);
+
+    /* config EP2 for OUT */
+    DCD_EP_PrepareRx(pdev,
+                     HID_OUT_EP,
+                     u8HidRevBuf,
+                     sizeof(u8HidRevBuf)/sizeof(uint8_t));
+    DCD_SetEPStatus (pdev , HID_OUT_EP , USB_OTG_EP_RX_VALID);
 
     return USBD_OK;
 }
@@ -447,6 +466,18 @@ static uint8_t  USBD_HID_DataIn (void  *pdev,
     return USBD_OK;
 }
 
+static uint8_t  USBD_HID_DataOut (void  *pdev,
+                              uint8_t epnum)
+{
+
+    DCD_EP_PrepareRx(pdev,
+                     HID_OUT_EP,
+                     u8HidRevBuf,
+                     sizeof(u8HidRevBuf)/sizeof(uint8_t));
+    DCD_SetEPStatus (pdev , HID_OUT_EP , USB_OTG_EP_RX_VALID);
+
+    return USBD_OK;
+}
 /*******************************************************************************
  * EOF (not truncated)
  ******************************************************************************/

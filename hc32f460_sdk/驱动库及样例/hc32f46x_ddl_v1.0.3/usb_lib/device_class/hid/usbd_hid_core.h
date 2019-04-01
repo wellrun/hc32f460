@@ -68,7 +68,7 @@
  ** \brief USBD_HID_Exported_Defines
  **
  ******************************************************************************/
-#define USB_HID_CONFIG_DESC_SIZ       34
+#define USB_HID_CONFIG_DESC_SIZ       41
 #define USB_HID_DESC_SIZ              9
 #define HID_MOUSE_REPORT_DESC_SIZE    74
 
