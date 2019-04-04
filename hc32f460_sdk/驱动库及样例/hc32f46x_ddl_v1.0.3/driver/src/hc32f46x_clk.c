@@ -84,14 +84,10 @@
 #define CLK_PLL_DIV_MIN                     2u
 #define CLK_PLL_DIV_MAX                     16u
 
-#define CLK_PLLQ_DIV_MIN                     1u
-#define CLK_PLLQ_DIV_MAX                     16u
-
-
 #define CLK_PLLN_MIN                        20u
-#define CLK_PLLN_MAX                        60u
+#define CLK_PLLN_MAX                        480u
 
-#define CLK_PLLM_MIN                        1u
+#define CLK_PLLM_MIN                        2u
 #define CLK_PLLM_MAX                        24u
 
 #define CLK_PLL_VCO_IN_MIN                  1*1000*1000
@@ -156,15 +152,10 @@
 (   (ClkPllSrcXTAL          ==  (src))      ||                                 \
     (ClkPllSrcHRC           ==  (src)))
 
-/*! Parameter validity check for pll div \a pllp, pllr. */
+/*! Parameter validity check for pll div \a pllp, pllq, pllr. */
 #define IS_PLL_DIV_VALID(pllx)                                                 \
 (   (CLK_PLL_DIV_MIN        <=  (pllx))     &&                                 \
     (CLK_PLL_DIV_MAX        >=  (pllx)))
-
-/*! Parameter validity check for pll div \a pllp,  pllr. */
-#define IS_PLLQ_DIV_VALID(pllx)                                                \
-(   (CLK_PLLQ_DIV_MIN        <=  (pllx))     &&                                \
-    (CLK_PLLQ_DIV_MAX        >=  (pllx)))
 
 /*! Parameter validity check for plln \a plln. */
 #define IS_PLLN_VALID(plln)                                                    \
@@ -682,7 +673,7 @@ void CLK_SetPllSource(en_clk_pll_source_t enPllSrc)
  **
  ** \retval None
  **
- ** \note   The pllsource/pllm is between 8MHz and 12MHz.
+ ** \note   The pllsource/pllm is between 1MHz and 24MHz.
  **         The pllsource/pllm*plln is between 240MHz and 480MHz.
  **         The maximum of pllsource/pllm*plln/pllp is 200MHz.
  **
@@ -694,7 +685,7 @@ void CLK_MpllConfig(const stc_clk_mpll_cfg_t *pstcMpllCfg)
 
     DDL_ASSERT(NULL != pstcMpllCfg);
     DDL_ASSERT(IS_PLL_DIV_VALID(pstcMpllCfg->PllpDiv));
-    DDL_ASSERT(IS_PLLQ_DIV_VALID(pstcMpllCfg->PllqDiv));
+    DDL_ASSERT(IS_PLL_DIV_VALID(pstcMpllCfg->PllqDiv));
     DDL_ASSERT(IS_PLL_DIV_VALID(pstcMpllCfg->PllrDiv));
     DDL_ASSERT(IS_PLLN_VALID(pstcMpllCfg->plln));
     DDL_ASSERT(IS_PLLM_VALID(pstcMpllCfg->pllmDiv));
