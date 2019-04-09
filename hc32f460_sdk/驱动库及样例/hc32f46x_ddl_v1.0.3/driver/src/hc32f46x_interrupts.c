@@ -3020,15 +3020,15 @@ void IRQ137_Handler(void)
     {
         Spi1TxEmpty_IrqHandler();
     }
-    /* SPI Ch.1 parity/overflow/underflow/mode error */   //todo
-    if ((true == M4_INTC->VSSEL137_f.VSEL13) && (true == !!(M4_SPI1->SR & 0x1Du)))
-    {
-        Spi1Err_IrqHandler();
-    }
     /* SPI Ch.1 bus idle */
-    if ((true == M4_INTC->VSSEL137_f.VSEL14) && (true == M4_SPI1->SR_f.IDLNF))
+    if ((true == M4_INTC->VSSEL137_f.VSEL13) && (true == M4_SPI1->SR_f.IDLNF))
     {
         Spi1Idle_IrqHandler();
+    }
+    /* SPI Ch.1 parity/overflow/underflow/mode error */
+    if ((true == M4_INTC->VSSEL137_f.VSEL14) && (true == !!(M4_SPI1->SR & 0x1Du)))
+    {
+        Spi1Err_IrqHandler();
     }
     /* SPI Ch.2 Receive completed */
     if ((true == M4_INTC->VSSEL137_f.VSEL16) && (true == M4_SPI2->SR_f.RDFF))
@@ -3040,15 +3040,15 @@ void IRQ137_Handler(void)
     {
         Spi2TxEmpty_IrqHandler();
     }
-    /* SPI Ch.2 parity/overflow/underflow/mode error */   //todo
-    if ((true == M4_INTC->VSSEL137_f.VSEL18) && (true == !!(M4_SPI2->SR & 0x1Du)))
-    {
-        Spi2Err_IrqHandler();
-    }
     /* SPI Ch.2 bus idle */
-    if ((true == M4_INTC->VSSEL137_f.VSEL19) && (true == M4_SPI2->SR_f.IDLNF))
+    if ((true == M4_INTC->VSSEL137_f.VSEL18) && (true == M4_SPI2->SR_f.IDLNF))
     {
         Spi2Idle_IrqHandler();
+    }
+    /* SPI Ch.2 parity/overflow/underflow/mode error */
+    if ((true == M4_INTC->VSSEL137_f.VSEL19) && (true == !!(M4_SPI2->SR & 0x1Du)))
+    {
+        Spi2Err_IrqHandler();
     }
     /* SPI Ch.3 Receive completed */
     if ((true == M4_INTC->VSSEL137_f.VSEL21) && (true == M4_SPI3->SR_f.RDFF))
@@ -3060,15 +3060,15 @@ void IRQ137_Handler(void)
     {
         Spi3TxEmpty_IrqHandler();
     }
-    /* SPI Ch.3 parity/overflow/underflow/mode error */   //todo
-    if ((true == M4_INTC->VSSEL137_f.VSEL23) && (true == !!(M4_SPI3->SR & 0x1Du)))
-    {
-        Spi3Err_IrqHandler();
-    }
     /* SPI Ch.3 bus idle */
-    if ((true == M4_INTC->VSSEL137_f.VSEL24) && (true == M4_SPI3->SR_f.IDLNF))
+    if ((true == M4_INTC->VSSEL137_f.VSEL23) && (true == M4_SPI3->SR_f.IDLNF))
     {
         Spi3Idle_IrqHandler();
+    }
+    /* SPI Ch.3 parity/overflow/underflow/mode error */
+    if ((true == M4_INTC->VSSEL137_f.VSEL24) && (true == !!(M4_SPI3->SR & 0x1Du)))
+    {
+        Spi3Err_IrqHandler();
     }
     /* SPI Ch.4 Receive completed */
     if ((true == M4_INTC->VSSEL137_f.VSEL26) && (true == M4_SPI4->SR_f.RDFF))
@@ -3080,15 +3080,15 @@ void IRQ137_Handler(void)
     {
         Spi4TxEmpty_IrqHandler();
     }
-    /* SPI Ch.4 parity/overflow/underflow/mode error */   //todo
-    if ((true == M4_INTC->VSSEL137_f.VSEL28) && (true == !!(M4_SPI4->SR & 0x1Du)))
-    {
-        Spi4Err_IrqHandler();
-    }
     /* SPI Ch.4 bus idle */
-    if ((true == M4_INTC->VSSEL137_f.VSEL29) && (true == M4_SPI4->SR_f.IDLNF))
+    if ((true == M4_INTC->VSSEL137_f.VSEL28) && (true == M4_SPI4->SR_f.IDLNF))
     {
         Spi4Idle_IrqHandler();
+    }
+    /* SPI Ch.4 parity/overflow/underflow/mode error */
+    if ((true == M4_INTC->VSSEL137_f.VSEL29) && (true == !!(M4_SPI4->SR & 0x1Du)))
+    {
+        Spi4Err_IrqHandler();
     }
 }
 
