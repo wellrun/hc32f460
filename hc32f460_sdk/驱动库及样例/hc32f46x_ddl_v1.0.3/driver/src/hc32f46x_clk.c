@@ -134,7 +134,7 @@
 /*! Parameter validity check for stop XTAL \a syssrc \a pllsrc. */
 #define IS_XTAL_STOP_VALID(syssrc,pllsrc)                                      \
 (   (ClkSysSrcXTAL      != (syssrc)) &&                                        \
-    (ClkPllSrcXTAL      != (pllsrc)))
+    (!((ClkPllSrcXTAL ==  (pllsrc)) && (M4_SYSREG->CMU_PLLCR_f.MPLLOFF == 0))))
 
 /*! Parameter validity check for stop XTAL32 \a syssrc. */
 #define IS_XTAL32_STOP_VALID(syssrc)        (ClkSysSrcXTAL32 != (syssrc))
@@ -142,7 +142,7 @@
 /*! Parameter validity check for stop HRC \a syssrc \a pllsrc. */
 #define IS_HRC_STOP_VALID(syssrc,pllsrc)                                       \
 (   (ClkSysSrcHRC           !=  (syssrc))   &&                                 \
-    (ClkPllSrcHRC           !=  (pllsrc)))
+    (!((ClkPllSrcHRC ==  (pllsrc)) && (M4_SYSREG->CMU_PLLCR_f.MPLLOFF == 0))))
 
 /*! Parameter validity check for stop MRC \a syssrc. */
 #define IS_MRC_STOP_VALID(syssrc)           (ClkSysSrcMRC != syssrc)
@@ -423,9 +423,9 @@ void CLK_XtalCmd(en_functional_state_t enNewState)
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
-    DDL_ASSERT(((Enable == enNewState) ?
+    DDL_ASSERT((Enable == enNewState) ?
                 1 : IS_XTAL_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW,
-                M4_SYSREG->CMU_PLLCFGR_f.PLLSRC)));
+                M4_SYSREG->CMU_PLLCFGR_f.PLLSRC));
 
     ENABLE_CLOCK_REG_WRITE();
 
@@ -537,9 +537,10 @@ void CLK_HrcCmd(en_functional_state_t enNewState)
     en_flag_status_t status;
 
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
-    DDL_ASSERT(IS_HRC_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW,
-                                M4_SYSREG->CMU_PLLCFGR_f.PLLSRC));
-
+    DDL_ASSERT((Enable == enNewState) ?
+                1 : IS_HRC_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW,
+                M4_SYSREG->CMU_PLLCFGR_f.PLLSRC));
+    
     ENABLE_CLOCK_REG_WRITE();
 
     M4_SYSREG->CMU_HRCCR_f.HRCSTP = ((Enable == enNewState) ? 0 : 1);
@@ -591,7 +592,8 @@ void CLK_MrcCmd(en_functional_state_t enNewState)
     __IO uint32_t timeout = 0;
 
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
-    DDL_ASSERT(IS_MRC_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW));
+    DDL_ASSERT((Enable == enNewState) ?
+                1 : IS_MRC_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW));
 
     ENABLE_CLOCK_REG_WRITE();
 
@@ -643,8 +645,9 @@ void CLK_LrcCmd(en_functional_state_t enNewState)
     __IO uint32_t timeout = 0;
 
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
-    DDL_ASSERT(IS_LRC_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW));
-
+    DDL_ASSERT((Enable == enNewState) ?
+                1 : IS_LRC_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW));
+    
     ENABLE_CLOCK_REG_WRITE();
 
     M4_SYSREG->CMU_LRCCR_f.LRCSTP = ((Enable == enNewState) ? 0 : 1);
@@ -743,8 +746,9 @@ void CLK_MpllCmd(en_functional_state_t enNewState)
     en_flag_status_t status;
 
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
-    DDL_ASSERT(IS_MPLL_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW));
-
+    DDL_ASSERT((Enable == enNewState) ?
+                1 : IS_MPLL_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW));
+    
     ENABLE_CLOCK_REG_WRITE();
 
     M4_SYSREG->CMU_PLLCR_f.MPLLOFF = ((Enable == enNewState) ? 0 : 1);
