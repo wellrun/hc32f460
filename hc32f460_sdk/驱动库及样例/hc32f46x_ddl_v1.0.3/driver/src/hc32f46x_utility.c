@@ -128,7 +128,7 @@ static en_result_t SetUartBaudrate(uint32_t u32Baudrate)
     uint32_t C;
     uint32_t OVER8;
     float32_t DIV = 0.0;
-    uint32_t u32Tmp = 0u;
+    uint64_t u64Tmp = 0u;
     uint32_t DIV_Integer = 0u;
     uint32_t DIV_Fraction = 0xFFFFFFFFul;
 
@@ -161,56 +161,8 @@ static en_result_t SetUartBaudrate(uint32_t u32Baudrate)
         /* DIV_Fraction = ((8 * (2 - OVER8) * (DIV_Integer + 1) * 256 * B) / C) - 128 */
         /* E = (C * (128 + DIV_Fraction) / (8 * (2 - OVER8) * (DIV_Integer + 1) * 256 * B)) - 1 */
         /* DIV_Fraction = (((2 - OVER8) * (DIV_Integer + 1) * 2048 * B) / C) - 128 */
-        u32Tmp = (2 - OVER8) * (DIV_Integer + 1) * B;
-
-        if (u32Tmp <= 0x001FFFFFul)           /* 2048 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (1 * (2048 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x003FFFFFul)      /* 1024 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (2 *(1024 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x007FFFFFul)      /* 512 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (4 * (512 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x00FFFFFFul)      /* 256 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (8 * (256 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x01FFFFFFul)      /* 128 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (16 * (128 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x03FFFFFFul)      /* 64 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (32 * (64 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x07FFFFFFul)      /* 32 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (64 *(32 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x0FFFFFFFul)      /* 16 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (128 * (16 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x1FFFFFFFul)      /* 8 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (256 * (8 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x3FFFFFFFul)      /* 4 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (512 *(4 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x7FFFFFFFul)      /* 2 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (1024 * (2 * u32Tmp / C)) - 128;
-        }
-        else                                  /* 1 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (2048 *(1 * u32Tmp/ C)) - 128;
-        }
+        u64Tmp = (2 - OVER8) * (DIV_Integer + 1) * B;
+        DIV_Fraction = 2048 * u64Tmp/C - 128;
     }
     else
     {
@@ -247,7 +199,7 @@ en_result_t Ddl_UartInit(void)
 
     M4_USART3->CR1_f.ML = 0;    // LSB
     M4_USART3->CR1_f.MS = 0;    // UART mode
-    M4_USART3->CR1_f.OVER8 = 1; // 16bit sampling mode
+    M4_USART3->CR1_f.OVER8 = 1; // 8bit sampling mode
     M4_USART3->CR1_f.M = 0;     // 8 bit data length
     M4_USART3->CR1_f.PCE = 0;   // no parity bit
 

@@ -1511,7 +1511,7 @@ static en_result_t SetUartBaudrate(M4_USART_TypeDef *USARTx,
     uint32_t C;
     uint32_t OVER8;
     float32_t DIV = 0.0;
-    uint32_t u32Tmp = 0u;
+    uint64_t u64Tmp = 0u;
     uint32_t DIV_Integer = 0u;
     uint32_t DIV_Fraction = 0xFFFFFFFFul;
 
@@ -1547,56 +1547,8 @@ static en_result_t SetUartBaudrate(M4_USART_TypeDef *USARTx,
         /* DIV_Fraction = ((8 * (2 - OVER8) * (DIV_Integer + 1) * 256 * B) / C) - 128 */
         /* E = (C * (128 + DIV_Fraction) / (8 * (2 - OVER8) * (DIV_Integer + 1) * 256 * B)) - 1 */
         /* DIV_Fraction = (((2 - OVER8) * (DIV_Integer + 1) * 2048 * B) / C) - 128 */
-        u32Tmp = (2 - OVER8) * (DIV_Integer + 1) * B;
-
-        if (u32Tmp <= 0x001FFFFFul)           /* 2048 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (1 * (2048 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x003FFFFFul)      /* 1024 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (2 *(1024 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x007FFFFFul)      /* 512 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (4 * (512 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x00FFFFFFul)      /* 256 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (8 * (256 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x01FFFFFFul)      /* 128 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (16 * (128 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x03FFFFFFul)      /* 64 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (32 * (64 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x07FFFFFFul)      /* 32 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (64 *(32 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x0FFFFFFFul)      /* 16 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (128 * (16 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x1FFFFFFFul)      /* 8 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (256 * (8 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x3FFFFFFFul)      /* 4 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (512 *(4 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x7FFFFFFFul)      /* 2 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (1024 * (2 * u32Tmp / C)) - 128;
-        }
-        else                                  /* 1 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (2048 *(1 * u32Tmp/ C)) - 128;
-        }
+        u64Tmp = (2 - OVER8) * (DIV_Integer + 1) * B;
+        DIV_Fraction = 2048 * u64Tmp / C - 128;
     }
     else
     {
@@ -1630,6 +1582,7 @@ static en_result_t SetScBaudrate(M4_USART_TypeDef *USARTx,
     uint32_t C;
     uint32_t S;
     float32_t DIV = 0.0;
+    uint64_t u64Tmp = 0u;
     uint32_t DIV_Integer = 0u;
     uint32_t DIV_Fraction = 0xFFFFFFFFul;
     const uint16_t au16EtuClkCnts[] = {32, 64, 93, 128, 186, 256, 372, 512};
@@ -1668,6 +1621,8 @@ static en_result_t SetScBaudrate(M4_USART_TypeDef *USARTx,
         /* B = C * (128 + DIV_Fraction) / ((2 * S) * (DIV_Integer + 1) * 256) */
         /* DIV_Fraction = ((2 * S) * (DIV_Integer + 1) * 256 * B / C) - 128 */
         /* DIV_Fraction = ((DIV_Integer + 1) * B * S * 512 / C) - 128 */
+        u64Tmp = (DIV_Integer + 1) * B * S;
+        DIV_Fraction = 512 * u64Tmp / C - 128;
     }
     else
     {
@@ -1700,7 +1655,7 @@ static en_result_t SetClkSyncBaudrate(M4_USART_TypeDef *USARTx,
 {
     uint32_t C;
     uint32_t B;
-    uint32_t u32Tmp = 0u;
+    uint64_t u64Tmp = 0u;
     float32_t DIV = 0.0;
     uint32_t DIV_Integer = 0u;
     uint32_t DIV_Fraction = 0xFFFFFFFFul;
@@ -1738,52 +1693,8 @@ static en_result_t SetClkSyncBaudrate(M4_USART_TypeDef *USARTx,
         /* B = C * (128 + DIV_Fraction) / (4 * (DIV_Integer + 1) * 256) */
         /* DIV_Fraction = (4 * (DIV_Integer + 1) * 256 * B / C) - 128 */
         /* DIV_Fraction = ((DIV_Integer + 1) * B * 1024 / C) - 128 */
-        u32Tmp = (DIV_Integer + 1) * B;
-
-        if (u32Tmp <= 0x003FFFFFul)           /* 1024 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (1 *(1024 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x007FFFFFul)      /* 512 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (2 * (512 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x00FFFFFFul)      /* 256 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (4 * (256 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x01FFFFFFul)      /* 128 * u32Tmp  < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (8 * (128 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x03FFFFFFul)      /* 64 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (16 * (64 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x07FFFFFFul)      /* 32 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (32 *(32 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x0FFFFFFFul)      /* 16 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (64 * (16 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x1FFFFFFFul)      /* 8 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (128 * (8 * u32Tmp / C)) - 128;
-        }
-        else if (u32Tmp <= 0x3FFFFFFFul)      /* 4 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (256 *(4 * u32Tmp/ C)) - 128;
-        }
-        else if (u32Tmp <= 0x7FFFFFFFul)      /* 2 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (512 * (2 * u32Tmp / C)) - 128;
-        }
-        else                                  /* 1 * u32Tmp < 0xFFFFFFFF*/
-        {
-            DIV_Fraction = (1024 *(1 * u32Tmp/ C)) - 128;
-        }
+        u64Tmp = (DIV_Integer + 1) * B;
+        DIV_Fraction = 1024 * u64Tmp / C - 128;
     }
     else
     {

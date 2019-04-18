@@ -587,7 +587,7 @@ en_result_t PORT_OE(en_port_t enPort, uint16_t u16Pin, en_functional_state_t enN
     }
     else
     {
-        *POERx &= (~u16Pin) & 0xFFFF;;
+        *POERx &= (~u16Pin) & 0xFFFF;
     }
     return Ok;
 
