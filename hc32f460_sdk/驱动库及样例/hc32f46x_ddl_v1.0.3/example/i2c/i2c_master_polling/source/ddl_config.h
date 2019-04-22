@@ -17,7 +17,7 @@
  *
  * Disclaimer:
  * HDSC MAKES NO WARRANTY, EXPRESS OR IMPLIED, ARISING BY LAW OR OTHERWISE,
- * REGARDING THE SOFTWARE (INCLUDING ANY ACOOMPANYING WRITTEN MATERIALS),
+ * REGARDING THE SOFTWARE (INCLUDING ANY ACCOMPANYING WRITTEN MATERIALS),
  * ITS PERFORMANCE OR SUITABILITY FOR YOUR INTENDED USE, INCLUDING,
  * WITHOUT LIMITATION, THE IMPLIED WARRANTY OF MERCHANTABILITY, THE IMPLIED
  * WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE OR USE, AND THE IMPLIED
@@ -84,8 +84,11 @@ extern "C"
  ** \brief This is the list of modules to be used in the device driver library
  ** Select the modules you need to use to DDL_ON.
  **
- ** \note DDL_ICG_ENABLE and DDL_UTILITY_ENABLE must be turned on(DDL_ON) to
- ** ensure that the chip works properly.
+ ** \note DDL_ICG_ENABLE must be turned on(DDL_ON) to ensure that the chip works
+ ** properly.
+ **
+ ** \note DDL_UTILITY_ENABLE must be turned on(DDL_ON) if using Device Driver
+ ** Library.
  ******************************************************************************/
 #define DDL_ICG_ENABLE                              DDL_ON
 #define DDL_UTILITY_ENABLE                          DDL_ON
@@ -95,12 +98,13 @@ extern "C"
 #define DDL_CAN_ENABLE                              DDL_OFF
 #define DDL_CLK_ENABLE                              DDL_ON
 #define DDL_CMP_ENABLE                              DDL_OFF
+#define DDL_CRC_ENABLE                              DDL_OFF
 #define DDL_DCU_ENABLE                              DDL_OFF
 #define DDL_DMAC_ENABLE                             DDL_OFF
 #define DDL_EFM_ENABLE                              DDL_ON
 #define DDL_EMB_ENABLE                              DDL_OFF
-#define DDL_EXINT_NMI_SWI_ENABLE                    DDL_OFF
 #define DDL_EVENT_PORT_ENABLE                       DDL_OFF
+#define DDL_EXINT_NMI_SWI_ENABLE                    DDL_OFF
 #define DDL_GPIO_ENABLE                             DDL_ON
 #define DDL_HASH_ENABLE                             DDL_OFF
 #define DDL_I2C_ENABLE                              DDL_ON
@@ -141,7 +145,7 @@ extern "C"
  ** Select the modules you need to use to MW_ON.
  ******************************************************************************/
 #define MW_SD_CARD_ENABLE                           MW_OFF
-#define MW_USB_ENABLE                               MW_OFF
+#define MW_FS_ENABLE                                MW_OFF
 #define MW_WM8731_ENABLE                            MW_OFF
 
 

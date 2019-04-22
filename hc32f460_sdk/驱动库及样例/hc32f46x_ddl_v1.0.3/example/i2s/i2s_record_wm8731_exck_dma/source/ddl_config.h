@@ -17,7 +17,7 @@
  *
  * Disclaimer:
  * HDSC MAKES NO WARRANTY, EXPRESS OR IMPLIED, ARISING BY LAW OR OTHERWISE,
- * REGARDING THE SOFTWARE (INCLUDING ANY ACOOMPANYING WRITTEN MATERIALS),
+ * REGARDING THE SOFTWARE (INCLUDING ANY ACCOMPANYING WRITTEN MATERIALS),
  * ITS PERFORMANCE OR SUITABILITY FOR YOUR INTENDED USE, INCLUDING,
  * WITHOUT LIMITATION, THE IMPLIED WARRANTY OF MERCHANTABILITY, THE IMPLIED
  * WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE OR USE, AND THE IMPLIED
@@ -45,7 +45,7 @@
  ** A detailed description is available at
  ** @link DdlConfigGroup Ddl Config description @endlink
  **
- **   - 2018-9-27  1.0  Yangjp First version for Device Driver Library config.
+ **   - 2018-10-18  1.0  Yangjp First version for Device Driver Library config.
  **
  ******************************************************************************/
 #ifndef __DDL_CONFIG_H__
@@ -78,16 +78,17 @@ extern "C"
 /*! Chip module on-off define */
 #define DDL_ON                                      1u
 #define DDL_OFF                                     0u
-#define MW_ON                                       1u
-#define MW_OFF                                      0u
 
 /**
  *******************************************************************************
  ** \brief This is the list of modules to be used in the device driver library
  ** Select the modules you need to use to DDL_ON.
  **
- ** \note DDL_ICG_ENABLE and DDL_UTILITY_ENABLE must be turned on(DDL_ON) to
- ** ensure that the chip works properly.
+ ** \note DDL_ICG_ENABLE must be turned on(DDL_ON) to ensure that the chip works
+ ** properly.
+ **
+ ** \note DDL_UTILITY_ENABLE must be turned on(DDL_ON) if using Device Driver
+ ** Library.
  ******************************************************************************/
 #define DDL_ICG_ENABLE                              DDL_ON
 #define DDL_UTILITY_ENABLE                          DDL_ON
@@ -95,11 +96,14 @@ extern "C"
 #define DDL_ADC_ENABLE                              DDL_OFF
 #define DDL_AES_ENABLE                              DDL_OFF
 #define DDL_CAN_ENABLE                              DDL_OFF
-#define DDL_CMP_ENABLE                              DDL_OFF
 #define DDL_CLK_ENABLE                              DDL_ON
+#define DDL_CMP_ENABLE                              DDL_OFF
+#define DDL_CRC_ENABLE                              DDL_OFF
 #define DDL_DCU_ENABLE                              DDL_OFF
 #define DDL_DMAC_ENABLE                             DDL_ON
 #define DDL_EFM_ENABLE                              DDL_ON
+#define DDL_EMB_ENABLE                              DDL_OFF
+#define DDL_EVENT_PORT_ENABLE                       DDL_OFF
 #define DDL_EXINT_NMI_SWI_ENABLE                    DDL_OFF
 #define DDL_GPIO_ENABLE                             DDL_ON
 #define DDL_HASH_ENABLE                             DDL_OFF
@@ -107,10 +111,8 @@ extern "C"
 #define DDL_I2S_ENABLE                              DDL_ON
 #define DDL_INTERRUPTS_ENABLE                       DDL_ON
 #define DDL_KEYSCAN_ENABLE                          DDL_OFF
-#define DDL_LPM_ENABLE                              DDL_OFF
 #define DDL_MPU_ENABLE                              DDL_OFF
 #define DDL_OTS_ENABLE                              DDL_OFF
-#define DDL_PGA_ENABLE                              DDL_OFF
 #define DDL_PWC_ENABLE                              DDL_ON
 #define DDL_QSPI_ENABLE                             DDL_OFF
 #define DDL_RMU_ENABLE                              DDL_OFF
@@ -120,7 +122,11 @@ extern "C"
 #define DDL_SRAM_ENABLE                             DDL_OFF
 #define DDL_SWDT_ENABLE                             DDL_OFF
 #define DDL_TIMER0_ENABLE                           DDL_OFF
-#define DDL_TIMER4_ENABLE                           DDL_OFF
+#define DDL_TIMER4_CNT_ENABLE                       DDL_OFF
+#define DDL_TIMER4_EMB_ENABLE                       DDL_OFF
+#define DDL_TIMER4_OCO_ENABLE                       DDL_OFF
+#define DDL_TIMER4_PWM_ENABLE                       DDL_OFF
+#define DDL_TIMER4_SEVT_ENABLE                      DDL_OFF
 #define DDL_TIMER6_ENABLE                           DDL_OFF
 #define DDL_TIMERA_ENABLE                           DDL_OFF
 #define DDL_TRNG_ENABLE                             DDL_OFF
@@ -128,9 +134,20 @@ extern "C"
 #define DDL_USBFS_ENABLE                            DDL_OFF
 #define DDL_WDT_ENABLE                              DDL_OFF
 
+
+/*! Midware module on-off define */
+#define MW_ON                                       1u
+#define MW_OFF                                      0u
+
+/**
+ *******************************************************************************
+ ** \brief This is the list of Midware modules to use
+ ** Select the modules you need to use to MW_ON.
+ ******************************************************************************/
 #define MW_SD_CARD_ENABLE                           MW_OFF
-#define MW_USB_ENABLE                               MW_OFF
+#define MW_FS_ENABLE                                MW_OFF
 #define MW_WM8731_ENABLE                            MW_ON
+
 
 /*******************************************************************************
  * Global variable definitions ('extern')

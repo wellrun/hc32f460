@@ -17,7 +17,7 @@
  *
  * Disclaimer:
  * HDSC MAKES NO WARRANTY, EXPRESS OR IMPLIED, ARISING BY LAW OR OTHERWISE,
- * REGARDING THE SOFTWARE (INCLUDING ANY ACOOMPANYING WRITTEN MATERIALS),
+ * REGARDING THE SOFTWARE (INCLUDING ANY ACCOMPANYING WRITTEN MATERIALS),
  * ITS PERFORMANCE OR SUITABILITY FOR YOUR INTENDED USE, INCLUDING,
  * WITHOUT LIMITATION, THE IMPLIED WARRANTY OF MERCHANTABILITY, THE IMPLIED
  * WARRANTY OF FITNESS FOR A PARTICULAR PURPOSE OR USE, AND THE IMPLIED
@@ -85,7 +85,7 @@
 #define ADC_CLK_UPLLR               (3u)
 
 /* Select PCLK as ADC clock. */
-#define ADC_CLK                     ADC_CLK_PCLK
+#define ADC_CLK                     ADC_CLK_UPLLR
 
 /* ADC1 channel definition for this example. */
 #define ADC1_SA_NORMAL_CHANNEL      (ADC1_CH0 | ADC1_CH10)
@@ -376,9 +376,9 @@ static void AdcClockConfig(void)
     CLK_XtalCmd(Enable);
 
     /* Set UPLL out 240MHz. */
-    stcUpllCfg.pllmDiv = 1u;
+    stcUpllCfg.pllmDiv = 2u;
     /* upll = 8M(XTAL) / pllmDiv * plln */
-    stcUpllCfg.plln    = 30u;
+    stcUpllCfg.plln    = 60u;
     stcUpllCfg.PllpDiv = 16u;
     stcUpllCfg.PllqDiv = 16u;
     stcUpllCfg.PllrDiv = 16u;
