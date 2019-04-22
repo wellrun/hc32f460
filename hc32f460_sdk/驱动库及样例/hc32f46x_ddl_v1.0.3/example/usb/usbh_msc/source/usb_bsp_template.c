@@ -132,14 +132,14 @@ static void SysClkIni(void)
     /* Switch system clock source to MPLL. */
     CLK_SetSysClkSource(CLKSysSrcMPLL);
 
-    stcUpllCfg.pllmDiv = 1;
-    stcUpllCfg.plln = 42;
+    stcUpllCfg.pllmDiv = 2;
+    stcUpllCfg.plln = 84;
     stcUpllCfg.PllpDiv = 7;//48M
     stcUpllCfg.PllqDiv = 7;
     stcUpllCfg.PllrDiv = 7;
     CLK_UpllConfig(&stcUpllCfg);
     CLK_UpllCmd(Enable);
-    /* Wait MPLL ready. */
+    /* Wait UPLL ready. */
     while(Set != CLK_GetFlagStatus(ClkFlagUPLLRdy));
 
     /* Set USB clock source */
