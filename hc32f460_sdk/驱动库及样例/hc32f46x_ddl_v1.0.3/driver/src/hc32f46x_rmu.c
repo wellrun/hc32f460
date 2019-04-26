@@ -137,11 +137,11 @@ en_result_t RMU_GetResetCause(stc_rmu_rstcause_t *pstcData)
 
 /**
  *******************************************************************************
- ** \brief Get the chip reset cause.
+ ** \brief Clear the reset flag.
  **
  ** \param None
  **
- ** \retval Ok                    Get successfully.
+ ** \retval Ok                    Clear successfully.
  **
  ** \note   clear reset flag should be done after read RMU_RSTF0 register.
  ******************************************************************************/
