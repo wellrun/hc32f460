@@ -207,8 +207,8 @@ typedef enum en_pwc_wkover_flag
  ******************************************************************************/
 typedef enum en_pwc_ram_pwr_ctl
 {
-    DynamicCtl                      = 0u,   ///< Work at high speed.
-    PowDownCtl                      = 1u,   ///< Work at ultra low speed.
+    DynamicCtl                      = 0u,   ///< Ram dynamic.
+    PowDownCtl                      = 1u,   ///< Ram power down.
 }en_pwc_ram_pwr_ctl_t;
 
 /**
@@ -330,7 +330,7 @@ typedef struct stc_pwc_pwr_mode_cfg
     en_pwc_stopdas_t        enStpDrvAbi;    ///< Driver ability while enter stop mode.
     en_pwc_drvability_sca_t enDrvAbility;   ///< Driver ability scale.
     en_pwc_dvoltage_sca_t   enDynVol;       ///< Dynamic voltage.
-    en_pwc_waketime_sel_t   enPwrDWkupTm;   ///< Ptwk2 edge configuration (rising or falling).
+    en_pwc_waketime_sel_t   enPwrDWkupTm;   ///< The power down wake up time select.
 }stc_pwc_pwr_mode_cfg_t;
 
 /**

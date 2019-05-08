@@ -82,12 +82,12 @@ extern "C"
  ******************************************************************************/
 typedef enum en_efm_flash_status
 {
-    FlashReady                  = 1u,   ///< The flash ready falg.
+    FlashReady                  = 1u,   ///< The flash ready flag.
     FlashRWErr                  = 2u,   ///< The flash read/write error flag.
     FlashEOP                    = 3u,   ///< The flash end of operation flag.
     FlashPgMissMatch            = 4u,   ///< The flash program miss match flag.
     FlashPgSizeErr              = 5u,   ///< The flash program size error flag.
-    FlashPgEreaPErr             = 6u,   ///< The flash program protect erea error flag.
+    FlashPgareaPErr             = 6u,   ///< The flash program protect area error flag.
     FlashWRPErr                 = 7u,   ///< The flash write protect error flag.
 }en_efm_flash_status_t;
 
@@ -127,7 +127,7 @@ typedef enum en_efm_erase_pgm_md
 typedef enum en_efm_int_sel
 {
     PgmErsErrInt                = 0u,   ///< The flash program / erase error interrupt.
-    EndPgmInt                   = 1u,   ///< The flash end of prpgram interrupt.
+    EndPgmInt                   = 1u,   ///< The flash end of program interrupt.
     ReadErrInt                  = 2u,   ///< The flash read collided error interrupt.
 }en_efm_int_sel_t;
 

@@ -135,7 +135,7 @@ void Led_Init(void)
 int32_t main(void)
 {
     uint32_t u32Addr;
-    stc_efm_win_protect_addr_t stcWinAdrr;
+    stc_efm_win_protect_addr_t stcWinAddr;
     const uint32_t u32TestData = 0x5A5A5A5A;
 
     /* Init Led. */
@@ -153,14 +153,14 @@ int32_t main(void)
     EFM_SectorErase(FLASH_SECTOR62_ADRR);
 
     /* Set windows protect address. */
-    stcWinAdrr.StartAddr = FLASH_WIN_START_ADDR;
-    stcWinAdrr.EndAddr = FLASH_WIN_END_ADDR;
-    EFM_SetWinProtectAddr(stcWinAdrr);
+    stcWinAddr.StartAddr = FLASH_WIN_START_ADDR;
+    stcWinAddr.EndAddr = FLASH_WIN_END_ADDR;
+    EFM_SetWinProtectAddr(stcWinAddr);
 
     /* Enable program & erase err interrupt. */
     EFM_InterruptCmd(PgmErsErrInt, Enable);
 
-    /* Set Fcm interrupt. */
+    /* Set EFM_PEERR interrupt. */
     enShareIrqEnable(INT_EFM_PEERR);
 
     /* Enable interrupt. */

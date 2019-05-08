@@ -143,7 +143,7 @@
 /*  Parameter validity check for flash address. */
 #define IS_VALID_FLASH_ADDR(addr)                                              \
 (   ((addr) == 0x00000000)                      ||                             \
-    ((addr) >= 0x00000001)                      ||                             \
+    ((addr) >= 0x00000001)                      &&                             \
     ((addr) <= 0x0007FFDF))
 
 /*  Parameter validity check for flash address. */
@@ -403,8 +403,8 @@ void EFM_InterruptCmd(en_efm_int_sel_t enInt, en_functional_state_t enNewState)
  ** \brief Checks whether the specified FLASH flag is set or not..
  **
  ** \param [in] u32flag                 Specifies the FLASH flag to check.
- ** \arg   EFM_FLAG_WRPERR              Flash wirte protect error flag.
- ** \arg   EFM_FLAG_PEPRTERR            Flash program protect erea error flag.
+ ** \arg   EFM_FLAG_WRPERR              Flash write protect error flag.
+ ** \arg   EFM_FLAG_PEPRTERR            Flash program protect area error flag.
  ** \arg   EFM_FLAG_PGSZERR             Flash program size error flag.
  ** \arg   EFM_FLAG_PGMISMTCH           Flash program miss match flag.
  ** \arg   EFM_FLAG_EOP                 Flash end of program flag.
@@ -427,9 +427,9 @@ en_flag_status_t EFM_GetFlagStatus(uint32_t u32flag)
  *******************************************************************************
  ** \brief Checks whether the specified FLASH flag is set or not..
  **
- ** \param [in] u32flag                 Specifies the FLASH flag to check.
- ** \arg   EFM_FLAG_WRPERR              Flash wirte protect error flag.
- ** \arg   EFM_FLAG_PEPRTERR            Flash program protect erea error flag.
+ ** \param [in] u32flag                 Specifies the FLASH flag to clear.
+ ** \arg   EFM_FLAG_WRPERR              Flash write protect error flag.
+ ** \arg   EFM_FLAG_PEPRTERR            Flash program protect area error flag.
  ** \arg   EFM_FLAG_PGSZERR             Flash program size error flag.
  ** \arg   EFM_FLAG_PGMISMTCH           Flash program miss match flag.
  ** \arg   EFM_FLAG_EOP                 Flash end of program flag.
@@ -483,7 +483,7 @@ en_efm_flash_status_t EFM_GetStatus(void)
     }
     else if(1 == M4_EFM->FSR_f.PEPRTERR)
     {
-        enFlashStatus = FlashPgEreaPErr;
+        enFlashStatus = FlashPgareaPErr;
     }
     else if(1 == M4_EFM->FSR_f.PEWERR)
     {
@@ -532,7 +532,7 @@ void EFM_SetBusState(en_efm_bus_sta_t enState)
 
 /**
  *******************************************************************************
- ** \brief Flash single program withour read back.
+ ** \brief Flash single program without read back.
  **
  ** \param  [in] u32Addr                The specified program address.
  ** \param  [in] u32Data                The specified program data.
@@ -554,7 +554,7 @@ en_result_t EFM_SingleProgram(uint32_t u32Addr, uint32_t u32Data)
 
     M4_EFM->FRMC_f.CACHE = Disable;
 
-    /* Enable prgram. */
+    /* Enable program. */
     EFM_ErasePgmCmd(Enable);
     /* Set single program mode. */
     EFM_SetErasePgmMode(SingleProgram);
@@ -603,7 +603,7 @@ en_result_t EFM_SingleProgramRB(uint32_t u32Addr, uint32_t u32Data)
 
     M4_EFM->FRMC_f.CACHE = Disable;
 
-    /* Enable prgram. */
+    /* Enable program. */
     EFM_ErasePgmCmd(Enable);
     /* Set single program with read back mode. */
     EFM_SetErasePgmMode(SingleProgramRB);
@@ -680,7 +680,7 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
 
     M4_EFM->FRMC_f.CACHE = Disable;
 
-    /* Enable prgram. */
+    /* Enable program. */
     EFM_ErasePgmCmd(Enable);
     /* Set sequence program mode. */
     EFM_SetErasePgmMode(SequenceProgram);
@@ -721,7 +721,7 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
  *******************************************************************************
  ** \brief Flash sector erase.
  **
- ** \param  [in] u32Addr                The uncetain(radom) address in the specified sector.
+ ** \param  [in] u32Addr                The uncertain(random) address in the specified sector.
  **
  ** \retval None
  **
@@ -761,7 +761,7 @@ void EFM_SectorErase(uint32_t u32Addr)
  *******************************************************************************
  ** \brief Flash mass erase.
  **
- ** \param  [in] u32Addr                The uncetain(radom) address in the flash.
+ ** \param  [in] u32Addr                The uncertain(random) address in the flash.
  **
  ** \retval None
  **
