@@ -94,7 +94,7 @@ USB_OTG_CORE_HANDLE  USB_OTG_dev;
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
-extern	void         USB_OTG_ActiveRemoteWakeup(USB_OTG_CORE_HANDLE *pdev);
+extern  void         USB_OTG_ActiveRemoteWakeup(USB_OTG_CORE_HANDLE *pdev);
 
 /**
  *******************************************************************************
@@ -107,14 +107,14 @@ extern	void         USB_OTG_ActiveRemoteWakeup(USB_OTG_CORE_HANDLE *pdev);
  ******************************************************************************/
 Button_TypeDef Key_ReadIOPin_continuous(void)
 {
-	if(!PORT_GetBit(KEY_PORT,KEY_UP))
-		return BUTTON_UP;
-	else if(!PORT_GetBit(KEY_PORT,KEY_DOWN))
-		return BUTTON_DOWN;
-	else if(!PORT_GetBit(KEY_PORT,KEY_LEFT))
-		return BUTTON_LEFT;
-	else if(!PORT_GetBit(KEY_PORT,KEY_RIGHT))
-		return BUTTON_RIGHT;
+    if(!PORT_GetBit(KEY_PORT,KEY_UP))
+        return BUTTON_UP;
+    else if(!PORT_GetBit(KEY_PORT,KEY_DOWN))
+        return BUTTON_DOWN;
+    else if(!PORT_GetBit(KEY_PORT,KEY_LEFT))
+        return BUTTON_LEFT;
+    else if(!PORT_GetBit(KEY_PORT,KEY_RIGHT))
+        return BUTTON_RIGHT;
     else
         return BUTTON_NULL;
 }
@@ -168,13 +168,13 @@ static uint8_t* USBD_HID_GetPos (void)
  ******************************************************************************/
 void SysTick_IrqHandler(void)
 {
-	uint8_t *buf;
+    uint8_t *buf;
 
-	buf = USBD_HID_GetPos();
-	if((buf[1] != 0) ||(buf[2] != 0))
-	{
-		USBD_HID_SendReport (&USB_OTG_dev, buf, 4);
-	}
+    buf = USBD_HID_GetPos();
+    if((buf[1] != 0) ||(buf[2] != 0))
+    {
+        USBD_HID_SendReport (&USB_OTG_dev, buf, 4);
+    }
 }
 /**
  *******************************************************************************
@@ -187,27 +187,27 @@ void SysTick_IrqHandler(void)
  ******************************************************************************/
 int32_t main (void)
 {
-	__IO uint32_t test = 0;
+    __IO uint32_t test = 0;
 
-	USBD_Init(&USB_OTG_dev,
+    USBD_Init(&USB_OTG_dev,
 #ifdef USE_USB_OTG_FS
-		USB_OTG_FS_CORE_ID,
+              USB_OTG_FS_CORE_ID,
 #else
-		USB_OTG_HS_CORE_ID,
+              USB_OTG_HS_CORE_ID,
 #endif
-		&USR_desc,
-		&USBD_HID_cb,
-		&USR_cb);
+              &USR_desc,
+              &USBD_HID_cb,
+              &USR_cb);
 
-	while (1)
-	{
-		/* remote wakeup test */
-		if(test == 0x1)
+    while (1)
+    {
+        /* remote wakeup test */
+        if(test == 0x1)
         {
-			USB_OTG_ActiveRemoteWakeup(&USB_OTG_dev);
-			test  = 0;
-		}
-	}
+            USB_OTG_ActiveRemoteWakeup(&USB_OTG_dev);
+            test  = 0;
+        }
+    }
 }
 
 /*******************************************************************************

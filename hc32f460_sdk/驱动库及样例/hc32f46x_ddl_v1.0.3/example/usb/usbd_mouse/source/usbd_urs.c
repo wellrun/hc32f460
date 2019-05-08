@@ -44,8 +44,8 @@
  **
  ** A detailed description is available at
  ** @link
-		This file includes the user application layer.
-	@endlink
+        This file includes the user application layer.
+    @endlink
  **
  **   - 2018-05-21  1.0  gouwei First version for USB demo.
  **

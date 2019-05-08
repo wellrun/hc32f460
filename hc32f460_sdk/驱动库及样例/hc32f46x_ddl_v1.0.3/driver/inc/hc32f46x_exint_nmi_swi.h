@@ -195,7 +195,6 @@ typedef struct stc_exint_config
     en_functional_state_t   enFilterEn;         ///< TRUE: Enable filter function
     en_ei_flt_clk_t         enFltClk;           ///< Filter clock, ref@ en_ei_flt_clk_t for details
     en_exti_lvl_t           enExtiLvl;          ///< Detection level, ref@ en_exti_lvl_t for details
-    func_ptr_t              pfnExtiCallback;    ///< Callback pointers
 }stc_exint_config_t;
 
 /**

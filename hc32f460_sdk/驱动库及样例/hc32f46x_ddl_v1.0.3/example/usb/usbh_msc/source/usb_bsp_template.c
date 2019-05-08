@@ -44,9 +44,9 @@
  **
  ** A detailed description is available at
  ** @link
-		This file is responsible to offer board support package and is
+        This file is responsible to offer board support package and is
         configurable by user.
-	@endlink
+    @endlink
  **
  **   - 2018-05-21  1.0  gouwei First version for USB demo.
  **
@@ -66,8 +66,8 @@ extern      uint32_t USBH_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
 
 void USB_IRQ_Handler(void)
 {
-	//printf("usb isr\n");
-	USBH_OTG_ISR_Handler(&USB_OTG_Core);
+    //printf("usb isr\n");
+    USBH_OTG_ISR_Handler(&USB_OTG_Core);
 }
 
 /**
@@ -167,7 +167,7 @@ void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
     /* clock config */
     SysClkIni();
 
-	Ddl_UartInit();
+    Ddl_UartInit();
     printf("USBFS start !!\n");
 
     /* port config */
@@ -250,13 +250,13 @@ void USB_OTG_BSP_TimeInit ( void )
   * \param  usec : Value of delay required in micro sec
   * \retval None
   */
-#define	Fclk	50000000
+#define Fclk    50000000
 void USB_OTG_BSP_uDelay (const uint32_t t)
 {
-	uint32_t	i;
-	uint32_t	j;
-	j=Fclk / 1000000 * t;
-	for(i = 0; i < j; i++);
+    uint32_t    i;
+    uint32_t    j;
+    j=Fclk / 1000000 * t;
+    for(i = 0; i < j; i++);
 }
 
 
@@ -268,10 +268,10 @@ void USB_OTG_BSP_uDelay (const uint32_t t)
   */
 void USB_OTG_BSP_mDelay (const uint32_t msec)
 {
-	unsigned long	i;
-	unsigned long	j;
-	j=Fclk / 1000 * msec;
-	for(i = 0; i < j; i++);
+    unsigned long   i;
+    unsigned long   j;
+    j=Fclk / 1000 * msec;
+    for(i = 0; i < j; i++);
 
  //   USB_OTG_BSP_uDelay(msec * 1000);
 

@@ -350,12 +350,12 @@ en_result_t enNvicRecover(void)
  ** param [in]                          pstcIrqRegiConf, IRQ registration
  **                                     configure structure
  **
- ** retval                              Ok, IRQ register sucessfully.
+ ** retval                              Ok, IRQ register successfully.
  **                                     ErrorInvalidParameter, IRQ No. and
  **                                     Vector No. are not match.
  **                                     ErrorUninitialized, Make sure the
  **                                     Interrupt select register (INTSEL) is
- **                                     default vaule (0x1FFu) before setting.
+ **                                     default value (0x1FFu) before setting.
  **
  *****************************************************************************/
 en_result_t enIrqRegistration(const stc_irq_regi_conf_t *pstcIrqRegiConf)
@@ -2511,17 +2511,17 @@ void IRQ129_Handler(void)
     {
         Dma2Err_IrqHandler();
     }
-    /* EFM page erase Error */
+    /* EFM program/erase Error */
     if ((true == M4_INTC->VSSEL129_f.VSEL18) && (true == !!(M4_EFM->FSR & 0x0Fu)))
     {
-        EfmPageEraseErr_IrqHandler();
+        EfmPgmEraseErr_IrqHandler();
     }
     /* EFM collision Error */
     if ((true == M4_INTC->VSSEL129_f.VSEL19) && (true == M4_EFM->FSR_f.RDCOLERR))
     {
         EfmColErr_IrqHandler();
     }
-    /* EFM opertae end */
+    /* EFM operate end */
     if ((true == M4_INTC->VSSEL129_f.VSEL20) && (true == M4_EFM->FSR_f.OPTEND))
     {
         EfmOpEnd_IrqHandler();
@@ -2588,16 +2588,6 @@ void IRQ130_Handler(void)
     if ((true == M4_INTC->VSSEL130_f.VSEL3) && (true == M4_TMR02->STFLR_f.CMBF))
     {
         Timer02GCMB_IrqHandler();
-    }
-    /* RTC alarm */
-    if ((true == M4_INTC->VSSEL130_f.VSEL17) && (true == M4_RTC->CR2_f.ALMF))
-    {
-        RtcAlarm_IrqHandler();
-    }
-    /* RTC period */
-    if ((true == M4_INTC->VSSEL130_f.VSEL18) && (true == M4_RTC->CR2_f.PRDF))
-    {
-        RtcPeriod_IrqHandler();
     }
     /* Main-OSC stop */
     if ((true == M4_INTC->VSSEL130_f.VSEL21) && (true == M4_SYSREG->CMU_XTALSTDSR_f.XTALSTDF))

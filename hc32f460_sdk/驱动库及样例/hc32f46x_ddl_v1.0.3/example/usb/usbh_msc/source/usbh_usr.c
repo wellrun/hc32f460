@@ -44,8 +44,8 @@
  **
  ** A detailed description is available at
  ** @link
-		This file includes the user application layer.
-	@endlink
+        This file includes the user application layer.
+    @endlink
  **
  **   - 2018-05-21  1.0  gouwei First version for USB demo.
  **
@@ -189,42 +189,42 @@ static void     Toggle_Leds(void);
 */
 typedef struct
 {
-	uint8_t  pic_head[2];
-	uint16_t pic_size_l;
-	uint16_t pic_size_h;
-	uint16_t pic_nc1;
-	uint16_t pic_nc2;
-	uint16_t pic_data_address_l;
-	uint16_t pic_data_address_h;
-	uint16_t pic_message_head_len_l;
-	uint16_t pic_message_head_len_h;
-	uint16_t pic_w_l;
-	uint16_t pic_w_h;
-	uint16_t pic_h_l;
-	uint16_t pic_h_h;
-	uint16_t pic_bit;
-	uint16_t pic_dip;
-	uint16_t pic_zip_l;
-	uint16_t pic_zip_h;
-	uint16_t pic_data_size_l;
-	uint16_t pic_data_size_h;
-	uint16_t pic_dipx_l;
-	uint16_t pic_dipx_h;
-	uint16_t pic_dipy_l;
-	uint16_t pic_dipy_h;
-	uint16_t pic_color_index_l;
-	uint16_t pic_color_index_h;
-	uint16_t pic_other_l;
-	uint16_t pic_other_h;
+    uint8_t  pic_head[2];
+    uint16_t pic_size_l;
+    uint16_t pic_size_h;
+    uint16_t pic_nc1;
+    uint16_t pic_nc2;
+    uint16_t pic_data_address_l;
+    uint16_t pic_data_address_h;
+    uint16_t pic_message_head_len_l;
+    uint16_t pic_message_head_len_h;
+    uint16_t pic_w_l;
+    uint16_t pic_w_h;
+    uint16_t pic_h_l;
+    uint16_t pic_h_h;
+    uint16_t pic_bit;
+    uint16_t pic_dip;
+    uint16_t pic_zip_l;
+    uint16_t pic_zip_h;
+    uint16_t pic_data_size_l;
+    uint16_t pic_data_size_h;
+    uint16_t pic_dipx_l;
+    uint16_t pic_dipx_h;
+    uint16_t pic_dipy_l;
+    uint16_t pic_dipy_h;
+    uint16_t pic_color_index_l;
+    uint16_t pic_color_index_h;
+    uint16_t pic_other_l;
+    uint16_t pic_other_h;
 }BMP_HEAD;
 
 BMP_HEAD bmp;
 
 typedef struct
 {
-	uint8_t  r;				            /* RED */
-	uint8_t  g;						    /* GREEN */
-	uint8_t  b;							/* BLUE	*/
+    uint8_t  r;                         /* RED */
+    uint8_t  g;                         /* GREEN */
+    uint8_t  b;                         /* BLUE */
 }BMP_POINT;
 
 BMP_POINT point;
@@ -276,7 +276,7 @@ void USBH_USR_Init(void)
 */
 void USBH_USR_DeviceAttached(void)
 {
-  printf((void *)MSG_DEV_ATTACHED);
+    printf((void *)MSG_DEV_ATTACHED);
 }
 
 
@@ -289,7 +289,7 @@ void USBH_USR_UnrecoveredError (void)
 {
 
   /* Set default screen color*/
-  printf((void *)MSG_UNREC_ERROR);
+    printf((void *)MSG_UNREC_ERROR);
 }
 
 
@@ -437,10 +437,10 @@ void USBH_USR_SerialNum_String(void *SerialNumString)
 void USBH_USR_EnumerationDone(void)
 {
 
-	/* Enumeration complete */
-	printf((void *)MSG_DEV_ENUMERATED);
-	printf("To see the root content of the disk : \n" );
-	printf("Press USER KEY...\n");
+    /* Enumeration complete */
+    printf((void *)MSG_DEV_ENUMERATED);
+    printf("To see the root content of the disk : \n" );
+    printf("Press USER KEY...\n");
 
 }
 
@@ -519,9 +519,9 @@ int USBH_USR_MSC_Application(void)
     printf("> Disk capacity : %d Bytes\n", USBH_MSC_Param.MSCapacity * \
       USBH_MSC_Param.MSPageLength);
     printf("> Disk capacity : %d * %d = %d Bytes\n",
-			USBH_MSC_Param.MSCapacity,
-			USBH_MSC_Param.MSPageLength,
-			USBH_MSC_Param.MSCapacity * \
+            USBH_MSC_Param.MSCapacity,
+            USBH_MSC_Param.MSPageLength,
+            USBH_MSC_Param.MSCapacity * \
       USBH_MSC_Param.MSPageLength);
     if(USBH_MSC_Param.MSWriteProtect == DISK_WRITE_PROTECTED)
     {
@@ -590,7 +590,7 @@ int USBH_USR_MSC_Application(void)
 
     USBH_USR_ApplicationState = USH_USR_FS_DRAW;
 
-		printf("To start Image slide show Press USER KEY.\n");
+        printf("To start Image slide show Press USER KEY.\n");
 
     break;
 
@@ -654,7 +654,7 @@ static uint8_t Explore_Disk (char* path , uint8_t recu_level)
       if(line_idx > 9)
       {
         line_idx = 0;
-				printf("Press USER KEY to continue...\n");
+                printf("Press USER KEY to continue...\n");
 
         /*Key B3 in polling*/
         while((HCD_IsDeviceConnected(&USB_OTG_Core)) && \
@@ -742,9 +742,9 @@ static uint8_t Image_Browser (char* path)
 #endif
   printf ("     USB Host Library v2.1.0\n" );
   printf("> Disk capacity : %d * %d = %d Bytes\n",
-			USBH_MSC_Param.MSCapacity,
-			USBH_MSC_Param.MSPageLength,
-			USBH_MSC_Param.MSCapacity * \
+            USBH_MSC_Param.MSCapacity,
+            USBH_MSC_Param.MSPageLength,
+            USBH_MSC_Param.MSCapacity * \
       USBH_MSC_Param.MSPageLength);
   USBH_USR_ApplicationState = USH_USR_FS_READLIST;
   return ret;
@@ -773,7 +773,7 @@ static void Show_Image(void)
     }
     for(i = 0 ; i < IMAGE_BUFFER_SIZE; i+= 3)
     {
-	  //LCD_WriteRAM(((uint16_t)((Image_Buf[i+2] >> 3) << 11) | (uint16_t)((Image_Buf[i+1] >> 2) << 5) | (uint16_t)(Image_Buf[i] >> 3)));
+      //LCD_WriteRAM(((uint16_t)((Image_Buf[i+2] >> 3) << 11) | (uint16_t)((Image_Buf[i+1] >> 2) << 5) | (uint16_t)(Image_Buf[i] >> 3)));
     }
   }
 //  LCD_WriteReg(0x0011,0x6058);

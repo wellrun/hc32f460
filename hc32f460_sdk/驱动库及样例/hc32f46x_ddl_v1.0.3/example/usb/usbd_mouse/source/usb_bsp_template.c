@@ -92,7 +92,7 @@ extern  uint32_t USBD_OTG_ISR_Handler (USB_OTG_CORE_HANDLE *pdev);
  ******************************************************************************/
 void USB_IRQ_Handler(void)
 {
-	USBD_OTG_ISR_Handler(&USB_OTG_dev);
+    USBD_OTG_ISR_Handler(&USB_OTG_dev);
 }
 
 /**
@@ -194,7 +194,7 @@ void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
     /* clock config */
     SysClkIni();
 
-	Ddl_UartInit();
+    Ddl_UartInit();
     printf("USBFS start !!\n");
 
     /* port config */
@@ -244,14 +244,14 @@ void USB_OTG_BSP_EnableInterrupt(void)
 void USB_OTG_BSP_DriveVBUS(uint32_t speed, uint8_t state)
 {
 #if 0
-	/* Vbus control */
-	M4_PORT->PWPR = 0xA501;
+    /* Vbus control */
+    M4_PORT->PWPR = 0xA501;
 #if (USB_OTG_FS_BASE_ADDR == 0x400c0000) && defined USE_USB_OTG_FS
-	M4_PORT->PFSR006 = 0x0000;
-	M4_PORT->PCR006 = 0x0003;
+    M4_PORT->PFSR006 = 0x0000;
+    M4_PORT->PCR006 = 0x0003;
 #else
-	M4_PORT->PFSR004 = 0x0000;
-	M4_PORT->PCR004 = 0x0003;
+    M4_PORT->PFSR004 = 0x0000;
+    M4_PORT->PCR004 = 0x0003;
 #endif
 #endif
 }
@@ -285,13 +285,13 @@ void USB_OTG_BSP_TimeInit ( void )
   * \param  usec : Value of delay required in micro sec
   * \retval None
   */
-#define	Fclk	15000000
+#define Fclk    15000000
 void USB_OTG_BSP_uDelay (const uint32_t t)
 {
-	uint32_t	i;
-	uint32_t	j;
-	j=Fclk / 1000000 * t;
-	for(i = 0; i < j; i++);
+    uint32_t    i;
+    uint32_t    j;
+    j=Fclk / 1000000 * t;
+    for(i = 0; i < j; i++);
 }
 
 

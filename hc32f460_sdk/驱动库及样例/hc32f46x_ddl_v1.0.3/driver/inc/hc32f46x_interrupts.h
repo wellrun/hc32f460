@@ -300,7 +300,7 @@ __WEAKDEF void Dma2Btc3_IrqHandler(void);
 __WEAKDEF void Dma1Err_IrqHandler(void);
 __WEAKDEF void Dma2Err_IrqHandler(void);
 
-__WEAKDEF void EfmPageEraseErr_IrqHandler(void);
+__WEAKDEF void EfmPgmEraseErr_IrqHandler(void);
 __WEAKDEF void EfmColErr_IrqHandler(void);
 __WEAKDEF void EfmOpEnd_IrqHandler(void);
 __WEAKDEF void QspiInt_IrqHandler(void);
@@ -313,9 +313,6 @@ __WEAKDEF void Timer01GCMA_IrqHandler(void);
 __WEAKDEF void Timer01GCMB_IrqHandler(void);
 __WEAKDEF void Timer02GCMA_IrqHandler(void);
 __WEAKDEF void Timer02GCMB_IrqHandler(void);
-
-__WEAKDEF void RtcAlarm_IrqHandler(void);
-__WEAKDEF void RtcPeriod_IrqHandler(void);
 
 __WEAKDEF void MainOscStop_IrqHandler(void);
 __WEAKDEF void WakeupTimer_IrqHandler(void);

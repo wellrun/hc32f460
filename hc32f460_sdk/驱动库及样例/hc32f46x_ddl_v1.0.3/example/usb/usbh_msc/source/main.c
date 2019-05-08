@@ -44,8 +44,8 @@
  **
  ** A detailed description is available at
  ** @link
-		This file provides all the Application firmware functions.
-	@endlink
+        This file provides all the Application firmware functions.
+    @endlink
  **
  **   - 2018-05-21  1.0  gouwei First version for USB demo.
  **
@@ -86,35 +86,35 @@ __USB_ALIGN_BEGIN USBH_HOST                USB_Host __USB_ALIGN_END;
  ******************************************************************************/
 int main (void)
 {
-	__IO uint32_t i = 0;
-	__IO uint32_t test = 0;
+    __IO uint32_t i = 0;
+    __IO uint32_t test = 0;
 
   /* Init Host Library */
-	USBH_Init(&USB_OTG_Core,
+    USBH_Init(&USB_OTG_Core,
 #ifdef USE_USB_OTG_FS
-		USB_OTG_FS_CORE_ID,
+              USB_OTG_FS_CORE_ID,
 #else
-		USB_OTG_HS_CORE_ID,
+              USB_OTG_HS_CORE_ID,
 #endif
-		&USB_Host,
-		&USBH_MSC_cb,
-		&USR_cb);
+              &USB_Host,
+              &USBH_MSC_cb,
+              &USR_cb);
 
-	while (1)
-	{
-	/* Host Task handler */
-		USBH_Process(&USB_OTG_Core, &USB_Host);
-		if (i++ == 0x50000)
-		{
-			i = 0;
-//			led_toggle(1);
-//			led_toggle(2);
-		}
-		extern void USB_OTG_PRTSUSP(USB_OTG_CORE_HANDLE *pdev);
-		if (test == 1){
-			USB_OTG_PRTSUSP(&USB_OTG_Core);
-			test =0;
-		}
-	}
+    while (1)
+    {
+    /* Host Task handler */
+        USBH_Process(&USB_OTG_Core, &USB_Host);
+        if (i++ == 0x50000)
+        {
+            i = 0;
+//          led_toggle(1);
+//          led_toggle(2);
+        }
+        extern void USB_OTG_PRTSUSP(USB_OTG_CORE_HANDLE *pdev);
+        if (test == 1){
+            USB_OTG_PRTSUSP(&USB_OTG_Core);
+            test =0;
+        }
+    }
 
 }

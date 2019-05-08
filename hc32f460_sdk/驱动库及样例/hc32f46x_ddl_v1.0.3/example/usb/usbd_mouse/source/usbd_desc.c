@@ -44,8 +44,8 @@
  **
  ** A detailed description is available at
  ** @link
-		This file provides the USBD descriptors and string formating method.
-	@endlink
+        This file provides the USBD descriptors and string formating method.
+    @endlink
  **
  **   - 2018-05-21  1.0  gouwei First version for USB demo.
  **
