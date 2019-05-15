@@ -442,7 +442,7 @@ en_flag_status_t EFM_GetFlagStatus(uint32_t u32flag)
  ******************************************************************************/
 void EFM_ClearFlag(uint32_t u32flag)
 {
-    DDL_ASSERT(IS_VALID_CLEAR_FLASH_FLAG(u32flag));
+    //DDL_ASSERT(IS_VALID_CLEAR_FLASH_FLAG(u32flag));
 
     M4_EFM->FSCLR = u32flag;
 }
@@ -549,6 +549,10 @@ en_result_t EFM_SingleProgram(uint32_t u32Addr, uint32_t u32Data)
 
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
 
+    /* CLear the error flag. */
+    EFM_ClearFlag(EFM_FLAG_WRPERR | EFM_FLAG_PEPRTERR | EFM_FLAG_PGSZERR |
+                  EFM_FLAG_PGMISMTCH | EFM_FLAG_EOP | EFM_FLAG_RWERR);
+
     /* read back CACHE */
     u8tmp = M4_EFM->FRMC_f.CACHE;
 
@@ -597,6 +601,10 @@ en_result_t EFM_SingleProgramRB(uint32_t u32Addr, uint32_t u32Data)
     uint8_t u8tmp;
 
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
+
+    /* CLear the error flag. */
+    EFM_ClearFlag(EFM_FLAG_WRPERR | EFM_FLAG_PEPRTERR | EFM_FLAG_PGSZERR |
+                  EFM_FLAG_PGMISMTCH | EFM_FLAG_EOP | EFM_FLAG_RWERR);
 
     /* read back CACHE */
     u8tmp = M4_EFM->FRMC_f.CACHE;
@@ -675,6 +683,10 @@ en_result_t EFM_SequenceProgram(uint32_t u32Addr, uint32_t u32Len, void *pBuf)
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
     DDL_ASSERT(IS_VALID_POINTER(pBuf));
 
+    /* CLear the error flag. */
+    EFM_ClearFlag(EFM_FLAG_WRPERR | EFM_FLAG_PEPRTERR | EFM_FLAG_PGSZERR |
+                  EFM_FLAG_PGMISMTCH | EFM_FLAG_EOP | EFM_FLAG_RWERR);
+
     /* read back CACHE */
     u8tmp = M4_EFM->FRMC_f.CACHE;
 
@@ -734,6 +746,10 @@ void EFM_SectorErase(uint32_t u32Addr)
 
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
 
+    /* CLear the error flag. */
+    EFM_ClearFlag(EFM_FLAG_WRPERR | EFM_FLAG_PEPRTERR | EFM_FLAG_PGSZERR |
+                  EFM_FLAG_PGMISMTCH | EFM_FLAG_EOP | EFM_FLAG_RWERR);
+
     /* read back CACHE */
     u8tmp = M4_EFM->FRMC_f.CACHE;
 
@@ -773,6 +789,10 @@ void EFM_MassErase(uint32_t u32Addr)
     uint8_t u8tmp;
 
     DDL_ASSERT(IS_VALID_FLASH_ADDR(u32Addr));
+
+    /* CLear the error flag. */
+    EFM_ClearFlag(EFM_FLAG_WRPERR | EFM_FLAG_PEPRTERR | EFM_FLAG_PGSZERR |
+                  EFM_FLAG_PGMISMTCH | EFM_FLAG_EOP | EFM_FLAG_RWERR);
 
     /* read back CACHE */
     u8tmp = M4_EFM->FRMC_f.CACHE;
