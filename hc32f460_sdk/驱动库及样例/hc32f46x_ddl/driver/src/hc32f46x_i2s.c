@@ -414,8 +414,8 @@ void I2s_Init(M4_I2S_TypeDef* pstcI2sReg, const stc_i2s_config_t* pstcI2sCfg)
     {
         stcCTRL_Tmp.CKOE = 1u;
         stcCTRL_Tmp.LRCKOE = 1u;
-        stcCTRL_Tmp.SDOE = 1u;
     }
+    stcCTRL_Tmp.SDOE = 1u;
     stcCTRL_Tmp.MCKOE = pstcI2sCfg->enMcoOutEn;
     stcCTRL_Tmp.ODD = (uint8_t)i2sodd;
     stcCTRL_Tmp.RXBIRQWL = RXBUF_IRQ_WL;

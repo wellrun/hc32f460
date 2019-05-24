@@ -2024,7 +2024,7 @@
     <name>$PROJ_DIR$\..\source\usbd_desc.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\..\source\usbd_urs.c</name>
+    <name>$PROJ_DIR$\..\source\usbd_usr.c</name>
   </file>
   <file>
     <name>$PROJ_DIR$\..\source\usb_bsp_template.c</name>

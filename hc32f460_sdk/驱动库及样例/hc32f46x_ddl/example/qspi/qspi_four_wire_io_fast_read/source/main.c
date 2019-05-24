@@ -115,7 +115,7 @@
 #define FLASH_BUSY_BIT_MASK             (0x01u)
 
 /* FLASH instruction definition */
-#define FLASH_INSTR_WRITE_ENABEL        (0x06u)
+#define FLASH_INSTR_WRITE_ENABLE        (0x06u)
 #define FLASH_INSTR_PAGE_PROGRAM        (0x02u)
 #define FLASH_INSTR_ERASE_4KB_SECTOR    (0x20u)
 #define FLASH_INSTR_ERASE_CHIP          (0xC7u)
@@ -268,7 +268,7 @@ void QspiFlash_Init(void)
 void QspiFlash_WriteEnable(void)
 {
     QSPI_EnterDirectCommMode();
-    QSPI_WriteDirectCommValue(FLASH_INSTR_WRITE_ENABEL);
+    QSPI_WriteDirectCommValue(FLASH_INSTR_WRITE_ENABLE);
     QSPI_ExitDirectCommMode();
 }
 

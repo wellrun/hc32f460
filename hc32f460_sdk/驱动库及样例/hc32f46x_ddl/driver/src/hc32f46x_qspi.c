@@ -415,6 +415,133 @@ en_result_t QSPI_CommProtocolConfig(const stc_qspi_comm_protocol_t *pstcCommProt
 
 /**
  *******************************************************************************
+ ** \brief Enable or disable prefetch function
+ **
+ ** \param [in] enNewSta                The function new state
+ ** \arg Disable                        Disable prefetch function
+ ** \arg Enable                         Enable prefetch function
+ **
+ ** \retval Ok                          Process successfully done
+ **
+ ******************************************************************************/
+en_result_t QSPI_PrefetchCmd(en_functional_state_t enNewSta)
+{
+    en_result_t enRet = Ok;
+
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
+
+    M4_QSPI->CR_f.PFSAE = enNewSta;
+
+    return enRet;
+}
+
+/**
+ *******************************************************************************
+ ** \brief Set clock division
+ **
+ ** \param [in] enClkDiv                Clock division
+ ** \arg QspiHclkDiv2                   Clock source： HCLK/2
+ ** \arg QspiHclkDiv3                   Clock source： HCLK/3
+ ** \arg QspiHclkDiv4                   Clock source： HCLK/4
+ ** \arg QspiHclkDiv5                   Clock source： HCLK/5
+ ** \arg QspiHclkDiv6                   Clock source： HCLK/6
+ ** \arg QspiHclkDiv7                   Clock source： HCLK/7
+ ** \arg QspiHclkDiv8                   Clock source： HCLK/8
+ ** \arg QspiHclkDiv9                   Clock source： HCLK/9
+ ** \arg QspiHclkDiv10                  Clock source： HCLK/10
+ ** \arg QspiHclkDiv11                  Clock source： HCLK/11
+ ** \arg QspiHclkDiv12                  Clock source： HCLK/12
+ ** \arg QspiHclkDiv13                  Clock source： HCLK/13
+ ** \arg QspiHclkDiv14                  Clock source： HCLK/14
+ ** \arg QspiHclkDiv15                  Clock source： HCLK/15
+ ** \arg QspiHclkDiv16                  Clock source： HCLK/16
+ ** \arg QspiHclkDiv17                  Clock source： HCLK/17
+ ** \arg QspiHclkDiv18                  Clock source： HCLK/18
+ ** \arg QspiHclkDiv19                  Clock source： HCLK/19
+ ** \arg QspiHclkDiv20                  Clock source： HCLK/20
+ ** \arg QspiHclkDiv21                  Clock source： HCLK/21
+ ** \arg QspiHclkDiv22                  Clock source： HCLK/22
+ ** \arg QspiHclkDiv23                  Clock source： HCLK/23
+ ** \arg QspiHclkDiv24                  Clock source： HCLK/24
+ ** \arg QspiHclkDiv25                  Clock source： HCLK/25
+ ** \arg QspiHclkDiv26                  Clock source： HCLK/26
+ ** \arg QspiHclkDiv27                  Clock source： HCLK/27
+ ** \arg QspiHclkDiv28                  Clock source： HCLK/28
+ ** \arg QspiHclkDiv29                  Clock source： HCLK/29
+ ** \arg QspiHclkDiv30                  Clock source： HCLK/30
+ ** \arg QspiHclkDiv31                  Clock source： HCLK/31
+ ** \arg QspiHclkDiv32                  Clock source： HCLK/32
+ ** \arg QspiHclkDiv33                  Clock source： HCLK/33
+ ** \arg QspiHclkDiv34                  Clock source： HCLK/34
+ ** \arg QspiHclkDiv35                  Clock source： HCLK/35
+ ** \arg QspiHclkDiv36                  Clock source： HCLK/36
+ ** \arg QspiHclkDiv37                  Clock source： HCLK/37
+ ** \arg QspiHclkDiv38                  Clock source： HCLK/38
+ ** \arg QspiHclkDiv39                  Clock source： HCLK/39
+ ** \arg QspiHclkDiv40                  Clock source： HCLK/40
+ ** \arg QspiHclkDiv41                  Clock source： HCLK/41
+ ** \arg QspiHclkDiv42                  Clock source： HCLK/42
+ ** \arg QspiHclkDiv43                  Clock source： HCLK/43
+ ** \arg QspiHclkDiv44                  Clock source： HCLK/44
+ ** \arg QspiHclkDiv45                  Clock source： HCLK/45
+ ** \arg QspiHclkDiv46                  Clock source： HCLK/46
+ ** \arg QspiHclkDiv47                  Clock source： HCLK/47
+ ** \arg QspiHclkDiv48                  Clock source： HCLK/48
+ ** \arg QspiHclkDiv49                  Clock source： HCLK/49
+ ** \arg QspiHclkDiv50                  Clock source： HCLK/50
+ ** \arg QspiHclkDiv51                  Clock source： HCLK/51
+ ** \arg QspiHclkDiv52                  Clock source： HCLK/52
+ ** \arg QspiHclkDiv53                  Clock source： HCLK/53
+ ** \arg QspiHclkDiv54                  Clock source： HCLK/54
+ ** \arg QspiHclkDiv55                  Clock source： HCLK/55
+ ** \arg QspiHclkDiv56                  Clock source： HCLK/56
+ ** \arg QspiHclkDiv57                  Clock source： HCLK/57
+ ** \arg QspiHclkDiv58                  Clock source： HCLK/58
+ ** \arg QspiHclkDiv59                  Clock source： HCLK/59
+ ** \arg QspiHclkDiv60                  Clock source： HCLK/60
+ ** \arg QspiHclkDiv61                  Clock source： HCLK/61
+ ** \arg QspiHclkDiv62                  Clock source： HCLK/62
+ ** \arg QspiHclkDiv63                  Clock source： HCLK/63
+ ** \arg QspiHclkDiv64                  Clock source： HCLK/64
+ **
+ ** \retval Ok                          Process successfully done
+ **
+ ******************************************************************************/
+en_result_t QSPI_SetClockDiv(en_qspi_clk_div_t enClkDiv)
+{
+    en_result_t enRet = Ok;
+
+    DDL_ASSERT(IS_VALID_CLK_DIV(enClkDiv));
+
+    M4_QSPI->CR_f.DIV = enClkDiv;
+
+    return enRet;
+}
+
+/**
+ *******************************************************************************
+ ** \brief Set WP Pin level
+ **
+ ** \param [in] enWpLevel               WP pin level
+ ** \arg QspiWpPinOutputLow             WP pin(QIO2) output low level
+ ** \arg QspiWpPinOutputHigh            WP pin(QIO2) output high level
+ **
+ ** \retval Ok                          Process successfully done
+ **
+ ******************************************************************************/
+en_result_t QSPI_SetWPPinLevel(en_qspi_wp_pin_level_t enWpLevel)
+{
+    en_result_t enRet = Ok;
+
+    DDL_ASSERT(IS_VALID_WP_OUTPUT_LEVEL(enWpLevel));
+
+    M4_QSPI->FCR_f.WPOL = enWpLevel;
+
+    return enRet;
+}
+
+/**
+ *******************************************************************************
  ** \brief Set communication address width
  **
  ** \param [in] enAddrWidth             Communication address width
@@ -528,6 +655,8 @@ en_result_t QSPI_XipModeCmd(uint8_t u8Instr, en_functional_state_t enNewSta)
 {
     en_result_t enRet = Ok;
 
+    DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewSta));
+    
     M4_QSPI->XCMD = u8Instr;
     if (Enable == enNewSta)
     {

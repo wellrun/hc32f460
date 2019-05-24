@@ -91,11 +91,11 @@ extern "C"
 
 /**
  *******************************************************************************
- ** \brief Hc32 Series device driver library version number v1.0.3
+ ** \brief Hc32 Series device driver library version number v1.0.4
  ******************************************************************************/
 #define HC32_DDL_VERSION_MAIN           0x01u ///< [31:24] main version
 #define HC32_DDL_VERSION_SUB1           0x00u ///< [23:16] sub1 version
-#define HC32_DDL_VERSION_SUB2           0x03u ///< [15:8]  sub2 version
+#define HC32_DDL_VERSION_SUB2           0x04u ///< [15:8]  sub2 version
 #define HC32_DDL_VERSION_RC             0x00u ///< [7:0]   release candidate
 #define HC32_DDL_VERSION                ((HC32_DDL_VERSION_MAIN << 24) | \
                                          (HC32_DDL_VERSION_SUB1 << 16) | \

@@ -212,16 +212,6 @@ typedef enum en_rtc_irq_type_
 
 /**
  *******************************************************************************
- ** \brief RTC flag type enumeration
- ******************************************************************************/
-typedef enum en_rtc_flag_type
-{
-    RtcFlagPeriod = 0u,                 ///< Period count flag
-    RtcFlagAlarm  = 1u,                 ///< Alarm flag
-} en_rtc_flag_type_t;
-
-/**
- *******************************************************************************
  ** \brief RTC date and time structure definition
  ******************************************************************************/
 typedef struct stc_rtc_date_time
@@ -297,10 +287,10 @@ en_result_t RTC_SetAlarmTime(en_rtc_data_format_t enFormat, const stc_rtc_alarm_
 en_result_t RTC_GetAlarmTime(en_rtc_data_format_t enFormat, stc_rtc_alarm_time_t *pstcRtcAlarmTime);
 en_result_t RTC_AlarmCmd(en_functional_state_t enNewSta);
 
-/* status flags management functions ******************************************/
+/* Interrupt and flags management functions ******************************************/
 en_result_t RTC_IrqCmd(en_rtc_irq_type_t enIrq, en_functional_state_t enNewSta);
-en_flag_status_t RTC_GetFlag(en_rtc_flag_type_t enFlag);
-en_result_t RTC_ClearFlag(en_rtc_flag_type_t enFlag);
+en_flag_status_t RTC_GetAlarmFlag(void);
+en_result_t RTC_ClearAlarmFlag(void);
 
 //@} // RtcGroup
 

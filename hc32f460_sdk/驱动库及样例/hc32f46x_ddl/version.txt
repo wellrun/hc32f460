@@ -1,0 +1,70 @@
+version     date            comment
+ 1.0.4      May 24, 2019    1. convert encoding to UTF-8 for readme.txt
+                            2. add clock division interface of SPI
+                            3. add clock division and WP_Pin level interface of QSPI
+                            4. modify some words to be misspelled
+                            5. add USB MSC device card reader
+                            6. add MW_W25QXX_ENABLE in all ddl_config.h
+                            7. modify comment for usb lib and example
+                            8. modify device PID and VID
+                            9. add CLK_GetPllClockFreq function
+                            10.add CLK_GetI2sClkSource function
+                            11.modify Timer4 pwm: POCR register channel offset
+                            12.fix bug for i2s slave mode
+                            13.add DAM MON_xx register
+                            14.modified ICG.HRCFREQSEL as 1 bit
+                            15.add RTC CR1.ALMFCLR, CR2.ALMF
+                            16.add EFM FRMC.LVM
+                            17.add alarm flag to RTC
+                            18.set USB 1st DeviceDescriptor len to 8
+                            19.synchronize hc32f46x_ddl.chm version to 1.0.4 and update above
+
+ 1.0.3      May 15, 2019    1. add EFM_ClearFlag at ahead of program & erase
+                            2. comment valid check in EFM_ClearFlag
+
+            May 8, 2019     1. usb dirver
+                               use SPACE instead of TAB
+                            2. interrupt
+                                - typo
+                                - delete RTC interrupt ISR in share IRQ handler
+                                - EfmPageEraseErr_IrqHandler --> EfmPgmEraseErr_IrqHandler
+                            3. exint_nmi_swi
+                                - delete callback function pointer in exint init structure
+
+            Apr 26, 2019    1. modified CMU_ClrResetFlag func. comment
+
+            Apr 22, 2019    1. word spelling error
+                            2. upll setting for adc/usb/trng
+
+            Apr 18, 2019    1. modify comments about OVER8 = 1
+                            2. modify baudrate calculate
+                            3. delete duplicated semicolon
+
+            Apr 9, 2019     1. modified IS_XTAL_STOP_VALID & IS_HRC_STOP_VALID
+                            2. add judge before IS_XXX_STOP_VALID
+
+            Apr 4, 2019     1. recover IS_PLLQ_DIV_VALID, recover CLK_PLLM_MIN as 1u
+                            2. add IS_UPLLM_VALID because of upllm 2~24 and pllm 1~24
+                            3. modified func CLK_UpllConfig , IS_PLLM_VALID as 
+                               IS_UPLLM_VALID and comment pllm between 1M and 24M
+                            4. modified CLK_PLLM_MIN as 2u, CLK_PLLN_MAX as 480u
+                            5. use IS_PLL_DIV_VALID instead of IS_PLLQ_DIV_VALID
+                            6. modified func CLK_MpllConfig comment, pllsource/pllm 
+                               is between 1MHz and 24MHz.
+
+            Apr 1, 2019     1. add EP2 OUT function for HID device 
+
+            Mar 18, 2019    1. update chm file acoording to src updating
+                            
+            Mar 15, 2019    1. add CRC driver & sample
+                            2. bug fix
+                                - ICG/PWC/CLK/I2C
+
+            Mar 11, 2019    1. modify efm/rtc/clk/ driver & sample
+                            2. update SFR & SVD for IDE
+                            3. add 'ram.ini' for MDK RAM function
+                            4. add CRC pre-process
+
+            Mar 7, 2019     1. first release on github.com
+
+EOF

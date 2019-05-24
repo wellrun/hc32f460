@@ -138,11 +138,6 @@
 (   (RtcIrqPeriod == (x))                       ||                             \
     (RtcIrqAlarm == (x)))
 
-/*!< Parameter valid check for flag type */
-#define IS_VALID_FLAG_TYPE(x)                                                  \
-(   (RtcFlagPeriod == (x))                      ||                             \
-    (RtcFlagAlarm == (x)))
-
 /*!< 12 hour format am/pm status bit */
 #define RTC_HOUR12_AMPM_MASK                    (0x20u)
 
@@ -365,7 +360,7 @@ en_result_t RTC_PeriodIntConfig(en_rtc_period_int_type_t enIntType)
 
     u8RtcSta = M4_RTC->CR1_f.START;
     u8IntSta = M4_RTC->CR2_f.PRDIE;
-    /* Disable period interrupt when START=1 and clear period flag after write */
+    /* Disable period interrupt when START=1 and PRDIE=1 */
     if ((1u == u8IntSta) && (1u == u8RtcSta))
     {
         M4_RTC->CR2_f.PRDIE = 0u;
@@ -374,7 +369,6 @@ en_result_t RTC_PeriodIntConfig(en_rtc_period_int_type_t enIntType)
 
     if ((1u == u8IntSta) && (1u == u8RtcSta))
     {
-        M4_RTC->CR2_f.PRDF = 0u;
         M4_RTC->CR2_f.PRDIE = u8IntSta;
     }
 
@@ -900,7 +894,7 @@ en_result_t RTC_AlarmCmd(en_functional_state_t enNewSta)
 
     if ((1u == u8IntSta) && (1u == u8RtcSta))
     {
-        M4_RTC->CR2_f.ALMF = 0u;
+        M4_RTC->CR1_f.ALMFCLR = 0u;
         M4_RTC->CR2_f.ALMIE = u8IntSta;
     }
 
@@ -948,67 +942,33 @@ en_result_t RTC_IrqCmd(en_rtc_irq_type_t enIrq, en_functional_state_t enNewSta)
 
 /**
  *******************************************************************************
- ** \brief Get RTC flag status
+ ** \brief Get RTC Alarm flag status
  **
- ** \param [in] enFlag                  RTC flag type
- ** \arg RtcFlagPeriod                  Period count flag
- ** \arg RtcFlagAlarm                   Alarm flag
+ ** \param [in] None
  **
  ** \retval Set                         Flag is set
  ** \retval Reset                       Flag is reset
  **
  ******************************************************************************/
-en_flag_status_t RTC_GetFlag(en_rtc_flag_type_t enFlag)
+en_flag_status_t RTC_GetAlarmFlag(void)
 {
-    en_flag_status_t enFlagSta = Reset;
-
-    /* Check parameters */
-    DDL_ASSERT(IS_VALID_FLAG_TYPE(enFlag));
-
-    switch (enFlag)
-    {
-        case RtcFlagPeriod:
-            enFlagSta = (1u == M4_RTC->CR2_f.PRDF) ? Set : Reset;
-            break;
-        case RtcFlagAlarm:
-            enFlagSta = (1u == M4_RTC->CR2_f.ALMF) ? Set : Reset;
-            break;
-        default:
-            break;
-    }
-
-    return enFlagSta;
+    return (en_flag_status_t)(M4_RTC->CR2_f.ALMF);
 }
 
 /**
  *******************************************************************************
- ** \brief Clear RTC flag status
+ ** \brief Clear RTC Alarm flag status
  **
- ** \param [in] enFlag                  RTC flag type
- ** \arg RtcFlagPeriod                  Period count flag
- ** \arg RtcFlagAlarm                   Alarm flag
+ ** \param [in] None
  **
  ** \retval Ok                          Process successfully done
  **
  ******************************************************************************/
-en_result_t RTC_ClearFlag(en_rtc_flag_type_t enFlag)
+en_result_t RTC_ClearAlarmFlag(void)
 {
     en_result_t enRet = Ok;
 
-    /* Check parameters */
-    DDL_ASSERT(IS_VALID_FLAG_TYPE(enFlag));
-
-    switch (enFlag)
-    {
-        case RtcFlagPeriod:
-            M4_RTC->CR2_f.PRDF = 0u;
-            break;
-        case RtcFlagAlarm:
-            M4_RTC->CR2_f.ALMF = 0u;
-            break;
-        default:
-            break;
-    }
+    M4_RTC->CR1_f.ALMFCLR = 0u;
 
     return enRet;
 }

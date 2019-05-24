@@ -101,13 +101,13 @@ static uint32_t DCD_SessionRequest_ISR(USB_OTG_CORE_HANDLE *pdev);
  ******************************************************************************/
 char const *state_str[7] =
 {
-	"idle",
-	"setup",
-	"data_in",
-	"data_out",
-	"status_in",
-	"status_out",
-	"stall"
+    "idle",
+    "setup",
+    "data_in",
+    "data_out",
+    "status_in",
+    "status_out",
+    "stall"
 };
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')

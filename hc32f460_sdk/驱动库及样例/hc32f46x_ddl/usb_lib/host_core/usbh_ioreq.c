@@ -291,7 +291,6 @@ USBH_Status USBH_BulkReceiveData( USB_OTG_CORE_HANDLE *pdev,
     return USBH_OK;
 }
 
-
 /**
  *******************************************************************************
  ** \brief  USBH_InterruptReceiveData

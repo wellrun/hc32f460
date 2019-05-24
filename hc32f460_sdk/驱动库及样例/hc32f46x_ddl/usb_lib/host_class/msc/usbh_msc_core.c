@@ -120,10 +120,10 @@ uint8_t MSCErrorCount = 0;
 
 USBH_Class_cb_TypeDef  USBH_MSC_cb =
 {
-  USBH_MSC_InterfaceInit,
-  USBH_MSC_InterfaceDeInit,
-  USBH_MSC_ClassRequest,
-  USBH_MSC_Handle,
+    USBH_MSC_InterfaceInit,
+    USBH_MSC_InterfaceDeInit,
+    USBH_MSC_ClassRequest,
+    USBH_MSC_Handle,
 };
 
 /*******************************************************************************

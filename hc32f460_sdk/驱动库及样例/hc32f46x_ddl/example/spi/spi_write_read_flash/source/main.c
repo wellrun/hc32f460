@@ -114,7 +114,7 @@
 #define FLASH_BUSY_BIT_MASK             (0x01u)
 
 /* FLASH instruction */
-#define FLASH_INSTR_WRITE_ENABEL        (0x06u)
+#define FLASH_INSTR_WRITE_ENABLE        (0x06u)
 #define FLASH_INSTR_PAGE_PROGRAM        (0x02u)
 #define FLASH_INSTR_STANDARD_READ       (0x03u)
 #define FLASH_INSTR_ERASE_4KB_SECTOR    (0x20u)
@@ -359,7 +359,7 @@ uint8_t SpiFlash_WriteReadByte(uint8_t u8Data)
 void SpiFlash_WriteEnable(void)
 {
     SPI_NSS_LOW();
-    SpiFlash_WriteReadByte(FLASH_INSTR_WRITE_ENABEL);
+    SpiFlash_WriteReadByte(FLASH_INSTR_WRITE_ENABLE);
     SPI_NSS_HIGH();
 }
 

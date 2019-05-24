@@ -146,6 +146,7 @@ extern "C"
  ******************************************************************************/
 #define MW_SD_CARD_ENABLE                           MW_OFF
 #define MW_FS_ENABLE                                MW_OFF
+#define MW_W25QXX_ENABLE                            MW_OFF
 #define MW_WM8731_ENABLE                            MW_OFF
 
 

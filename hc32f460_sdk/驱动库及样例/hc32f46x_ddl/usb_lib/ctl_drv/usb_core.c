@@ -515,32 +515,32 @@ USB_OTG_STS USB_OTG_DisableGlobalInt(USB_OTG_CORE_HANDLE *pdev)
 
 USB_OTG_STS USB_OTG_stop_xfer (USB_OTG_CORE_HANDLE *pdev , uint32_t num )
 {
-	USB_OTG_STS status = USB_OTG_OK;
-	USB_OTG_DEPCTL_TypeDef  depctl;
-	USB_OTG_DIEPINTn_TypeDef diepint;
+    USB_OTG_STS status = USB_OTG_OK;
+    USB_OTG_DEPCTL_TypeDef  depctl;
+    USB_OTG_DIEPINTn_TypeDef diepint;
 
-	if (USB_OTG_READ_REG32(&pdev->regs.INEP_REGS[num]->DIEPTSIZ) == 0)
-		return USB_OTG_OK;
+    if (USB_OTG_READ_REG32(&pdev->regs.INEP_REGS[num]->DIEPTSIZ) == 0)
+    return USB_OTG_OK;
 
-	depctl.d32 = 0;
+    depctl.d32 = 0;
 
-	depctl.b.epdis = 1;
-	depctl.b.snak = 1;
-	USB_OTG_WRITE_REG32( &pdev->regs.INEP_REGS[num]->DIEPCTL, depctl.d32 );
+    depctl.b.epdis = 1;
+    depctl.b.snak = 1;
+    USB_OTG_WRITE_REG32( &pdev->regs.INEP_REGS[num]->DIEPCTL, depctl.d32 );
 
-	do
-	{
-		diepint.d32 = USB_OTG_READ_REG32(&pdev->regs.INEP_REGS[num]->DIEPINT);
-	} while (!diepint.b.epdisabled);
-	diepint.d32 = 0;
-	diepint.b.epdisabled = 1;
-	USB_OTG_WRITE_REG32( &pdev->regs.INEP_REGS[num]->DIEPINT, diepint.d32 );
+    do
+    {
+        diepint.d32 = USB_OTG_READ_REG32(&pdev->regs.INEP_REGS[num]->DIEPINT);
+    } while (!diepint.b.epdisabled);
+    diepint.d32 = 0;
+    diepint.b.epdisabled = 1;
+    USB_OTG_WRITE_REG32( &pdev->regs.INEP_REGS[num]->DIEPINT, diepint.d32 );
 
-	depctl.b.epdis = 0;
-	depctl.b.epena = 0;
-	USB_OTG_WRITE_REG32( &pdev->regs.INEP_REGS[num]->DIEPCTL, depctl.d32 );
+    depctl.b.epdis = 0;
+    depctl.b.epena = 0;
+    USB_OTG_WRITE_REG32( &pdev->regs.INEP_REGS[num]->DIEPCTL, depctl.d32 );
 
-	return status;
+    return status;
 }
 
 /**
@@ -1038,7 +1038,7 @@ USB_OTG_STS USB_OTG_EPDeactivate(USB_OTG_CORE_HANDLE *pdev , USB_OTG_EP *ep)
 #ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED
     if((ep->num == 1)&&(pdev->cfg.coreID == USB_OTG_HS_CORE_ID))
     {
-    USB_OTG_MODIFY_REG32(&pdev->regs.DREGS->DEACHMSK, daintmsk.d32, 0);
+        USB_OTG_MODIFY_REG32(&pdev->regs.DREGS->DEACHMSK, daintmsk.d32, 0);
     }
     else
 #endif
@@ -2130,22 +2130,10 @@ void USB_OTG_PRTSUSP(USB_OTG_CORE_HANDLE *pdev)
 {
     USB_OTG_HPRT0_TypeDef     port0;
 
-	port0.d32 = USB_OTG_ReadHPRT0(pdev);
-	port0.b.prtsusp = 1;
-	port0.b.prtres = 0;
-	USB_OTG_WRITE_REG32(pdev->regs.HPRT0, port0.d32);
-//	USB_OTG_BSP_mDelay(15000);
-//	port0.b.prtsusp = 0;
-//	port0.b.prtres = 1;
-//	USB_OTG_WRITE_REG32(pdev->regs.HPRT0, port0.d32);
-//	USB_OTG_BSP_mDelay(100);
-//	port0.b.prtres = 0;
-//	USB_OTG_WRITE_REG32(pdev->regs.HPRT0, port0.d32);
-
-//	power.d32 = USB_OTG_READ_REG32(&pdev->regs.PCGCCTL);
-//	power.b.gatehclk = 0;
-//	power.b.stoppclk = 0;
-//	USB_OTG_WRITE_REG32(pdev->regs.PCGCCTL, power.d32);
+    port0.d32 = USB_OTG_ReadHPRT0(pdev);
+    port0.b.prtsusp = 1;
+    port0.b.prtres = 0;
+    USB_OTG_WRITE_REG32(pdev->regs.HPRT0, port0.d32);
 }
 #endif
 void USB_OTG_PRTRES(USB_OTG_CORE_HANDLE *pdev)
@@ -2154,12 +2142,6 @@ void USB_OTG_PRTRES(USB_OTG_CORE_HANDLE *pdev)
 
 void USB_OTG_INTI_SRP(USB_OTG_CORE_HANDLE *pdev)
 {
-/*	USB_OTG_GOTGCTL_TypeDef     mem;
-	uint32_t *addr = (uint32_t *) & (pdev->regs.GREGS->GOTGCTL);
-
-	mem.d32 = USB_OTG_READ_REG32(addr);
-	mem.b.sesreq = 1;
-	USB_OTG_WRITE_REG32(addr, mem.d32);	*/
 }
 
 /*******************************************************************************

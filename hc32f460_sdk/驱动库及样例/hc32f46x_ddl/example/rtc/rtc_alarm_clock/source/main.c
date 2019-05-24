@@ -97,7 +97,6 @@ static uint8_t u8AlarmIntFlag = 0, u8AlarmCnt = 0;
 void RtcPeriod_IrqCallback(void)
 {
     u8SecIntFlag = 1u;
-    RTC_ClearFlag(RtcFlagPeriod);
 }
 
 /**
@@ -113,7 +112,7 @@ void RtcAlarm_IrqCallback(void)
 {
     u8AlarmCnt = 10u;
     u8AlarmIntFlag = 1u;
-    RTC_ClearFlag(RtcFlagAlarm);
+    RTC_ClearAlarmFlag();
 }
 
 /**

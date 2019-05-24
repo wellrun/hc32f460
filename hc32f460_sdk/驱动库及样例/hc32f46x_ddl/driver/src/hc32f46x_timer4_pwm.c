@@ -111,7 +111,7 @@
 
 /*!< Get the specified register address of the specified Timer4 unit */
 #define TMR4_RCSRx(__TMR4x__)               ((uint32_t)&__TMR4x__->RCSR)
-#define TMR4_POCRx(__TMR4x__, __CH__)       ((uint32_t)&__TMR4x__->POCRU + ((uint32_t)__CH__)*8)
+#define TMR4_POCRx(__TMR4x__, __CH__)       ((uint32_t)&__TMR4x__->POCRU + ((uint32_t)__CH__)*4)
 #define TMR4_PDARx(__TMR4x__, __CH__)       ((uint32_t)&__TMR4x__->PDARU + ((uint32_t)__CH__)*8)
 #define TMR4_PDBRx(__TMR4x__, __CH__)       ((uint32_t)&__TMR4x__->PDBRU + ((uint32_t)__CH__)*8)
 #define TMR4_PFSRx(__TMR4x__, __CH__)       ((uint32_t)&__TMR4x__->PFSRU + ((uint32_t)__CH__)*8)

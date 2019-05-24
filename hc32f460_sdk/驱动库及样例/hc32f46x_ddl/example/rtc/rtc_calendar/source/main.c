@@ -96,7 +96,6 @@ static uint8_t u8SecIntFlag = 0;
 void RtcPeriod_IrqCallback(void)
 {
     u8SecIntFlag = 1u;
-    RTC_ClearFlag(RtcFlagPeriod);
 }
 
 /**

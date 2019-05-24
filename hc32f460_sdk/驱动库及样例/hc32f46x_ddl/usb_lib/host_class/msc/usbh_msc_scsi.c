@@ -44,8 +44,8 @@
  **
  ** A detailed description is available at
  ** @link
-		This file implements the SCSI commands。
-	@endlink
+    This file implements the SCSI commands。
+    @endlink
  **
  **   - 2018-12-26  1.0  wangmin First version for USB demo.
  **
@@ -432,7 +432,6 @@ uint8_t USBH_MSC_RequestSense(USB_OTG_CORE_HANDLE *pdev)
     }
     return status;
 }
-
 
 /**
  *******************************************************************************

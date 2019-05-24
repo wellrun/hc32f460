@@ -863,6 +863,42 @@ en_result_t SPI_SetFirstBitPosition(M4_SPI_TypeDef *SPIx, en_spi_first_bit_posit
 
 /**
  *******************************************************************************
+ ** \brief SPI set clock division
+ **
+ ** \param [in] SPIx                    Pointer to SPI unit configuration address
+ ** \arg M4_SPI1                        SPI unit 1 configuration Address
+ ** \arg M4_SPI2                        SPI unit 2 configuration Address
+ ** \arg M4_SPI3                        SPI unit 3 configuration Address
+ ** \arg M4_SPI4                        SPI unit 4 configuration Address
+ **
+ ** \param [in] enClkDiv                Clock division
+ ** \arg SpiClkDiv2                     Spi pckl1 division 2
+ ** \arg SpiClkDiv4                     Spi pckl1 division 4
+ ** \arg SpiClkDiv8                     Spi pckl1 division 8
+ ** \arg SpiClkDiv16                    Spi pckl1 division 16
+ ** \arg SpiClkDiv32                    Spi pckl1 division 32
+ ** \arg SpiClkDiv64                    Spi pckl1 division 64
+ ** \arg SpiClkDiv128                   Spi pckl1 division 128
+ ** \arg SpiClkDiv256                   Spi pckl1 division 256
+ **
+ ** \retval Ok                          Process successfully done
+ **
+ ******************************************************************************/
+en_result_t SPI_SetClockDiv(M4_SPI_TypeDef *SPIx, en_spi_clk_div_t enClkDiv)
+{
+    en_result_t enRet = Ok;
+
+    /* Check parameters */
+    DDL_ASSERT(IS_VALID_SPI_UNIT(SPIx));
+    DDL_ASSERT(IS_VALID_CLK_DIV(enClkDiv));
+
+    SPIx->CFG2_f.MBR = enClkDiv;
+
+    return enRet;
+}
+
+/**
+ *******************************************************************************
  ** \brief Enable or disable SPI interrupt request
  **
  ** \param [in] SPIx                    Pointer to SPI unit configuration address

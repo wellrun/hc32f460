@@ -442,9 +442,9 @@
       <FilePath>..\source\usbd_desc.c</FilePath>
     </File>
     <File>
-      <FileName>usbd_urs.c</FileName>
+      <FileName>usbd_usr.c</FileName>
       <FileType>1</FileType>
-      <FilePath>..\source\usbd_urs.c</FilePath>
+      <FilePath>..\source\usbd_usr.c</FilePath>
     </File>
     <File>
       <FileName>usb_bsp_template.c</FileName>

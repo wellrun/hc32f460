@@ -102,11 +102,11 @@ typedef enum {
 }HC_STATUS;
 
 typedef enum {
-  URB_IDLE = 0,
-  URB_DONE,
-  URB_NOTREADY,
-  URB_ERROR,
-  URB_STALL
+    URB_IDLE = 0,
+    URB_DONE,
+    URB_NOTREADY,
+    URB_ERROR,
+    URB_STALL
 }URB_STATE;
 
 typedef enum {
@@ -287,8 +287,8 @@ typedef struct USB_OTG_handle
 #ifdef USE_OTG_MODE
     OTG_DEV     otg;
 #endif
-	void        *pClassData;
-	void        *pUserData;
+  void        *pClassData;
+  void        *pUserData;
 }USB_OTG_CORE_HANDLE , *PUSB_OTG_CORE_HANDLE;
 
 /*******************************************************************************

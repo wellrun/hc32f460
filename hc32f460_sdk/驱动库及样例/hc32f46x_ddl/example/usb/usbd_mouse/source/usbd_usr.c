@@ -47,7 +47,7 @@
         This file includes the user application layer.
     @endlink
  **
- **   - 2018-05-21  1.0  gouwei First version for USB demo.
+ **   - 2018-11-11  1.0  wangmin First version for USB demo.
  **
  ******************************************************************************/
 
@@ -60,15 +60,10 @@
 #include "usb_conf.h"
 #include "usb_bsp.h"
 
-
 /*******************************************************************************
- * Local pre-processor symbols/macros ('#define')
+ * Local type definitions ('typedef')
  ******************************************************************************/
-
-
-/*******************************************************************************
- * Local variable definitions ('static')
- ******************************************************************************/
+/* User callback functions */
 USBD_Usr_cb_TypeDef USR_cb =
 {
     USBD_USR_Init,
@@ -76,21 +71,36 @@ USBD_Usr_cb_TypeDef USR_cb =
     USBD_USR_DeviceConfigured,
     USBD_USR_DeviceSuspended,
     USBD_USR_DeviceResumed,
-
     USBD_USR_DeviceConnected,
     USBD_USR_DeviceDisconnected,
 };
+
+/*******************************************************************************
+ * Local pre-processor symbols/macros ('#define')
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Global variable definitions (declared in header file with 'extern')
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Local function prototypes ('static')
+ ******************************************************************************/
+
+/*******************************************************************************
+ * Local variable definitions ('static')
+ ******************************************************************************/
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
  ******************************************************************************/
 
 /**
-* \brief  Key_Config
-*         Key initialization
-* \param  None
-* \retval None
-*/
+ *******************************************************************************
+ ** \brief  Key initialization
+ ** \param  None
+ ** \retval None
+ ******************************************************************************/
 static void Key_Config(void)
 {
     stc_port_init_t stcPortInit;
@@ -110,11 +120,11 @@ static void Key_Config(void)
 }
 
 /**
-* \brief  USBD_USR_Init
-*         Displays the message on LCD for host lib initialization
-* \param  None
-* \retval None
-*/
+ *******************************************************************************
+ ** \brief  USBD_USR_Init
+ ** \param  None
+ ** \retval None
+ ******************************************************************************/
 void USBD_USR_Init(void)
 {
     /* Configure the IOE on which the JoyStick is connected */
@@ -129,11 +139,11 @@ void USBD_USR_Init(void)
 }
 
 /**
-* \brief  USBD_USR_DeviceReset
-*         Displays the message on LCD on device Reset Event
-* \param  speed : device speed
-* \retval None
-*/
+ *******************************************************************************
+ ** \brief  USBD_USR_DeviceReset
+ ** \param  speed : device speed
+ ** \retval None
+ ******************************************************************************/
 void USBD_USR_DeviceReset(uint8_t speed )
 {
     switch (speed)
@@ -151,63 +161,63 @@ void USBD_USR_DeviceReset(uint8_t speed )
     }
 }
 
-
 /**
-* \brief  USBD_USR_DeviceConfigured
-*         Displays the message on LCD on device configuration Event
-* \param  None
-* \retval Staus
-*/
+ *******************************************************************************
+ ** \brief  USBD_USR_DeviceConfigured
+ ** \param  None
+ ** \retval None
+ ******************************************************************************/
 void USBD_USR_DeviceConfigured (void)
 {
     printf("> HID Interface started.\n");
 }
 
-
 /**
-* \brief  USBD_USR_DeviceConnected
-*         Displays the message on LCD on device connection Event
-* \param  None
-* \retval Staus
-*/
+ *******************************************************************************
+ ** \brief  USBD_USR_DeviceConnected
+ ** \param  None
+ ** \retval None
+ ******************************************************************************/
 void USBD_USR_DeviceConnected (void)
 {
     printf("> USB Device Connected.\n");
 }
 
-
 /**
-* \brief  USBD_USR_DeviceDisonnected
-*         Displays the message on LCD on device disconnection Event
-* \param  None
-* \retval Staus
-*/
+ *******************************************************************************
+ ** \brief  USBD_USR_DeviceDisonnected
+ ** \param  None
+ ** \retval None
+ ******************************************************************************/
 void USBD_USR_DeviceDisconnected (void)
 {
     printf("> USB Device Disconnected.\n");
 }
 
 /**
-* \brief  USBD_USR_DeviceSuspended
-*         Displays the message on LCD on device suspend Event
-* \param  None
-* \retval None
-*/
+ *******************************************************************************
+ ** \brief  USBD_USR_DeviceSuspended
+ ** \param  None
+ ** \retval None
+ ******************************************************************************/
 void USBD_USR_DeviceSuspended(void)
 {
     printf("> USB Device in Suspend Mode.\n");
     /* Users can do their application actions here for the USB-Reset */
 }
 
-
 /**
-* \brief  USBD_USR_DeviceResumed
-*         Displays the message on LCD on device resume Event
-* \param  None
-* \retval None
-*/
+ *******************************************************************************
+ ** \brief  USBD_USR_DeviceResumed
+ ** \param  None
+ ** \retval None
+ ******************************************************************************/
 void USBD_USR_DeviceResumed(void)
 {
     printf("> USB Device in Idle Mode.\n");
     /* Users can do their application actions here for the USB-Reset */
 }
+
+/*******************************************************************************
+ * EOF (not truncated)
+ ******************************************************************************/

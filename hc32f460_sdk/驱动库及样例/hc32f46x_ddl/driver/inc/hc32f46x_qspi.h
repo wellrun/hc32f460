@@ -401,6 +401,9 @@ en_result_t QSPI_Init(const stc_qspi_init_t *pstcQspiInitCfg);
 en_result_t QSPI_SetAddrWidth(en_qspi_addr_width_t enAddrWidth);
 en_result_t QSPI_SetExtendAddress(uint8_t u8Addr);
 en_result_t QSPI_CommProtocolConfig(const stc_qspi_comm_protocol_t *pstcCommProtocol);
+en_result_t QSPI_PrefetchCmd(en_functional_state_t enNewSta);
+en_result_t QSPI_SetClockDiv(en_qspi_clk_div_t enClkDiv);
+en_result_t QSPI_SetWPPinLevel(en_qspi_wp_pin_level_t enWpLevel);
 
 /* Rom access mode functions */
 en_result_t QSPI_SetRomAccessInstruct(uint8_t u8Instr);

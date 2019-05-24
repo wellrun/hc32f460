@@ -44,8 +44,8 @@
  **
  ** A detailed description is available at
  ** @link
-		This file provides the IO requests APIs for control endpoints.
-	@endlink
+    This file provides the IO requests APIs for control endpoints.
+    @endlink
  **
  **   - 2018-12-26  1.0  wangmin First version for USB demo.
  **

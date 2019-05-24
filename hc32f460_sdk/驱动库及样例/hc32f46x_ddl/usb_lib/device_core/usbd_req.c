@@ -96,7 +96,7 @@ __USB_ALIGN_BEGIN uint32_t  USBD_cfg_status __USB_ALIGN_END  = 0;
     #pragma data_alignment=4
   #endif
 #endif /* USB_OTG_HS_INTERNAL_DMA_ENABLED */
-__USB_ALIGN_BEGIN uint8_t USBD_StrDesc[USB_MAX_STR_DESC_SIZ] __USB_ALIGN_END ;
+__USB_ALIGN_BEGIN uint8_t USBD_StrDesc[USB_MAX_STR_DESC_SIZ] __USB_ALIGN_END;
 /*******************************************************************************
  * Local function prototypes ('static')
  ******************************************************************************/
@@ -369,7 +369,7 @@ static void USBD_GetDescriptor(USB_OTG_CORE_HANDLE  *pdev,
             pbuf = pdev->dev.usr_device->GetDeviceDescriptor(pdev->cfg.speed, &len);
             if ((req->wLength == 64) ||( pdev->dev.device_status == USB_OTG_DEFAULT))
             {
-                ;//len = 8;
+                len = 8;
             }
             break;
         case USB_DESC_TYPE_CONFIGURATION:

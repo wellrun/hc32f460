@@ -436,6 +436,7 @@ en_result_t SPI_SetReadDataRegObject(M4_SPI_TypeDef *SPIx, en_spi_read_object_t 
 en_result_t SPI_SetFrameNumber(M4_SPI_TypeDef *SPIx, en_spi_frame_number_t enFrameNum);
 en_result_t SPI_SetDataLength(M4_SPI_TypeDef *SPIx, en_spi_data_length_t enDataLength);
 en_result_t SPI_SetFirstBitPosition(M4_SPI_TypeDef *SPIx, en_spi_first_bit_position_t enPosition);
+en_result_t SPI_SetClockDiv(M4_SPI_TypeDef *SPIx, en_spi_clk_div_t enClkDiv);
 
 /* Interrupt and flags functions */
 en_result_t SPI_IrqCmd(M4_SPI_TypeDef *SPIx, en_spi_irq_type_t enIrq,

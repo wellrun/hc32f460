@@ -47,7 +47,7 @@
         This file provides all the Application firmware functions.
     @endlink
  **
- **   - 2018-05-21  1.0  gouwei First version for USB demo.
+ **   - 2018-11-11  1.0  wangmin First version for USB demo.
  **
  ******************************************************************************/
 
@@ -118,3 +118,7 @@ int main (void)
     }
 
 }
+
+/*******************************************************************************
+ * EOF (not truncated)
+ ******************************************************************************/

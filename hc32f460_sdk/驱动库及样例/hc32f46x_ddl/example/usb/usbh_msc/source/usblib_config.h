@@ -102,6 +102,7 @@ extern "C"
 /*! device class on-off define */
 #define DEVICE_CLASS_AUDIO                          DDL_OFF
 #define DEVICE_CLASS_HID                            DDL_OFF
+#define DEVICE_CLASS_MSC                            DDL_OFF
 #define DEVICE_CLASS_VCP                            DDL_OFF
 
 /*! host class on-off define */

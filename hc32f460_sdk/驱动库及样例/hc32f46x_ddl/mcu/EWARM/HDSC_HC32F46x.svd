@@ -7914,6 +7914,124 @@
                     </fields>
                 </register>
                 <register>
+                    <name>MONSAR0</name>
+                    <description>desc MONSAR0</description>
+                    <addressOffset>0x60</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                </register>
+                <register>
+                    <name>MONDAR0</name>
+                    <description>desc MONDAR0</description>
+                    <addressOffset>0x64</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                </register>
+                <register>
+                    <name>MONDTCTL0</name>
+                    <description>desc MONDTCTL0</description>
+                    <addressOffset>0x68</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x1</resetValue>
+                    <resetMask>0xFFFF03FF</resetMask>
+                    <fields>
+                        <field>
+                            <name>BLKSIZE</name>
+                            <description>desc BLKSIZE</description>
+                            <msb>9</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>CNT</name>
+                            <description>desc CNT</description>
+                            <msb>31</msb>
+                            <lsb>16</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONRPT0</name>
+                    <description>desc MONRPT0</description>
+                    <addressOffset>0x6C</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0x3FF03FF</resetMask>
+                    <fields>
+                        <field>
+                            <name>SRPT</name>
+                            <description>desc SRPT</description>
+                            <msb>9</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>DRPT</name>
+                            <description>desc DRPT</description>
+                            <msb>25</msb>
+                            <lsb>16</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONSNSEQCTL0</name>
+                    <description>desc MONSNSEQCTL0</description>
+                    <addressOffset>0x70</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                    <fields>
+                        <field>
+                            <name>SOFFSET</name>
+                            <description>desc SOFFSET</description>
+                            <msb>19</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>SNSCNT</name>
+                            <description>desc SNSCNT</description>
+                            <msb>31</msb>
+                            <lsb>20</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONDNSEQCTL0</name>
+                    <description>desc MONDNSEQCTL0</description>
+                    <addressOffset>0x74</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                    <fields>
+                        <field>
+                            <name>DOFFSET</name>
+                            <description>desc DOFFSET</description>
+                            <msb>19</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>DNSCNT</name>
+                            <description>desc DNSCNT</description>
+                            <msb>31</msb>
+                            <lsb>20</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
                     <name>SAR1</name>
                     <description>desc SAR1</description>
                     <addressOffset>0x80</addressOffset>
@@ -8202,6 +8320,124 @@
                             <msb>12</msb>
                             <lsb>12</lsb>
                             <access>read-write</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONSAR1</name>
+                    <description>desc MONSAR1</description>
+                    <addressOffset>0xA0</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                </register>
+                <register>
+                    <name>MONDAR1</name>
+                    <description>desc MONDAR1</description>
+                    <addressOffset>0xA4</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                </register>
+                <register>
+                    <name>MONDTCTL1</name>
+                    <description>desc MONDTCTL1</description>
+                    <addressOffset>0xA8</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x1</resetValue>
+                    <resetMask>0xFFFF03FF</resetMask>
+                    <fields>
+                        <field>
+                            <name>BLKSIZE</name>
+                            <description>desc BLKSIZE</description>
+                            <msb>9</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>CNT</name>
+                            <description>desc CNT</description>
+                            <msb>31</msb>
+                            <lsb>16</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONRPT1</name>
+                    <description>desc MONRPT1</description>
+                    <addressOffset>0xAC</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0x3FF03FF</resetMask>
+                    <fields>
+                        <field>
+                            <name>SRPT</name>
+                            <description>desc SRPT</description>
+                            <msb>9</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>DRPT</name>
+                            <description>desc DRPT</description>
+                            <msb>25</msb>
+                            <lsb>16</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONSNSEQCTL1</name>
+                    <description>desc MONSNSEQCTL1</description>
+                    <addressOffset>0xB0</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                    <fields>
+                        <field>
+                            <name>SOFFSET</name>
+                            <description>desc SOFFSET</description>
+                            <msb>19</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>SNSCNT</name>
+                            <description>desc SNSCNT</description>
+                            <msb>31</msb>
+                            <lsb>20</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONDNSEQCTL1</name>
+                    <description>desc MONDNSEQCTL1</description>
+                    <addressOffset>0xB4</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                    <fields>
+                        <field>
+                            <name>DOFFSET</name>
+                            <description>desc DOFFSET</description>
+                            <msb>19</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>DNSCNT</name>
+                            <description>desc DNSCNT</description>
+                            <msb>31</msb>
+                            <lsb>20</lsb>
+                            <access>read-only</access>
                         </field>
                     </fields>
                 </register>
@@ -8498,6 +8734,124 @@
                     </fields>
                 </register>
                 <register>
+                    <name>MONSAR2</name>
+                    <description>desc MONSAR2</description>
+                    <addressOffset>0xE0</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                </register>
+                <register>
+                    <name>MONDAR2</name>
+                    <description>desc MONDAR2</description>
+                    <addressOffset>0xE4</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                </register>
+                <register>
+                    <name>MONDTCTL2</name>
+                    <description>desc MONDTCTL2</description>
+                    <addressOffset>0xE8</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x1</resetValue>
+                    <resetMask>0xFFFF03FF</resetMask>
+                    <fields>
+                        <field>
+                            <name>BLKSIZE</name>
+                            <description>desc BLKSIZE</description>
+                            <msb>9</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>CNT</name>
+                            <description>desc CNT</description>
+                            <msb>31</msb>
+                            <lsb>16</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONRPT2</name>
+                    <description>desc MONRPT2</description>
+                    <addressOffset>0xEC</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0x3FF03FF</resetMask>
+                    <fields>
+                        <field>
+                            <name>SRPT</name>
+                            <description>desc SRPT</description>
+                            <msb>9</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>DRPT</name>
+                            <description>desc DRPT</description>
+                            <msb>25</msb>
+                            <lsb>16</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONSNSEQCTL2</name>
+                    <description>desc MONSNSEQCTL2</description>
+                    <addressOffset>0xF0</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                    <fields>
+                        <field>
+                            <name>SOFFSET</name>
+                            <description>desc SOFFSET</description>
+                            <msb>19</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>SNSCNT</name>
+                            <description>desc SNSCNT</description>
+                            <msb>31</msb>
+                            <lsb>20</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONDNSEQCTL2</name>
+                    <description>desc MONDNSEQCTL2</description>
+                    <addressOffset>0xF4</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                    <fields>
+                        <field>
+                            <name>DOFFSET</name>
+                            <description>desc DOFFSET</description>
+                            <msb>19</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>DNSCNT</name>
+                            <description>desc DNSCNT</description>
+                            <msb>31</msb>
+                            <lsb>20</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
                     <name>SAR3</name>
                     <description>desc SAR3</description>
                     <addressOffset>0x100</addressOffset>
@@ -8789,6 +9143,124 @@
                         </field>
                     </fields>
                 </register>
+                <register>
+                    <name>MONSAR3</name>
+                    <description>desc MONSAR3</description>
+                    <addressOffset>0x120</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                </register>
+                <register>
+                    <name>MONDAR3</name>
+                    <description>desc MONDAR3</description>
+                    <addressOffset>0x124</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                </register>
+                <register>
+                    <name>MONDTCTL3</name>
+                    <description>desc MONDTCTL3</description>
+                    <addressOffset>0x128</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x1</resetValue>
+                    <resetMask>0xFFFF03FF</resetMask>
+                    <fields>
+                        <field>
+                            <name>BLKSIZE</name>
+                            <description>desc BLKSIZE</description>
+                            <msb>9</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>CNT</name>
+                            <description>desc CNT</description>
+                            <msb>31</msb>
+                            <lsb>16</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONRPT3</name>
+                    <description>desc MONRPT3</description>
+                    <addressOffset>0x12C</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0x3FF03FF</resetMask>
+                    <fields>
+                        <field>
+                            <name>SRPT</name>
+                            <description>desc SRPT</description>
+                            <msb>9</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>DRPT</name>
+                            <description>desc DRPT</description>
+                            <msb>25</msb>
+                            <lsb>16</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONSNSEQCTL3</name>
+                    <description>desc MONSNSEQCTL3</description>
+                    <addressOffset>0x130</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                    <fields>
+                        <field>
+                            <name>SOFFSET</name>
+                            <description>desc SOFFSET</description>
+                            <msb>19</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>SNSCNT</name>
+                            <description>desc SNSCNT</description>
+                            <msb>31</msb>
+                            <lsb>20</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
+                <register>
+                    <name>MONDNSEQCTL3</name>
+                    <description>desc MONDNSEQCTL3</description>
+                    <addressOffset>0x134</addressOffset>
+                    <size>32</size>
+                    <access>read-only</access>
+                    <resetValue>0x0</resetValue>
+                    <resetMask>0xFFFFFFFF</resetMask>
+                    <fields>
+                        <field>
+                            <name>DOFFSET</name>
+                            <description>desc DOFFSET</description>
+                            <msb>19</msb>
+                            <lsb>0</lsb>
+                            <access>read-only</access>
+                        </field>
+                        <field>
+                            <name>DNSCNT</name>
+                            <description>desc DNSCNT</description>
+                            <msb>31</msb>
+                            <lsb>20</lsb>
+                            <access>read-only</access>
+                        </field>
+                    </fields>
+                </register>
             </registers>
         </peripheral>
         <peripheral derivedFrom="DMA1">
@@ -8852,7 +9324,7 @@
                     <size>32</size>
                     <access>read-write</access>
                     <resetValue>0x0</resetValue>
-                    <resetMask>0x10300F1</resetMask>
+                    <resetMask>0x10101F1</resetMask>
                     <fields>
                         <field>
                             <name>SLPMD</name>
@@ -8866,6 +9338,13 @@
                             <description>desc FLWT</description>
                             <msb>7</msb>
                             <lsb>4</lsb>
+                            <access>read-write</access>
+                        </field>
+                        <field>
+                            <name>LVM</name>
+                            <description>desc LVM</description>
+                            <msb>8</msb>
+                            <lsb>8</lsb>
                             <access>read-write</access>
                         </field>
                         <field>
@@ -11153,12 +11632,12 @@
                     <size>32</size>
                     <access>read-only</access>
                     <resetValue>0xFFFFFFFF</resetValue>
-                    <resetMask>0xFC070103</resetMask>
+                    <resetMask>0xFC070101</resetMask>
                     <fields>
                         <field>
                             <name>HRCFREQSEL</name>
                             <description>desc HRCFREQSEL</description>
-                            <msb>1</msb>
+                            <msb>0</msb>
                             <lsb>0</lsb>
                             <access>read-only</access>
                         </field>
@@ -35094,7 +35573,7 @@
                     <size>32</size>
                     <access>read-write</access>
                     <resetValue>0x0</resetValue>
-                    <resetMask>0xEF</resetMask>
+                    <resetMask>0xFF</resetMask>
                     <fields>
                         <field>
                             <name>PRDS</name>
@@ -35108,6 +35587,13 @@
                             <description>desc AMPM</description>
                             <msb>3</msb>
                             <lsb>3</lsb>
+                            <access>read-write</access>
+                        </field>
+                        <field>
+                            <name>ALMFCLR</name>
+                            <description>desc ALMFCLR</description>
+                            <msb>4</msb>
+                            <lsb>4</lsb>
                             <access>read-write</access>
                         </field>
                         <field>
@@ -35140,7 +35626,7 @@
                     <size>32</size>
                     <access>read-write</access>
                     <resetValue>0x0</resetValue>
-                    <resetMask>0xFF</resetMask>
+                    <resetMask>0xEB</resetMask>
                     <fields>
                         <field>
                             <name>WAIT</name>
@@ -35154,13 +35640,6 @@
                             <description>desc WAITF</description>
                             <msb>1</msb>
                             <lsb>1</lsb>
-                            <access>read-write</access>
-                        </field>
-                        <field>
-                            <name>PRDF</name>
-                            <description>desc PRDF</description>
-                            <msb>2</msb>
-                            <lsb>2</lsb>
                             <access>read-write</access>
                         </field>
                         <field>
@@ -43883,15 +44362,15 @@
                             <access>read-write</access>
                         </field>
                         <field>
-                            <name>INENOVF</name>
-                            <description>desc INENOVF</description>
+                            <name>ITENOVF</name>
+                            <description>desc ITENOVF</description>
                             <msb>12</msb>
                             <lsb>12</lsb>
                             <access>read-write</access>
                         </field>
                         <field>
-                            <name>INENUDF</name>
-                            <description>desc INENUDF</description>
+                            <name>ITENUDF</name>
+                            <description>desc ITENUDF</description>
                             <msb>13</msb>
                             <lsb>13</lsb>
                             <access>read-write</access>

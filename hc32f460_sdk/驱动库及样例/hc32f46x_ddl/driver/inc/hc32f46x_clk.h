@@ -589,6 +589,21 @@ typedef struct stc_clk_freq
     uint32_t            pclk4Freq;          ///< Pclk4 frequency.
 }stc_clk_freq_t;
 
+/**
+ *******************************************************************************
+ ** \brief  PLL Clock frequency structure.
+ **
+ ******************************************************************************/
+typedef struct stc_pll_clk_freq
+{
+    uint32_t            mpllp;              ///< mpllp clock frequency.
+    uint32_t            mpllq;              ///< mpllq clock frequency.
+    uint32_t            mpllr;              ///< mpllr clock frequency.
+    uint32_t            upllp;              ///< upllp clock frequency.
+    uint32_t            upllq;              ///< upllq clock frequency.
+    uint32_t            upllr;              ///< upllr clock frequency.
+}stc_pll_clk_freq_t;
+
 /*******************************************************************************
  * Global pre-processor symbols/macros ('#define')
  ******************************************************************************/
@@ -622,9 +637,11 @@ void CLK_SetSysClkSource(en_clk_sys_source_t enTargetSysSrc);
 en_clk_sys_source_t CLK_GetSysClkSource(void);
 void CLK_SysClkConfig(const stc_clk_sysclk_cfg_t *pstcSysclkCfg);
 void CLK_GetClockFreq(stc_clk_freq_t *pstcClkFreq);
+void CLK_GetPllClockFreq(stc_pll_clk_freq_t *pstcPllClkFreq);
 void CLK_SetUsbClkSource(en_clk_usb_source_t enTargetUsbSrc);
 void CLK_SetPeriClkSource(en_clk_peri_source_t enTargetAdcSrc);
 void CLK_SetI2sClkSource(M4_I2S_TypeDef* pstcI2sReg, en_clk_peri_source_t enTargetPeriSrc);
+en_clk_peri_source_t CLK_GetI2sClkSource(M4_I2S_TypeDef* pstcI2sReg);
 void CLK_TpiuClkConfig(const en_clk_tpiuclk_div_factor_t enTpiuDiv);
 void CLK_TpiuClkCmd(en_functional_state_t enNewState);
 void CLK_OutputClkConfig(en_clk_output_ch_t enCh, const stc_clk_output_cfg_t *pstcOutputCfg);

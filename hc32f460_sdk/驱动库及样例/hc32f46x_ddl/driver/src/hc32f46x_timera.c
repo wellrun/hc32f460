@@ -1507,10 +1507,10 @@ en_result_t TIMERA_IrqCmd(M4_TMRA_TypeDef *TIMERAx, en_timera_irq_type_t enIrq,
             TIMERAx->ICONR_f.ITEN8 = enNewSta;
             break;
         case TimeraIrqOverflow:
-            TIMERAx->BCSTR_f.INENOVF = enNewSta;
+            TIMERAx->BCSTR_f.ITENOVF = enNewSta;
             break;
         case TimeraIrqUnderflow:
-            TIMERAx->BCSTR_f.INENUDF = enNewSta;
+            TIMERAx->BCSTR_f.ITENUDF = enNewSta;
             break;
         default:
             break;

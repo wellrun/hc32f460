@@ -182,7 +182,7 @@
 #define IS_UPLLM_VALID(pllm)                                                   \
 (   (CLK_UPLLM_MIN           <=  (pllm))     &&                                \
     (CLK_UPLLM_MAX           >=  (pllm)))
-	
+
 /*! Parameter validity check for pllsource/pllm \a vco_in. */
 #define IS_PLL_VCO_IN_VALID(vco_in)                                            \
 (   (CLK_PLL_VCO_IN_MIN     <=  (vco_in))   &&                                 \
@@ -540,7 +540,7 @@ void CLK_HrcCmd(en_functional_state_t enNewState)
     DDL_ASSERT((Enable == enNewState) ?
                 1 : IS_HRC_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW,
                 M4_SYSREG->CMU_PLLCFGR_f.PLLSRC));
-    
+
     ENABLE_CLOCK_REG_WRITE();
 
     M4_SYSREG->CMU_HRCCR_f.HRCSTP = ((Enable == enNewState) ? 0 : 1);
@@ -647,7 +647,7 @@ void CLK_LrcCmd(en_functional_state_t enNewState)
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
     DDL_ASSERT((Enable == enNewState) ?
                 1 : IS_LRC_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW));
-    
+
     ENABLE_CLOCK_REG_WRITE();
 
     M4_SYSREG->CMU_LRCCR_f.LRCSTP = ((Enable == enNewState) ? 0 : 1);
@@ -748,7 +748,7 @@ void CLK_MpllCmd(en_functional_state_t enNewState)
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
     DDL_ASSERT((Enable == enNewState) ?
                 1 : IS_MPLL_STOP_VALID(M4_SYSREG->CMU_CKSWR_f.CKSW));
-    
+
     ENABLE_CLOCK_REG_WRITE();
 
     M4_SYSREG->CMU_PLLCR_f.MPLLOFF = ((Enable == enNewState) ? 0 : 1);
@@ -1092,6 +1092,61 @@ void CLK_GetClockFreq(stc_clk_freq_t *pstcClkFreq)
 
 /**
  *******************************************************************************
+ ** \brief  Get PLL clock frequency.
+ **
+ ** \param  [in] pstcPllClkFreq        The PLL clock source struct.
+ **
+ ** \retval The clock frequency include mpllp, mpllq, mpllr, upllp, upllq, upllr.
+ **
+ ** \note   None
+ **
+ ******************************************************************************/
+void CLK_GetPllClockFreq(stc_pll_clk_freq_t *pstcPllClkFreq)
+{
+    uint8_t pllsource;
+    uint8_t mplln = 0, mpllp = 0, mpllq = 0, mpllr = 0, mpllm = 0;
+    uint8_t uplln = 0, upllp = 0, upllq = 0, upllr = 0, upllm = 0;
+
+    /* Get pll clock source */
+    pllsource = M4_SYSREG->CMU_PLLCFGR_f.PLLSRC;
+
+    /* Get Mpll parameter value */
+    mpllp = M4_SYSREG->CMU_PLLCFGR_f.MPLLP;
+    mpllq = M4_SYSREG->CMU_PLLCFGR_f.MPLLQ;
+    mpllr = M4_SYSREG->CMU_PLLCFGR_f.MPLLR;
+    mplln = M4_SYSREG->CMU_PLLCFGR_f.MPLLN;
+    mpllm = M4_SYSREG->CMU_PLLCFGR_f.MPLLM;
+
+    /* Get Upll paramter value */
+    upllp = M4_SYSREG->CMU_UPLLCFGR_f.UPLLP;
+    upllq = M4_SYSREG->CMU_UPLLCFGR_f.UPLLQ;
+    upllr = M4_SYSREG->CMU_UPLLCFGR_f.UPLLR;
+    uplln = M4_SYSREG->CMU_UPLLCFGR_f.UPLLN;
+    upllm = M4_SYSREG->CMU_UPLLCFGR_f.UPLLM;
+
+    /* Get mpllp ,mpllr, mpllq, upllp, upllq, upllr clock frequency */
+    if (ClkPllSrcXTAL == pllsource)
+    {
+        pstcPllClkFreq->mpllp = (XTAL_VALUE)/(mpllm+1)*(mplln+1)/(mpllp+1);
+        pstcPllClkFreq->mpllq = (XTAL_VALUE)/(mpllm+1)*(mplln+1)/(mpllq+1);
+        pstcPllClkFreq->mpllr = (XTAL_VALUE)/(mpllm+1)*(mplln+1)/(mpllr+1);
+        pstcPllClkFreq->upllp = (XTAL_VALUE)/(upllm+1)*(uplln+1)/(upllp+1);
+        pstcPllClkFreq->upllq = (XTAL_VALUE)/(upllm+1)*(uplln+1)/(upllq+1);
+        pstcPllClkFreq->upllr = (XTAL_VALUE)/(upllm+1)*(uplln+1)/(upllr+1);
+    }
+    else if (ClkPllSrcHRC == pllsource)
+    {
+        pstcPllClkFreq->mpllp = (HRC_VALUE)/(mpllm+1)*(mplln+1)/(mpllp+1);
+        pstcPllClkFreq->mpllq = (HRC_VALUE)/(mpllm+1)*(mplln+1)/(mpllq+1);
+        pstcPllClkFreq->mpllr = (HRC_VALUE)/(mpllm+1)*(mplln+1)/(mpllr+1);
+        pstcPllClkFreq->upllp = (HRC_VALUE)/(upllm+1)*(uplln+1)/(upllp+1);
+        pstcPllClkFreq->upllq = (HRC_VALUE)/(upllm+1)*(uplln+1)/(upllq+1);
+        pstcPllClkFreq->upllr = (HRC_VALUE)/(upllm+1)*(uplln+1)/(upllr+1);
+    }
+}
+
+/**
+ *******************************************************************************
  ** \brief  Select usb clock source.
  **
  ** \param  [in] enTargetUsbSrc         The usb clock source.
@@ -1272,6 +1327,30 @@ void CLK_SetI2sClkSource(M4_I2S_TypeDef* pstcI2sReg, en_clk_peri_source_t enTarg
     }
 
     DISABLE_CLOCK1_REG_WRITE();
+}
+
+en_clk_peri_source_t CLK_GetI2sClkSource(M4_I2S_TypeDef* pstcI2sReg)
+{
+    en_clk_peri_source_t enI2sClkSource;
+
+    if(M4_I2S1 == pstcI2sReg)
+    {
+        enI2sClkSource = (en_clk_peri_source_t)M4_SYSREG->CMU_I2SCKSEL_f.I2S1CKSEL;
+    }
+    else if(M4_I2S2 == pstcI2sReg)
+    {
+        enI2sClkSource = (en_clk_peri_source_t)M4_SYSREG->CMU_I2SCKSEL_f.I2S2CKSEL;
+    }
+    else if(M4_I2S3 == pstcI2sReg)
+    {
+        enI2sClkSource = (en_clk_peri_source_t)M4_SYSREG->CMU_I2SCKSEL_f.I2S3CKSEL;
+    }
+    else if(M4_I2S4 == pstcI2sReg)
+    {
+        enI2sClkSource = (en_clk_peri_source_t)M4_SYSREG->CMU_I2SCKSEL_f.I2S4CKSEL;
+    }
+
+    return enI2sClkSource;
 }
 
 /**
