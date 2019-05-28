@@ -182,7 +182,7 @@ static uint8_t Master_SendAdr(uint8_t u8Adr)
     /* Send I2C address */
     I2C_SendData(I2C_CH, u8Adr);
 
-    if(DEVICE_ADDRESS == (u8Adr & 0x01))
+    if(ADDRESS_W == (u8Adr & 0x01))
     {
         /* If in master transfer process, Need wait transfer end*/
         uint32_t u32TimeOut = TIMEOUT;
