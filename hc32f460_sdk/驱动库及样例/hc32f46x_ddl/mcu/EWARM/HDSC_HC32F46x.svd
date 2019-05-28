@@ -26057,7 +26057,7 @@
                     <size>16</size>
                     <access>read-only</access>
                     <resetValue>0x0</resetValue>
-                    <resetMask>0xFFFF</resetMask>
+                    <resetMask>0x7</resetMask>
                     <fields>
                         <field>
                             <name>PIN00</name>
@@ -26078,97 +26078,6 @@
                             <description>desc PIN02</description>
                             <msb>2</msb>
                             <lsb>2</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN03</name>
-                            <description>desc PIN03</description>
-                            <msb>3</msb>
-                            <lsb>3</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN04</name>
-                            <description>desc PIN04</description>
-                            <msb>4</msb>
-                            <lsb>4</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN05</name>
-                            <description>desc PIN05</description>
-                            <msb>5</msb>
-                            <lsb>5</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN06</name>
-                            <description>desc PIN06</description>
-                            <msb>6</msb>
-                            <lsb>6</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN07</name>
-                            <description>desc PIN07</description>
-                            <msb>7</msb>
-                            <lsb>7</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN08</name>
-                            <description>desc PIN08</description>
-                            <msb>8</msb>
-                            <lsb>8</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN09</name>
-                            <description>desc PIN09</description>
-                            <msb>9</msb>
-                            <lsb>9</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN10</name>
-                            <description>desc PIN10</description>
-                            <msb>10</msb>
-                            <lsb>10</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN11</name>
-                            <description>desc PIN11</description>
-                            <msb>11</msb>
-                            <lsb>11</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN12</name>
-                            <description>desc PIN12</description>
-                            <msb>12</msb>
-                            <lsb>12</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN13</name>
-                            <description>desc PIN13</description>
-                            <msb>13</msb>
-                            <lsb>13</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN14</name>
-                            <description>desc PIN14</description>
-                            <msb>14</msb>
-                            <lsb>14</lsb>
-                            <access>read-only</access>
-                        </field>
-                        <field>
-                            <name>PIN15</name>
-                            <description>desc PIN15</description>
-                            <msb>15</msb>
-                            <lsb>15</lsb>
                             <access>read-only</access>
                         </field>
                     </fields>

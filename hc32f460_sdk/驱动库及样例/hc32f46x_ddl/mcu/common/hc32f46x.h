@@ -47,7 +47,7 @@
  **
  ** History:
  **
- **   - 2019-05-22  1.0   First version for Device Driver Library of HC32F46x series MCU.
+ **   - 2019-05-27  1.0   First version for Device Driver Library of HC32F46x series MCU.
  **
  ******************************************************************************/
 
@@ -3254,6 +3254,13 @@ typedef struct
     __IO uint16_t POT14                     : 1;
     __IO uint16_t POT15                     : 1;
 } stc_port_potr_field_t;
+
+typedef struct
+{
+    __IO uint16_t PIN00                     : 1;
+    __IO uint16_t PIN01                     : 1;
+    __IO uint16_t PIN02                     : 1;
+} stc_port_pidrh_field_t;
 
 typedef struct
 {
@@ -8529,7 +8536,7 @@ typedef struct
     union
     {
         __IO uint16_t PIDRH;
-        stc_port_pidr_field_t PIDRH_f;
+        stc_port_pidrh_field_t PIDRH_f;
     };
     uint8_t RESERVED31[2];
     union
@@ -20137,19 +20144,6 @@ typedef struct
 #define bM4_PORT_PIDRH_PIN00                            *((volatile unsigned int*)(0x42A70A00UL))
 #define bM4_PORT_PIDRH_PIN01                            *((volatile unsigned int*)(0x42A70A04UL))
 #define bM4_PORT_PIDRH_PIN02                            *((volatile unsigned int*)(0x42A70A08UL))
-#define bM4_PORT_PIDRH_PIN03                            *((volatile unsigned int*)(0x42A70A0CUL))
-#define bM4_PORT_PIDRH_PIN04                            *((volatile unsigned int*)(0x42A70A10UL))
-#define bM4_PORT_PIDRH_PIN05                            *((volatile unsigned int*)(0x42A70A14UL))
-#define bM4_PORT_PIDRH_PIN06                            *((volatile unsigned int*)(0x42A70A18UL))
-#define bM4_PORT_PIDRH_PIN07                            *((volatile unsigned int*)(0x42A70A1CUL))
-#define bM4_PORT_PIDRH_PIN08                            *((volatile unsigned int*)(0x42A70A20UL))
-#define bM4_PORT_PIDRH_PIN09                            *((volatile unsigned int*)(0x42A70A24UL))
-#define bM4_PORT_PIDRH_PIN10                            *((volatile unsigned int*)(0x42A70A28UL))
-#define bM4_PORT_PIDRH_PIN11                            *((volatile unsigned int*)(0x42A70A2CUL))
-#define bM4_PORT_PIDRH_PIN12                            *((volatile unsigned int*)(0x42A70A30UL))
-#define bM4_PORT_PIDRH_PIN13                            *((volatile unsigned int*)(0x42A70A34UL))
-#define bM4_PORT_PIDRH_PIN14                            *((volatile unsigned int*)(0x42A70A38UL))
-#define bM4_PORT_PIDRH_PIN15                            *((volatile unsigned int*)(0x42A70A3CUL))
 #define bM4_PORT_PODRH_POUT00                           *((volatile unsigned int*)(0x42A70A80UL))
 #define bM4_PORT_PODRH_POUT01                           *((volatile unsigned int*)(0x42A70A84UL))
 #define bM4_PORT_PODRH_POUT02                           *((volatile unsigned int*)(0x42A70A88UL))
