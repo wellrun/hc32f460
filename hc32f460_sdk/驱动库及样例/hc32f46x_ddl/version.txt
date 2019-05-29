@@ -1,5 +1,11 @@
 version     date            comment
- 1.0.4      May 24, 2019    1. convert encoding to UTF-8 for readme.txt
+ 1.0.4      May 29, 2019    1. Add comment to func CLK_GetI2sClkSource in hc32f46x_clk.c
+
+            May 28, 2019    1. Fix bug for i2c_master_polling example.
+			    2. modifid PIDRH register
+		            3. delete setupxx at .mac file
+
+            May 24, 2019    1. convert encoding to UTF-8 for readme.txt
                             2. add clock division interface of SPI
                             3. add clock division and WP_Pin level interface of QSPI
                             4. modify some words to be misspelled
