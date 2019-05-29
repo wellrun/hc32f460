@@ -1329,6 +1329,21 @@ void CLK_SetI2sClkSource(M4_I2S_TypeDef* pstcI2sReg, en_clk_peri_source_t enTarg
     DISABLE_CLOCK1_REG_WRITE();
 }
 
+/**
+ *******************************************************************************
+ ** \brief  Get I2S clock source.
+ **
+ ** \param  [in] pstcI2sReg             Pointer to I2S register
+ ** \arg    M4_I2S1                     I2s channel 1
+ ** \arg    M4_I2S2                     I2s channel 2
+ ** \arg    M4_I2S3                     I2s channel 3
+ ** \arg    M4_I2S4                     I2s channel 4
+ **
+ ** \retval en_clk_peri_source_t        The  I2S clock source.
+ **
+ ** \note   None
+ **
+ ******************************************************************************/
 en_clk_peri_source_t CLK_GetI2sClkSource(M4_I2S_TypeDef* pstcI2sReg)
 {
     en_clk_peri_source_t enI2sClkSource;
