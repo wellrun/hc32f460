@@ -1,11 +1,13 @@
 version     date            comment
- 1.0.4      May 29, 2019    1. Add comment to func CLK_GetI2sClkSource in hc32f46x_clk.c
+ 1.0.4      June 3, 2019    1. modify MPU protection regions write/read permission functions
+
+            May 29, 2019    1. Add comment to func CLK_GetI2sClkSource in hc32f46x_clk.c
                             2. interrupt.c
                                 - SPI_SPEI and SPI_SPII bit position in share IRQ register of SPI.1~4
 
- 1.0.4      May 28, 2019    1. Fix bug for i2c_master_polling example.
-			    2. modifid PIDRH register
-		            3. delete setupxx at .mac file
+            May 28, 2019    1. Fix bug for i2c_master_polling example.
+                            2. modifid PIDRH register
+                            3. delete setupxx at .mac file
 
             May 24, 2019    1. convert encoding to UTF-8 for readme.txt
                             2. add clock division interface of SPI
@@ -62,8 +64,8 @@ version     date            comment
 
             Apr 1, 2019     1. add EP2 OUT function for HID device 
 
-            Mar 18, 2019    1. update chm file acoording to src updating
-                            
+            Mar 18, 2019    1. update chm file according to src updating
+
             Mar 15, 2019    1. add CRC driver & sample
                             2. bug fix
                                 - ICG/PWC/CLK/I2C
