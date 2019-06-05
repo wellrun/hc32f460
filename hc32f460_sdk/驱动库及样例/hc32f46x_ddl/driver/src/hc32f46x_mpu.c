@@ -703,13 +703,13 @@ en_result_t MPU_SetProtRegionReadPermission(en_mpu_region_num_t enRegionNum,
     switch (enMpuRegionType)
     {
         case SMPU1Region:
-            RGCR_f->FRG0RP = u32State;
-            break;
-        case SMPU2Region:
             RGCR_f->S1RG0RP = u32State;
             break;
-        case FMPURegion:
+        case SMPU2Region:
             RGCR_f->S2RG0RP = u32State;
+            break;
+        case FMPURegion:
+            RGCR_f->FRG0RP = u32State;
             break;
         default:
             enRet = ErrorInvalidParameter;
@@ -748,13 +748,13 @@ en_functional_state_t MPU_GetProtRegionReadPermission(en_mpu_region_num_t enRegi
     switch (enMpuRegionType)
     {
         case SMPU1Region:
-            u32State = RGCR_f->FRG0RP;
-            break;
-        case SMPU2Region:
             u32State = RGCR_f->S1RG0RP;
             break;
-        case FMPURegion:
+        case SMPU2Region:
             u32State = RGCR_f->S2RG0RP;
+            break;
+        case FMPURegion:
+            u32State = RGCR_f->FRG0RP;
             break;
         default:
             break;
@@ -798,13 +798,13 @@ en_result_t MPU_SetProtRegionWritePermission(en_mpu_region_num_t enRegionNum,
     switch (enMpuRegionType)
     {
         case SMPU1Region:
-            RGCR_f->FRG0WP = u32State;
-            break;
-        case SMPU2Region:
             RGCR_f->S1RG0WP = u32State;
             break;
-        case FMPURegion:
+        case SMPU2Region:
             RGCR_f->S2RG0WP = u32State;
+            break;
+        case FMPURegion:
+            RGCR_f->FRG0WP = u32State;
             break;
         default:
             enRet = ErrorInvalidParameter;
@@ -843,13 +843,13 @@ en_functional_state_t MPU_GetProtRegionWritePermission(en_mpu_region_num_t enReg
     switch (enMpuRegionType)
     {
         case SMPU1Region:
-            u32State = RGCR_f->FRG0WP;
-            break;
-        case SMPU2Region:
             u32State = RGCR_f->S1RG0WP;
             break;
-        case FMPURegion:
+        case SMPU2Region:
             u32State = RGCR_f->S2RG0WP;
+            break;
+        case FMPURegion:
+            u32State = RGCR_f->FRG0WP;
             break;
         default:
             break;
