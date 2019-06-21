@@ -70,10 +70,16 @@
 /*******************************************************************************
  * Local pre-processor symbols/macros ('#define')
  ******************************************************************************/
+#define DMA_IDLE                            0u
+#define DMA_BUSY                            1u
+
 #define DMACH0                              0x01
 #define DMACH1                              0x02
 #define DMACH2                              0x04
 #define DMACH3                              0x08
+
+#define DMATIMEOUT1                         0x5000
+#define DMATIMEOUT2                         0x1000
 
 #define DMA_CHCTL_DEFAULT                   0x00001000
 #define DMA_DTCTL_DEFAULT                   0x00000001
@@ -370,6 +376,7 @@
 /*******************************************************************************
  * Local variable definitions ('static')
  ******************************************************************************/
+static volatile uint8_t DmaChEnState = DMA_IDLE;
 
 /*******************************************************************************
  * Function implementation - global ('extern') and local ('static')
@@ -644,21 +651,60 @@ en_result_t DMA_ClearIrqFlag(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, en_dma_ir
  ** \note   None
  **
  ******************************************************************************/
-void DMA_ChannelCmd(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, en_functional_state_t enNewState)
+en_result_t DMA_ChannelCmd(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, en_functional_state_t enNewState)
 {
+    uint16_t u16Timeout = 0;
+    uint32_t u32Temp = 0;
+    uint8_t  u8DmaCh = 0;
+    uint32_t u32Cnt;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_FUNCTIONAL_STATE(enNewState));
 
-    switch(enNewState)
+    if(DMA_IDLE == DmaChEnState)
     {
-        case Enable:
-            pstcDmaReg->CHEN |= (1u << (u8Ch + DMA_CHEN_CHEN_Pos));
-            break;
-        case Disable:
-            pstcDmaReg->CHEN &= (~(1u << (u8Ch + DMA_CHEN_CHEN_Pos)));
-            break;
+        DmaChEnState = DMA_BUSY;
+
+        /* Read back channel enable register except current channel */
+        u32Temp = (pstcDmaReg->CHEN & ~(1 << u8Ch));
+        if(0 != u32Temp)
+        {
+            for(u8DmaCh = 0; u8DmaCh < 4; u8DmaCh++)
+            {
+                u32Cnt = READ_DMA_CH_REG(&pstcDmaReg->DTCTL0, u8DmaCh) >> DMA_DTCTL_CNT_Pos;
+
+                /* if the other channel is running, wait it transfer complete */
+                if(((1 << u8DmaCh) == (pstcDmaReg->CHEN & (1 << u8DmaCh))) &&  \
+                   ((READ_DMA_CH_REG(&pstcDmaReg->MONDTCTL0, u8DmaCh) >> DMA_DTCTL_CNT_Pos) < u32Cnt))
+                {
+                    while(Reset != (pstcDmaReg->CHEN & (1 << u8DmaCh)))
+                    {
+                         u16Timeout++;
+                        if(u16Timeout > DMATIMEOUT1)
+                        {
+                            return ErrorTimeout;
+                        }
+                    }
+                }
+             }
+        }
+
+        switch(enNewState)
+        {
+            case Enable:
+                pstcDmaReg->CHEN |= (1u << (u8Ch + DMA_CHEN_CHEN_Pos));
+                break;
+            case Disable:
+                pstcDmaReg->CHEN &= (~(1u << (u8Ch + DMA_CHEN_CHEN_Pos)));
+                break;
+        }
+
+        DmaChEnState =  DMA_IDLE;
+        return Ok;
     }
+
+    return Error;
 }
 
 /**
@@ -809,12 +855,27 @@ en_flag_status_t DMA_GetChFlag(M4_DMA_TypeDef* pstcDmaReg, en_dma_ch_flag_t enDm
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetSrcAddress(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint32_t u32Address)
+en_result_t DMA_SetSrcAddress(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint32_t u32Address)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
 
     WRITE_DMA_CH_REG(&pstcDmaReg->SAR0, u8Ch, u32Address);
+
+    /* Ensure the address has been writed */
+    while(u32Address != READ_DMA_CH_REG(&pstcDmaReg->SAR0, u8Ch))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        WRITE_DMA_CH_REG(&pstcDmaReg->SAR0, u8Ch, u32Address);
+    }
+
+    return Ok;
 }
 
 /**
@@ -833,12 +894,28 @@ void DMA_SetSrcAddress(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint32_t u32Add
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetDesAddress(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint32_t u32Address)
+en_result_t DMA_SetDesAddress(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint32_t u32Address)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
 
     WRITE_DMA_CH_REG(&pstcDmaReg->DAR0, u8Ch, u32Address);
+
+    /* Ensure the address has been writed */
+    while(u32Address != READ_DMA_CH_REG(&pstcDmaReg->DAR0, u8Ch))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        WRITE_DMA_CH_REG(&pstcDmaReg->DAR0, u8Ch, u32Address);
+    }
+
+    return Ok;
+
 }
 
 
@@ -858,13 +935,28 @@ void DMA_SetDesAddress(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint32_t u32Add
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetBlockSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16BlkSize)
+en_result_t DMA_SetBlockSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16BlkSize)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_BLKSIZE(u16BlkSize));
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->DTCTL0, u8Ch, DMA_DTCTL_BLKSIZE, u16BlkSize);
+
+    /* Ensure the block size has been writed */
+    while(u16BlkSize != (uint16_t)(READ_DMA_CH_REG(&pstcDmaReg->DTCTL0, u8Ch) & DMA_DTCTL_BLKSIZE))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->DTCTL0, u8Ch, DMA_DTCTL_BLKSIZE, u16BlkSize);
+    }
+
+    return Ok;
 }
 
 /**
@@ -883,13 +975,28 @@ void DMA_SetBlockSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16BlkS
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetTransferCnt(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16TrnCnt)
+en_result_t DMA_SetTransferCnt(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16TrnCnt)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_TRNCNT(u16TrnCnt));
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->DTCTL0, u8Ch, DMA_DTCTL_CNT, u16TrnCnt);
+
+    /* Ensure the transfer count has been writed */
+    while(u16TrnCnt != ((READ_DMA_CH_REG(&pstcDmaReg->DTCTL0, u8Ch) & DMA_DTCTL_CNT) >> DMA_DTCTL_CNT_Pos))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->DTCTL0, u8Ch, DMA_DTCTL_CNT, u16TrnCnt);
+    }
+
+    return Ok;
 }
 
 /**
@@ -908,13 +1015,28 @@ void DMA_SetTransferCnt(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Tr
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetSrcRptSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Size)
+en_result_t DMA_SetSrcRptSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Size)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_SRPT_SIZE(u16Size));
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->RPT0, u8Ch, DMA_RPT_SRPT, u16Size);
+
+    /* Ensure the source repeat size has been writed */
+    while(u16Size != (uint16_t)(READ_DMA_CH_REG(&pstcDmaReg->RPT0, u8Ch) & DMA_RPT_SRPT))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->RPT0, u8Ch, DMA_RPT_SRPT, u16Size);
+    }
+
+    return Ok;
 }
 
 /**
@@ -933,13 +1055,28 @@ void DMA_SetSrcRptSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Siz
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetDesRptSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Size)
+en_result_t DMA_SetDesRptSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Size)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_DRPT_SIZE(u16Size));
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->RPT0, u8Ch, DMA_RPT_DRPT, u16Size);
+
+    /* Ensure the destination repeat size has been writed */
+    while(u16Size != ((READ_DMA_CH_REG(&pstcDmaReg->RPT0, u8Ch) & DMA_RPT_DRPT) >> DMA_RPT_DRPT_Pos))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->RPT0, u8Ch, DMA_RPT_DRPT, u16Size);
+    }
+
+    return Ok;
 }
 
 
@@ -959,13 +1096,28 @@ void DMA_SetDesRptSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Siz
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetSrcRptbSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Size)
+en_result_t DMA_SetSrcRptbSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Size)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_SRPTB_SIZE(u16Size));
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->RPTB0, u8Ch, DMA_RPTB_SRPTB, u16Size);
+
+    /* Ensure the source repeat size has been writed */
+    while(u16Size != (uint16_t)(READ_DMA_CH_REG(&pstcDmaReg->RPTB0, u8Ch) & DMA_RPTB_SRPTB))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->RPTB0, u8Ch, DMA_RPTB_SRPTB, u16Size);
+    }
+
+    return Ok;
 }
 
 /**
@@ -984,13 +1136,28 @@ void DMA_SetSrcRptbSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Si
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetDesRptBSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Size)
+en_result_t DMA_SetDesRptBSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Size)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_DRPTB_SIZE(u16Size));
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->RPTB0, u8Ch, DMA_RPTB_DRPTB, u16Size);
+
+    /* Ensure the destination repeat size has been writed */
+    while(u16Size != ((READ_DMA_CH_REG(&pstcDmaReg->RPTB0, u8Ch) & DMA_RPTB_DRPTB) >> DMA_RPTB_DRPTB_Pos))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->RPTB0, u8Ch, DMA_RPTB_DRPTB, u16Size);
+    }
+
+    return Ok;
 }
 
 /**
@@ -1011,9 +1178,11 @@ void DMA_SetDesRptBSize(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint16_t u16Si
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetSrcNseqCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
+en_result_t DMA_SetSrcNseqCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
                         const stc_dma_nseq_cfg_t* pstcSrcNseqCfg)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_SNSOFFSET(pstcSrcNseqCfg->u32Offset));
@@ -1021,6 +1190,21 @@ void DMA_SetSrcNseqCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->SNSEQCTL0, u8Ch, DMA_SNSEQCTL_SOFFSET, pstcSrcNseqCfg->u32Offset);
     MODIFY_DMA_CH_REG(&pstcDmaReg->SNSEQCTL0, u8Ch, DMA_SNSEQCTL_SNSCNT, pstcSrcNseqCfg->u16Cnt);
+
+    /* Ensure the no-sequence offset & count has been writed */
+    while((pstcSrcNseqCfg->u32Offset | (pstcSrcNseqCfg->u16Cnt << DMA_SNSEQCTL_SNSCNT_Pos))
+            != READ_DMA_CH_REG(&pstcDmaReg->SNSEQCTL0, u8Ch))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->SNSEQCTL0, u8Ch, DMA_SNSEQCTL_SOFFSET, pstcSrcNseqCfg->u32Offset);
+        MODIFY_DMA_CH_REG(&pstcDmaReg->SNSEQCTL0, u8Ch, DMA_SNSEQCTL_SNSCNT, pstcSrcNseqCfg->u16Cnt);
+    }
+
+    return Ok;
 }
 
 /**
@@ -1041,9 +1225,11 @@ void DMA_SetSrcNseqCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetSrcNseqBCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
+en_result_t DMA_SetSrcNseqBCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
                         const stc_dma_nseqb_cfg_t* pstcSrcNseqBCfg)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_SNSDIST(pstcSrcNseqBCfg->u32NseqDist));
@@ -1051,6 +1237,21 @@ void DMA_SetSrcNseqBCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->SNSEQCTLB0, u8Ch, DMA_SNSEQCTLB_SNSDIST, pstcSrcNseqBCfg->u32NseqDist);
     MODIFY_DMA_CH_REG(&pstcDmaReg->SNSEQCTLB0, u8Ch, DMA_SNSEQCTLB_SNSCNTB, pstcSrcNseqBCfg->u16CntB);
+
+    /* Ensure the no-sequence offset & count has been writed */
+    while((pstcSrcNseqBCfg->u32NseqDist | (pstcSrcNseqBCfg->u16CntB << DMA_SNSEQCTLB_SNSCNTB_Pos))
+            != READ_DMA_CH_REG(&pstcDmaReg->SNSEQCTLB0, u8Ch))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->SNSEQCTLB0, u8Ch, DMA_SNSEQCTLB_SNSDIST, pstcSrcNseqBCfg->u32NseqDist);
+        MODIFY_DMA_CH_REG(&pstcDmaReg->SNSEQCTLB0, u8Ch, DMA_SNSEQCTLB_SNSCNTB, pstcSrcNseqBCfg->u16CntB);
+    }
+
+    return Ok;
 }
 
 /**
@@ -1071,9 +1272,11 @@ void DMA_SetSrcNseqBCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetDesNseqCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
+en_result_t DMA_SetDesNseqCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
                         const stc_dma_nseq_cfg_t* pstcDesNseqCfg)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_DNSOFFSET(pstcDesNseqCfg->u32Offset));
@@ -1081,6 +1284,21 @@ void DMA_SetDesNseqCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->DNSEQCTL0, u8Ch, DMA_DNSEQCTL_DOFFSET, pstcDesNseqCfg->u32Offset);
     MODIFY_DMA_CH_REG(&pstcDmaReg->DNSEQCTL0, u8Ch, DMA_DNSEQCTL_DNSCNT, pstcDesNseqCfg->u16Cnt);
+
+    /* Ensure the no-sequence offset & count has been writed */
+    while((pstcDesNseqCfg->u32Offset | (pstcDesNseqCfg->u16Cnt << DMA_DNSEQCTL_DNSCNT_Pos))
+            != READ_DMA_CH_REG(&pstcDmaReg->DNSEQCTL0, u8Ch))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->DNSEQCTL0, u8Ch, DMA_DNSEQCTL_DOFFSET, pstcDesNseqCfg->u32Offset);
+        MODIFY_DMA_CH_REG(&pstcDmaReg->DNSEQCTL0, u8Ch, DMA_DNSEQCTL_DNSCNT, pstcDesNseqCfg->u16Cnt);
+    }
+
+    return Ok;
 }
 
 /**
@@ -1101,9 +1319,11 @@ void DMA_SetDesNseqCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetDesNseqBCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
+en_result_t DMA_SetDesNseqBCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
                         const stc_dma_nseqb_cfg_t* pstcDesNseqBCfg)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_DNSDIST(pstcDesNseqBCfg->u32NseqDist));
@@ -1111,6 +1331,21 @@ void DMA_SetDesNseqBCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
 
     MODIFY_DMA_CH_REG(&pstcDmaReg->DNSEQCTLB0, u8Ch, DMA_DNSEQCTLB_DNSDIST, pstcDesNseqBCfg->u32NseqDist);
     MODIFY_DMA_CH_REG(&pstcDmaReg->DNSEQCTLB0, u8Ch, DMA_DNSEQCTLB_DNSCNTB, pstcDesNseqBCfg->u16CntB);
+
+    /* Ensure the no-sequence offset & count has been writed */
+    while((pstcDesNseqBCfg->u32NseqDist | (pstcDesNseqBCfg->u16CntB << DMA_DNSEQCTLB_DNSCNTB_Pos))
+            != READ_DMA_CH_REG(&pstcDmaReg->DNSEQCTLB0, u8Ch))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        MODIFY_DMA_CH_REG(&pstcDmaReg->DNSEQCTLB0, u8Ch, DMA_DNSEQCTLB_DNSDIST, pstcDesNseqBCfg->u32NseqDist);
+        MODIFY_DMA_CH_REG(&pstcDmaReg->DNSEQCTLB0, u8Ch, DMA_DNSEQCTLB_DNSCNTB, pstcDesNseqBCfg->u16CntB);
+    }
+
+    return Ok;
 }
 
 /**
@@ -1129,13 +1364,28 @@ void DMA_SetDesNseqBCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
  ** \note   None
  **
  ******************************************************************************/
-void DMA_SetLLP(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint32_t u32Pointer)
+en_result_t DMA_SetLLP(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch, uint32_t u32Pointer)
 {
+    uint16_t u16Timeout = 0;
+
     DDL_ASSERT(IS_VALID_DMA_REG(pstcDmaReg));
     DDL_ASSERT(IS_VALID_CH(u8Ch));
     DDL_ASSERT(IS_VALID_LLP(u32Pointer));
 
     WRITE_DMA_CH_REG(&pstcDmaReg->LLP0, u8Ch, u32Pointer);
+
+    /* Ensure the destination repeat size has been writed */
+    while(u32Pointer != ((READ_DMA_CH_REG(&pstcDmaReg->LLP0, u8Ch) & DMA_LLP_LLP) >> DMA_LLP_LLP_Pos))
+    {
+        u16Timeout++;
+        if(u16Timeout > DMATIMEOUT2)
+        {
+            return ErrorTimeout;
+        }
+        WRITE_DMA_CH_REG(&pstcDmaReg->LLP0, u8Ch, u32Pointer);
+    }
+
+    return Ok;
 }
 
 /**
@@ -1273,7 +1523,8 @@ void DMA_ChannelCfg(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
  **
  ** \retval None.
  **
- ** \note   This function should be used after enable DMAx clk(PWC_Fcg0PeriphClockCmd).
+ ** \note   This function should be used after enable DMAx clk(PWC_Fcg0PeriphClockCmd)
+ **         and before channel enable.
  **
  ******************************************************************************/
 void DMA_InitChannel(M4_DMA_TypeDef* pstcDmaReg, uint8_t u8Ch,
