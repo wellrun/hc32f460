@@ -1536,7 +1536,7 @@ static en_result_t SetUartBaudrate(M4_USART_TypeDef *USARTx,
 
     if ((DIV < 0) || (DIV_Integer > 0xFFu))
     {
-        DDL_ASSERT(false);
+        //DDL_ASSERT(false);
         return ErrorInvalidParameter;
     }
 

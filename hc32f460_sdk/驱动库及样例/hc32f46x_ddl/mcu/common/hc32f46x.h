@@ -47,7 +47,7 @@
  **
  ** History:
  **
- **   - 2019-05-27  1.0   First version for Device Driver Library of HC32F46x series MCU.
+ **   - 2019-06-17  1.03   First version for Device Driver Library of HC32F46x series MCU.
  **
  ******************************************************************************/
 
@@ -2587,7 +2587,7 @@ typedef struct
 
 typedef struct
 {
-    __IO uint32_t INDEX                     : 2;
+    __IO uint32_t INDEX                     : 3;
 } stc_keyscan_ssr_field_t;
 
 typedef struct
@@ -18828,6 +18828,7 @@ typedef struct
 #define bM4_KEYSCAN_SER_SEN                             *((volatile unsigned int*)(0x42A18080UL))
 #define bM4_KEYSCAN_SSR_INDEX0                          *((volatile unsigned int*)(0x42A18100UL))
 #define bM4_KEYSCAN_SSR_INDEX1                          *((volatile unsigned int*)(0x42A18104UL))
+#define bM4_KEYSCAN_SSR_INDEX2                          *((volatile unsigned int*)(0x42A18108UL))
 #define bM4_MPU_RGD0_MPURG0SIZE0                        *((volatile unsigned int*)(0x42A00000UL))
 #define bM4_MPU_RGD0_MPURG0SIZE1                        *((volatile unsigned int*)(0x42A00004UL))
 #define bM4_MPU_RGD0_MPURG0SIZE2                        *((volatile unsigned int*)(0x42A00008UL))

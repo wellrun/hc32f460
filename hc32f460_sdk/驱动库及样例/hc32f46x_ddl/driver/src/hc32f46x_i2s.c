@@ -197,7 +197,7 @@ void I2S_FuncCmd(M4_I2S_TypeDef* pstcI2sReg, en_i2s_func_t enFunc,
     }
     else
     {
-        if(1 == (pstcI2sReg->CTRL & (1 << enFunc)))
+        if(0 != (pstcI2sReg->CTRL & (1 << enFunc)))
         {
             pstcI2sReg->CTRL &= ~(1 << enFunc);
         }
