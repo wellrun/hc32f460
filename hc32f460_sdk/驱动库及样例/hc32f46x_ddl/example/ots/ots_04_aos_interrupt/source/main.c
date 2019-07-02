@@ -156,10 +156,11 @@ int32_t main(void)
  ******************************************************************************/
 static void SystemClockConfig(void)
 {
-    stc_clk_xtal_cfg_t stcXtalCfg;
-    stc_clk_mpll_cfg_t stcMpllCfg;
+    stc_clk_xtal_cfg_t   stcXtalCfg;
+    stc_clk_mpll_cfg_t   stcMpllCfg;
     stc_clk_sysclk_cfg_t stcSysclkCfg;
-    stc_clk_freq_t stcClkFreq;
+    stc_clk_freq_t       stcClkFreq;
+    stc_sram_config_t    stcSramConfig;
 
     MEM_ZERO_STRUCT(stcXtalCfg);
     MEM_ZERO_STRUCT(stcMpllCfg);
@@ -188,6 +189,16 @@ static void SystemClockConfig(void)
     EFM_Unlock();
     EFM_SetLatency(EFM_LATENCY_5);
     EFM_Lock();
+
+    /* If the system clock frequency is higher than 100MHz and SRAM1, SRAM2, SRAM3 or Ret_SRAM is used,
+       the wait cycle must be set. */
+    stcSramConfig.u8SramIdx     = Sram12Idx | Sram3Idx | SramRetIdx;
+    stcSramConfig.enSramRC      = SramCycle2;
+    stcSramConfig.enSramWC      = SramCycle2;
+    stcSramConfig.enSramEccMode = EccMode0;
+    stcSramConfig.enSramEccOp   = SramNmi;
+    stcSramConfig.enSramPyOp    = SramNmi;
+    SRAM_Init(&stcSramConfig);
 
     CLK_MpllCmd(Enable);
 

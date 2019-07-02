@@ -119,7 +119,7 @@ extern "C"
 #define DDL_RTC_ENABLE                              DDL_OFF
 #define DDL_SDIOC_ENABLE                            DDL_OFF
 #define DDL_SPI_ENABLE                              DDL_OFF
-#define DDL_SRAM_ENABLE                             DDL_OFF
+#define DDL_SRAM_ENABLE                             DDL_ON
 #define DDL_SWDT_ENABLE                             DDL_OFF
 #define DDL_TIMER0_ENABLE                           DDL_OFF
 #define DDL_TIMER4_CNT_ENABLE                       DDL_OFF
