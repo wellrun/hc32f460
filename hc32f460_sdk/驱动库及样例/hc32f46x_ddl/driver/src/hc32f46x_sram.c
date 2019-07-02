@@ -260,8 +260,8 @@ en_result_t SRAM_Init(const stc_sram_config_t *pstcSramConfig)
         {
             M4_SRAMC->WTCR |= (pstcSramConfig->enSramRC                     |  \
                              (pstcSramConfig->enSramWC << 4)) << (i * 8);
-            u8TmpIdx >>= 1;
         }
+        u8TmpIdx >>= 1;
     }
     /* SRAM3 ECC config */
     if (true == (pstcSramConfig->u8SramIdx & Sram3Idx))

@@ -95,6 +95,7 @@ int32_t main(void)
     stc_clk_mpll_cfg_t      stcMpllCfg;
     stc_clk_freq_t          stcClkFreq;
     stc_clk_output_cfg_t    stcOutputClkCfg;
+    stc_sram_config_t       stcSramConfig;
 
 
     MEM_ZERO_STRUCT(enSysClkSrc);
@@ -133,6 +134,15 @@ int32_t main(void)
     EFM_Unlock();
     EFM_SetLatency(EFM_LATENCY_4);
     EFM_Lock();
+
+    /* sram init include read/write wait cycle setting */
+    stcSramConfig.u8SramIdx = Sram12Idx | Sram3Idx | SramHsIdx | SramRetIdx;
+    stcSramConfig.enSramRC = SramCycle5;
+    stcSramConfig.enSramWC = SramCycle6;
+    stcSramConfig.enSramEccMode = EccMode3;
+    stcSramConfig.enSramEccOp = SramNmi;
+    stcSramConfig.enSramPyOp = SramNmi;
+    SRAM_Init(&stcSramConfig);
 
     /* Enable MPLL. */
     CLK_MpllCmd(Enable);

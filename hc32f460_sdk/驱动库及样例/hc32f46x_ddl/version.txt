@@ -1,5 +1,9 @@
 version     date            comment
- 1.0.4      July 1, 2019   1. Fix bug for I2S_FuncCmd() function.
+ 1.0.4      July 2	    1.modified SRAM_Init
+		            2.add SRAM_Init to clk_switch_sysclk sample, mainly setting sram 
+				read/write cycle
+
+            July 1, 2019   1. Fix bug for I2S_FuncCmd() function.
                            2. Modify headfile hc32f46x.h for keyscan.
 
             Jun 19, 2019   1. dma.c & dma.h
