@@ -137,8 +137,8 @@ int32_t main(void)
 
     /* sram init include read/write wait cycle setting */
     stcSramConfig.u8SramIdx = Sram12Idx | Sram3Idx | SramHsIdx | SramRetIdx;
-    stcSramConfig.enSramRC = SramCycle5;
-    stcSramConfig.enSramWC = SramCycle6;
+    stcSramConfig.enSramRC = SramCycle2;
+    stcSramConfig.enSramWC = SramCycle2;
     stcSramConfig.enSramEccMode = EccMode3;
     stcSramConfig.enSramEccOp = SramNmi;
     stcSramConfig.enSramPyOp = SramNmi;
