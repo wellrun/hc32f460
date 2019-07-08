@@ -507,7 +507,7 @@ en_flag_status_t PWC_GetWakeup0Flag(uint32_t u32WkupFlag)
 
     u8flag = (M4_SYSREG->PWR_PDWKF0 & u32WkupFlag);
 
-    return ((1 == u8flag) ? Set : Reset);
+    return ((0 == u8flag) ? Reset : Set);
 }
 
 /**
@@ -533,7 +533,7 @@ en_flag_status_t PWC_GetWakeup1Flag(uint32_t u32WkupFlag)
 
     u8flag = (M4_SYSREG->PWR_PDWKF1 & u32WkupFlag);
 
-    return ((1 == u8flag) ? Set : Reset);
+    return ((0 == u8flag) ? Reset : Set);
 }
 
 /**
